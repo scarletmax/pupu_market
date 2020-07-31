@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketadmin.mapper.PointMapper">
+
+    <select id="findPointList" parameterType="java.util.HashMap" resultType="com.cykj.marketpojo.Point">
+        select a.*,b.`name` as 'userName' ,c.`name` as'stateStr' from t_point a , t_user b , t_property c
+        where a.user_id=b.id and c.type='point_state'and a.state=c.value
+        <if test="userName!=null">
+            and a.user_name like '%${userName}%'
+        </if>
+        <if test="userId!=null">
+            and a.user_id like '%${userId}%'
+        </if>
+        <if test="stateStr!=null">
+            and c.name = #{stateStr}
+        </if>
+    </select>
+
+    <select id="findPointCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+        select count(*) from t_point a , t_user b , t_property c
+        where a.user_id=b.id and c.type='point_state'and a.state=c.value
+        <if test="userName!=null">
+            and a.user_name like '%${userName}%'
+        </if>
+        <if test="userId!=null">
+            and a.user_id like '%${userId}%'
+        </if>
+        <if test="stateStr!=null">
+            and c.name = #{stateStr}
+        </if>
+    </select>
+
+    <select id="findPointState" resultType="java.lang.String">
+        select name from t_property
+        where type='point_state'
+    </select>
+
+
+</mapper>

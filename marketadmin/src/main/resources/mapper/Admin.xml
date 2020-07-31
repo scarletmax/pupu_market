@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketadmin.mapper.AdminMapper">
+    <!--	管理员列表-->
+    <select id="findAdminList" parameterType="java.util.HashMap" resultType="com.cykj.marketpojo.Admin">
+        select a.*,b.`name` as 'roleName' ,c.`name` as'stateText' from t_admin a , t_role b , t_property c
+        where a.role_id=b.id and c.type='admin_state'and a.state=c.value
+        <if test="name!=null">
+            and a.name like '%${name}%'
+        </if>
+        <if test="account!=null">
+            and a.account like '%${account}%'
+        </if>
+        <if test="stateText!=null">
+            and c.name = #{stateText}
+        </if>
+    </select>
+
+    <select id="findAdminCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+        select count(*) from t_admin a , t_role b , t_property c
+        where a.role_id=b.id and c.type='admin_state'and a.state=c.value
+        <if test="name!=null">
+            and a.name like '%${name}%'
+        </if>
+        <if test="account!=null">
+            and a.account like '%${account}%'
+        </if>
+        <if test="stateText!=null">
+            and c.name = #{stateText}
+        </if>
+    </select>
+
+    <select id="findAdminState" resultType="java.lang.String">
+        select name from t_property
+        where type='admin_state'
+    </select>
+
+    <update id="updateState">
+        update t_admin set state=(select value from t_property where type='admin_state' and name=#{state} )
+        WHERE id = #{id}
+    </update>
+
+    <select id="findAdminRole" resultType="java.lang.String">
+        select name from t_role
+    </select>
+
+    <select id="findAccount" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from t_admin where account=#{account}
+    </select>
+
+    <insert id="addAdmin" parameterType="com.cykj.marketpojo.Admin">
+       INSERT INTO t_admin(account,name,pwd,state,role_id,tel) value(#{account},#{name},#{pwd},#{state},
+       (select id from t_role where name=#{roleName}),#{tel})
+    </insert>
+
+    <select id="findUserState" resultType="java.lang.String">
+        select name from t_property
+        where type='user_state'
+    </select>
+
+    <select id="findUserList" parameterType="java.util.HashMap" resultType="com.cykj.marketpojo.User">
+        select a.*,b.`name` as 'levelName' ,c.`name` as'stateStr'
+        from t_user a , t_level b , t_property c
+        where a.level_id=b.id and c.type='user_state'and a.state=c.value
+        <if test="name!=null">
+            and a.name like '%${name}%'
+        </if>
+        <if test="account!=null">
+            and a.account like '%${account}%'
+        </if>
+        <if test="stateStr!=null">
+            and c.name = #{stateStr}
+        </if>
+        <if test="levelName!=null">
+            and b.name = #{levelName}
+        </if>
+        <if test="startDate != null and startDate != '' ">and DATE_FORMAT(reg_time,'%Y-%m-%d') gt; #{startDate}</if>
+
+        <if test="endDate != null and endDate != '' ">and DATE_FORMAT(reg_time,'%Y-%m-%d') lt; #{endDate}
+        </if>
+        limit #{pageSize} offset #{start}
+    </select>
+
+    <select id="findUserCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+        select count(*)
+        from t_user a , t_level b , t_property c
+        where a.level_id=b.id and c.type='user_state'and a.state=c.value
+        <if test="name!=null">
+            and a.name like '%${name}%'
+        </if>
+        <if test="account!=null">
+            and a.account like '%${account}%'
+        </if>
+        <if test="stateStr!=null">
+            and c.name = #{stateStr}
+        </if>
+        <if test="levelName!=null">
+            and b.name = #{levelName}
+        </if>
+        <if test="startDate != null and startDate != '' ">
+        and DATE_FORMAT(reg_time,'%Y-%m-%d') gt; #{startDate}
+        </if>
+        <if test="endDate != null and endDate != '' ">
+        and DATE_FORMAT(reg_time,'%Y-%m-%d') lt; #{endDate}
+        </if>
+    </select>
+
+    <update id="updateUserState">
+        update t_user set state=(select value from t_property where type='user_state' and name=#{state} )
+        WHERE id = #{id}
+    </update>
+
+    <update id="resetPwd">
+        update t_admin set pwd=(select value from t_property where type='reset_pwd')
+        WHERE id = #{id}
+    </update>
+
+</mapper>

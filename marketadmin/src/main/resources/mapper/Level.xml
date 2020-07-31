@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketadmin.mapper.LevelMapper">
+    <!--	管理员列表-->
+    <select id="findLevelList" parameterType="java.util.HashMap" resultType="com.cykj.marketpojo.Level">
+        select * from t_level
+    </select>
+
+    <select id="findLevelCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+        select count(*) from t_level
+    </select>
+
+</mapper>
