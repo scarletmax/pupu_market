@@ -1,0 +1,14 @@
+server:
+  port: 2020 #服务端地址
+eureka:
+  instance:
+    hostname: localhost #服务端访问地址
+
+  client:
+    fetch-registry: false #是否从eureka 服务器获取各个微服务地址
+    register-with-eureka: false #是否注册到eureka服务器
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+
+

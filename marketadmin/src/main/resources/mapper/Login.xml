@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketadmin.mapper.LoginMapper">
+    <!--	管理员登陆-->
+    <select id="login" parameterType="com.cykj.marketpojo.Admin" resultType="com.cykj.marketpojo.Admin">
+	    select id,account,pwd,role_id from t_admin
+	    where account=#{account} and pwd=#{pwd}
+	</select>
+
+</mapper>

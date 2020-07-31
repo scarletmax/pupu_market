@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketadmin.mapper.MenuMapper">
+    <!--    获取菜单-->
+    <select id="getMenu" parameterType="java.lang.Integer" resultMap="menuMap">
+    select m.id,name,url,parent_id ,role_id
+    from t_Menu m,t_role_menu r
+    where parent_id=0 and m.id=r.menu_id and r.role_id= #{role_id}
+    </select>
+    <!--    父级菜单获取子菜单的 映射结果集-->
+    <resultMap id="menuMap" type="com.cykj.marketpojo.Menu">
+        <id column="parent_id" property="parentId"></id>
+        <id column="role_id" property="roleId"></id>
+        <collection property="childList" ofType="com.cykj.marketpojo.Menu" javaType="java.util.ArrayList"
+                    column="{id=id,role_id=role_id}" select="getChildMenu">
+        </collection>
+    </resultMap>
+    <!--    获取父级菜单的子菜单-->
+    <select id="getChildMenu"  resultType="com.cykj.marketpojo.Menu">
+     select m.id,name,url,m.parent_id
+     from t_menu m,t_role_menu r
+     where parent_id=#{id} and m.id=r.menu_id and r.role_id= #{role_id};
+    </select>
+
+
+    <!--    根据父级菜单获取菜单-->
+    <select id="getMenuByPid" resultType="com.cykj.marketpojo.Menu">
+        select * from t_menu a,t_role_menu b
+        where a.parent_id = #{id}  and a.id=b.menu_id
+        and b.role_id = #{roleId} order by a.id
+    </select>
+    <!--    根据角色id查询已分配菜单-->
+    <!--    <select id="queryAttr" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.Menu">-->
+    <!--        select m.id, m.name, m.url, parent_id, r.id as relationId, r.role_id-->
+    <!--        from t_menu m,t_role_menu r-->
+    <!--        where  m.id=r.menu_id and r.role_id= #{roleId}-->
+    <!--    </select>-->
+    <!--    查询所有子菜单-->
+    <select id="queryAllChild" resultType="com.cykj.marketpojo.Menu">
+        select m.id, m.name, m.url, parent_id
+        from t_menu m
+        where  parent_id != '0'
+    </select>
+    <!--    根据菜单id获取菜单-->
+    <select id="getMenuById" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.Menu">
+        select * from t_menu where id= #{id}
+    </select>
+    <!--    移除已分配的菜单-->
+    <update id="removeAttr" >
+        delete from t_role_menu where
+          role_id= #{roleId} and menu_id = #{id}
+    </update>
+    <!--    新分配菜单-->
+    <update id="newAttr">
+        insert into t_role_menu (role_id,menu_id)
+        values (#{roleId},#{id})
+    </update>
+    <!--    获取还没插入的父级菜单-->
+    <select id="getUnInsert" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select t1.* from
+    (select distinct  m.parent_id from t_menu m,t_role_menu R
+     where m.id=r.menu_id and role_id = #{roleId} and parent_id!='0')t1
+    where t1.parent_id not in (
+               select d.id from t_role_menu c,t_menu d where
+                c.menu_id=d.id  and role_id=#{roleId} and parent_id='0'
+        );
+    </select>
+    <!--    获取所有权限-->
+    <select id="getAllRole" resultType="com.cykj.marketpojo.Role">
+        select id,name from t_role
+    </select>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketadmin.mapper.DeliverymanMapper">
+    <!--	派送员列表查询-->
+    <select id="queryDeliveryman" parameterType="java.util.HashMap" resultType="com.cykj.marketpojo.Deliveryman">
+        select d.id,d.account,d.name,tel,id_card,sex,auto_order_taking,money,p.name as stateStr
+        from t_deliveryman d,t_property p
+        where d.state=p.value and p.type='deliveryman_state'
+        <if test="name != null and name != '' ">
+            and  d.name like  concat('%',#{name},'%')
+        </if>
+        <if test="account != null and account != '' ">
+            and  d.account like  concat('%',#{account},'%')
+        </if>
+
+        <if test="state != null and state != '' ">
+            and  p.name = #{state}
+        </if>
+        limit #{pageSize} offset #{startNum}
+    </select>
+    <!--    查询派送员总数-->
+    <select id="queryCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+        select count(*)
+        from t_deliveryman d,t_property p
+        where d.state=p.value and p.type='deliveryman_state'
+        <if test="name != null and name != '' ">
+            and  d.name like  concat('%',#{name},'%')
+        </if>
+        <if test="account != null and account != '' ">
+            and  d.account like  concat('%',#{uploadUser},'%')
+        </if>
+        <if test="state != null and state != '' ">
+            and  p.name = #{state}
+        </if>
+    </select>
+    <!--    管理员更改派送员状态 审核通过/审核不通过/禁用/启用-->
+    <update id="updateState"  >
+    update t_deliveryman set state =
+    (select value from t_property where t_property.type='deliveryman_state' and name= #{state} )
+    where id= #{id}
+    </update>
+<!--    获取所有的派送员状态-->
+    <select id="getAllState" resultType="String">
+        select name
+        from t_property where type='deliveryman_state'
+    </select>
+</mapper>
