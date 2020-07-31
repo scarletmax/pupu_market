@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketadmin.mapper.RoleMapper">
+
+    <!--角色列表-->
+    <select id="selectRoleList" resultType="com.cykj.marketpojo.Role">
+        select * from t_role
+    </select>
+    <!--角色改-->
+    <update id="updateRole" parameterType="com.cykj.marketpojo.Role">
+        update t_role set name=#{name} where id=#{id}
+    </update>
+    <!--角色增-->
+    <update id="insertRole" parameterType="com.cykj.marketpojo.Role">
+        insert into t_role (name) values (#{name})
+    </update>
+    <!--角色查重-->
+    <select id="isRoleRepeat" resultType="java.lang.Integer">
+        select count(*) from t_role where name = #{name}
+    </select>
+
+
+</mapper>
