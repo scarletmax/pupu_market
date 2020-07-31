@@ -11,18 +11,39 @@ public class ShopAdmin {
     private String shopName;
     private String tel;
     private Date createTime;
+    private int state;
+    private String stateStr;
 
     public ShopAdmin() {
     }
 
-    public ShopAdmin(int id, String account, String name, String pwd, int shopId, String tel, Date createTime) {
+    public ShopAdmin(int id, String account, String name, String pwd, int shopId, String shopName, String tel, Date createTime, int state, String stateStr) {
         this.id = id;
         this.account = account;
         this.name = name;
         this.pwd = pwd;
         this.shopId = shopId;
+        this.shopName = shopName;
         this.tel = tel;
         this.createTime = createTime;
+        this.state = state;
+        this.stateStr = stateStr;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public String getStateStr() {
+        return stateStr;
+    }
+
+    public void setStateStr(String stateStr) {
+        this.stateStr = stateStr;
     }
 
     public int getId() {

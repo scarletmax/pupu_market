@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="online_market@rm-wz98e15n644mq3089ko.mysql.rds.aliyuncs.com" uuid="a6c228d1-fece-4c03-ac6b-9a73d6720d8e">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://rm-wz98e15n644mq3089ko.mysql.rds.aliyuncs.com:3306/online_market</jdbc-url>
+    </data-source>
+  </component>
+</project>

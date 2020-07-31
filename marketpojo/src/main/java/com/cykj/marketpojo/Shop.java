@@ -13,14 +13,16 @@ public class Shop {
     private String info;
     private String verifyID;
     private String verifyPic;
-    private Date creatTime;
+    private Date createTime;
     private String bossName;
     private String tel;
+    private int state;
+    private  String stateStr;
 
     public Shop() {
     }
 
-    public Shop(int id, String name, String address, String shopPic, Double longitude, Double latitude, String info, String verifyID, String verifyPic, Date creatTime, String bossName, String tel) {
+    public Shop(int id, String name, String address, String shopPic, Double longitude, Double latitude, String info, String verifyID, String verifyPic, Date createTime, String bossName, String tel, int state, String stateStr) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -30,9 +32,27 @@ public class Shop {
         this.info = info;
         this.verifyID = verifyID;
         this.verifyPic = verifyPic;
-        this.creatTime = creatTime;
+        this.createTime = createTime;
         this.bossName = bossName;
         this.tel = tel;
+        this.state = state;
+        this.stateStr = stateStr;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public String getStateStr() {
+        return stateStr;
+    }
+
+    public void setStateStr(String stateStr) {
+        this.stateStr = stateStr;
     }
 
     public int getId() {
@@ -107,12 +127,12 @@ public class Shop {
         this.verifyPic = verifyPic;
     }
 
-    public Date getCreatTime() {
-        return creatTime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatTime(Date creatTime) {
-        this.creatTime = creatTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public String getBossName() {

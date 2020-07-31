@@ -76,13 +76,19 @@
     </update>
 
 
-    <!--查询商店管理员-->
+    <!--查询商店-->
     <select id="findShop" resultType="com.cykj.marketpojo.Shop">
 
-        select ts.id, ts.name, ts.address, ts.shop_pic, ts.longtitude, ts.latitude, ts.info, ts.verifyID, ts.verify_pic, ts.create_time, ts.boss_name, ts.tel
-        from t_shop ts
+        select ts.id, ts.name, ts.address, ts.shop_pic, ts.longtitude,
+        ts.latitude, ts.info, ts.verifyID, ts.verify_pic,
+        ts.create_time, ts.boss_name, ts.tel ,tp.name as stateStr
+        from t_shop ts left join t_property tp on ts.state = tp.value and tp.type='shop_state'
 
         <where>
+            <if test="state!=null and state!=''">
+                and ts.state =#{state}
+
+            </if>
 
 
             <if test="bossName!=null and bossName!=''">
@@ -107,13 +113,16 @@
     </select>
 
 
-    <!--查询订单总数-->
+    <!--查询商店总数-->
     <select id="findShopCount" resultType="java.lang.Integer">
         select count(*) co
-        from t_shop ts
+        from t_shop ts left join t_property tp on ts.state = tp.value and tp.type='shop_state'
 
         <where>
+            <if test="state!=null and state!=''">
+                and ts.state =#{state}
 
+            </if>
 
             <if test="bossName!=null and bossName!=''">
                 and ts.boss_name like concat('%',#{bossName},'%')
