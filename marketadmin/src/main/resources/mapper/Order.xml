@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cykj.online_market_admin.mapper.OrderMapper">
+<mapper namespace="com.cykj.marketadmin.mapper.OrderMapper">
 
     <!--查询订单列表-->
-    <select id="findOrderList" resultType="com.cykj.online_market_bean.pojo.OrderDetail">
+    <select id="findOrderList" resultType="com.cykj.marketpojo.OrderDetail">
         select
         tod.id,
         tod.total_price,

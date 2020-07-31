@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cykj.online_market_admin.mapper.DeliverymanCommentMapper">
+<mapper namespace="com.cykj.marketadmin.mapper.DeliverymanCommentMapper">
 
     <!--查询订单列表-->
-    <select id="findDeliverymanComment" resultType="com.cykj.online_market_bean.pojo.DeliverymanComment">
+    <select id="findDeliverymanComment" resultType="com.cykj.marketpojo.DeliverymanComment">
 
 select id, deliveryman_id, point, comment, create_time, user_id, order_detail_id
 from t_deliveryman_comment

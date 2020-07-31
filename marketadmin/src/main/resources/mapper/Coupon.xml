@@ -2,16 +2,16 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cykj.online_market_admin.mapper.CouponMapper">
+<mapper namespace="com.cykj.marketadmin.mapper.CouponMapper">
 
     <!--查询优惠券-->
-    <select id="findCoupon" resultType="com.cykj.online_market_bean.pojo.Coupon">
+    <select id="findCoupon" resultType="com.cykj.marketpojo.Coupon">
 
 
 
     </select>
 <!--查询优惠券-->
-    <select id="findCouponUser" resultType="com.cykj.online_market_bean.pojo.CouponUser">
+    <select id="findCouponUser" resultType="com.cykj.marketpojo.CouponUser">
 
       select tc.name,tcu.create_time,tc.rule,tp.name as stateStr
       from t_coupon_user tcu

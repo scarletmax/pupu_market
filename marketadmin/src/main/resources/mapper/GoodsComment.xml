@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cykj.online_market_admin.mapper.GoodsCommentMapper">
+<mapper namespace="com.cykj.marketadmin.mapper.GoodsCommentMapper">
 
     <!--查询订单列表-->
-    <select id="findGoodsComment" resultType="com.cykj.online_market_bean.pojo.GoodsComment">
+    <select id="findGoodsComment" resultType="com.cykj.marketpojo.GoodsComment">
 
       select tgc.id,tgc.order_detail_id,tgc.user_id,tgc.comment,tgc.create_time,tgc.goods_id,tgc.point,tg.name as goodsName
          from t_goods_comment tgc left join t_goods tg on tgc.id=tg.id

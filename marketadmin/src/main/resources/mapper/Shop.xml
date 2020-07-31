@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cykj.online_market_admin.mapper.ShopMapper">
+<mapper namespace="com.cykj.marketadmin.mapper.ShopMapper">
 
     <!--查询商店管理员-->
-    <select id="findShopAdmin" resultType="com.cykj.online_market_bean.pojo.ShopAdmin">
+    <select id="findShopAdmin" resultType="com.cykj.marketpojo.ShopAdmin">
 
         select tsa.shop_id,tsa.id,tsa.name,tsa.create_time,tsa.account,tsa.pwd,tsa.tel,ts.name as shopName ,tp.name as stateStr
         from t_shop_admin tsa
@@ -77,7 +77,7 @@
 
 
     <!--查询商店管理员-->
-    <select id="findShop" resultType="com.cykj.online_market_bean.pojo.Shop">
+    <select id="findShop" resultType="com.cykj.marketpojo.Shop">
 
         select ts.id, ts.name, ts.address, ts.shop_pic, ts.longtitude, ts.latitude, ts.info, ts.verifyID, ts.verify_pic, ts.create_time, ts.boss_name, ts.tel
         from t_shop ts
