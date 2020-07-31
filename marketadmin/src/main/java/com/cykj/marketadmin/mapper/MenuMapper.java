@@ -2,6 +2,7 @@ package com.cykj.marketadmin.mapper;
 
 
 import com.cykj.marketpojo.Menu;
+import com.cykj.marketpojo.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +28,6 @@ public interface MenuMapper {
      boolean newAttr(@Param("roleId") int roleId, @Param("id") int id);
     //获取还没插入的父级菜单
      List<Integer> getUnInsert(int roleId);
+    //     获取所有权限
+    List<Role> getAllRole();
 }

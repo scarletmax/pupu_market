@@ -1,4 +1,4 @@
-package com.cykj.marketadmin.control;
+package com.cykj.online_market_admin.control;
 
 
 import com.alibaba.fastjson.JSON;
@@ -65,6 +65,11 @@ public class MenuControl {
             return "fail";
         }
 
+    }
+    @RequestMapping("getAllRole")
+    @ResponseBody
+    public String getAllRole() {
+        return JSON.toJSONString(menuService.getAllRole());
     }
 
 

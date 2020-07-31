@@ -7,6 +7,7 @@ import com.cykj.marketadmin.service.MenuService;
 
 import com.cykj.marketpojo.AttrMsg;
 import com.cykj.marketpojo.Menu;
+import com.cykj.marketpojo.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,10 @@ import java.util.List;
 public class MenuServiceImpl implements MenuService {
     @Autowired
     MenuMapper menuMapper;
-
+    @Override
+    public List<Role> getAllRole() {
+        return menuMapper.getAllRole();
+    }
     @Override
     public List<Menu> getMenu(int roleId) {
         return menuMapper.getMenu(roleId);

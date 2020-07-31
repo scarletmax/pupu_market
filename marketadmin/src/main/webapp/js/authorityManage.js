@@ -10,7 +10,7 @@ $(function () {
             var str=""
             if(list!=null){
                 for (var i = 0; i <list.length ; i++) {
-                    if(i===0) {
+                    if(i=='0') {
                         str+="<p><input type='radio' value='"+list[i].id+"' name='role'  checked onchange='changeRole(this)'>"+list[i].name+"</p>"
 
                     }else {
@@ -30,7 +30,7 @@ $(function () {
 $(function () {
 
     //获取菜单信息
-    // console.log($("input[name='role']:checked").val())
+    console.log($("input[name='role']:checked").val())
     var roleId=$("input[name='role']:checked").val()
     var path= $("#path").val()
     var unselected= $("#unselect-ul");
@@ -80,7 +80,7 @@ $(function () {
                             "                </li>")
                         for (var j = 0; j <unAttrList.length ; j++) {
                             var menu=unAttrList[j];
-                            if(menu.id==parentMenu.id){
+                            if(menu.parentId==parentMenu.id){
                                 selected.append(" <li>" +
                                     "                    <input type='checkbox' class='checkboxs  '  id='"+menu.id+"' name='"+parentMenu.id+"' value='"+menu.id+"'/>\n" +
                                     "                    <label for='"+menu.id+"'></label>\n" +
