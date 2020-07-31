@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.online_market_admin.mapper.ShopMapper">
+
+    <!--查询商店管理员-->
+    <select id="findShopAdmin" resultType="com.cykj.online_market_bean.pojo.ShopAdmin">
+
+        select tsa.shop_id,tsa.id,tsa.name,tsa.create_time,tsa.account,tsa.pwd,tsa.tel,ts.name as shopName ,tp.name as stateStr
+        from t_shop_admin tsa
+        left join t_shop ts on tsa.shop_id = ts.id
+        left join t_property tp on tsa.state = tp.value and tp.type='shopAdmin_state'
+
+        <where>
+            <if test="userName!=null and userName!=''">
+                and tsa.name like concat('%',#{userName},'%')
+
+            </if>
+
+            <if test="account!=null and account!=''">
+                and tsa.account like concat('%',#{account},'%')
+
+            </if>
+            <if test="shopName!=null and shopName!=''">
+                and ts.name like concat('%',#{shopName},'%')
+
+            </if>
+
+            <if test="startTime!=null and startTime!=''">
+                and date_format(tod.create_time,'%Y-%m-%d')&gt;=#{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and date_format(tod.create_time,'%Y-%m-%d')&lt;=#{endTime}
+            </if>
+        </where>
+
+        limit #{page},#{limit}
+
+    </select>
+
+
+    <!--查询订单总数-->
+    <select id="findShopAdminCount" resultType="java.lang.Integer">
+        select count(*) co
+        from t_shop_admin tsa
+        left join t_shop ts on tsa.shop_id = ts.id
+        <where>
+            <if test="userName!=null and userName!=''">
+                and tsa.name like concat('%',#{userName},'%')
+
+            </if>
+
+            <if test="account!=null and account!=''">
+                and tsa.account like concat('%',#{account},'%')
+
+            </if>
+            <if test="shopName!=null and shopName!=''">
+                and ts.name like concat('%',#{shopName},'%')
+
+            </if>
+
+            <if test="startTime!=null and startTime!=''">
+                and date_format(tod.create_time,'%Y-%m-%d')&gt;=#{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and date_format(tod.create_time,'%Y-%m-%d')&lt;=#{endTime}
+            </if>
+        </where>
+
+
+    </select>
+
+    <update id="changeState">
+        update t_shop_admin set state=#{state} where id=#{id}
+    </update>
+
+
+    <!--查询商店管理员-->
+    <select id="findShop" resultType="com.cykj.online_market_bean.pojo.Shop">
+
+        select ts.id, ts.name, ts.address, ts.shop_pic, ts.longtitude, ts.latitude, ts.info, ts.verifyID, ts.verify_pic, ts.create_time, ts.boss_name, ts.tel
+        from t_shop ts
+
+        <where>
+
+
+            <if test="bossName!=null and bossName!=''">
+                and ts.boss_name like concat('%',#{bossName},'%')
+
+            </if>
+            <if test="shopName!=null and shopName!=''">
+                and ts.name like concat('%',#{shopName},'%')
+
+            </if>
+
+            <if test="startTime!=null and startTime!=''">
+                and date_format(ts.create_time,'%Y-%m-%d')&gt;=#{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and date_format(ts.create_time,'%Y-%m-%d')&lt;=#{endTime}
+            </if>
+        </where>
+
+        limit #{page},#{limit}
+
+    </select>
+
+
+    <!--查询订单总数-->
+    <select id="findShopCount" resultType="java.lang.Integer">
+        select count(*) co
+        from t_shop ts
+
+        <where>
+
+
+            <if test="bossName!=null and bossName!=''">
+                and ts.boss_name like concat('%',#{bossName},'%')
+
+            </if>
+            <if test="shopName!=null and shopName!=''">
+                and ts.name like concat('%',#{shopName},'%')
+
+            </if>
+
+            <if test="startTime!=null and startTime!=''">
+                and date_format(ts.create_time,'%Y-%m-%d')&gt;=#{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and date_format(ts.create_time,'%Y-%m-%d')&lt;=#{endTime}
+            </if>
+        </where>
+
+
+    </select>
+</mapper>
