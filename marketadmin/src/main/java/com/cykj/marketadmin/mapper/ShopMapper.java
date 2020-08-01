@@ -19,4 +19,9 @@ public interface ShopMapper {
     int changeState(HashMap<String, Object> hashMap);
 
     List<Shop> selectShop();
+    int insertShopAdmin(HashMap<String, Object> hashMap);
+    List<Shop> shopList();
+
+    int changeShoopState(HashMap<String, Object> hashMap);
+    List<Property> findProperty(HashMap<String, Object> hashMap);
 }

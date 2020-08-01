@@ -51,4 +51,24 @@ public class ShopServiceImpl implements ShopService {
     public List<Shop> searchShop(){
         return shopMapper.selectShop();
     }
+
+    @Override
+    public int insertShopAdmin(HashMap<String, Object> hashMap) {
+        return shopMapper.insertShopAdmin(hashMap);
+    }
+
+    @Override
+    public List<Shop> shopList() {
+        return shopMapper.shopList();
+    }
+
+    @Override
+    public int changeShoopState(HashMap<String, Object> hashMap) {
+        return shopMapper.changeShoopState(hashMap);
+    }
+
+    @Override
+    public List<Property> findProperty(HashMap<String, Object> hashMap) {
+        return shopMapper.findProperty(hashMap);
+    }
 }

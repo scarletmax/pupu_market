@@ -88,14 +88,14 @@
 <script id="barDemo" type="text/html">
 
     {{#  if(d.stateStr ==='已删除'){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs layui-btn-disabled" >删除</a>
     {{# } else { }}
     {{#  if(d.stateStr ==='已启用'){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="enable">启用</a>
+    <a class="layui-btn layui-btn-xs layui-btn-disabled">启用</a>
     <a class="layui-btn layui-btn-xs " lay-event="disable">禁用</a>
     {{# } else { }}
     <a class="layui-btn layui-btn-xs " lay-event="enable">启用</a>
-    <a class="layui-btn layui-btn-xs layui-btn-disabled" lay-event="disable">禁用</a>
+    <a class="layui-btn layui-btn-xs layui-btn-disabled" >禁用</a>
     {{# } }}
     <a class="layui-btn layui-btn-xs " lay-event="del">删除</a>
     {{# } }}
@@ -148,34 +148,21 @@
                     case 'addAdmin':
                         var data = checkStatus.data;
 
-
-                        layer.confirm("新增管理员？？", function () {
-
+                        layer.confirm('新增管理员？', {
+                            btn: ['确定','取消'] //按钮
+                        }, function(){
+                            layer.msg("打开新窗口")
                             layer.open({
                                 title: '订单详情',
                                 shadeClose:false,
                                 maxmin: true,
                                 type: 2,
-                                content: path + "/jsp/orderInf.jsp",
-                                area: ['500px', '600px']
+                                content: path + "/jsp/addShopAdmin.jsp",
+                                area: ['500px', '400px']
                             });
+                        },
+                        );
 
-                            // $.ajax({
-                            //     url: path + "/adminControl/deleteLog",
-                            //     type: 'post',
-                            //     data: {"data": JSON.stringify(data)},
-                            //     async: true,
-                            //     dataType: 'text',
-                            //     success: function (msg) {
-                            //         if (msg === "success") {
-                            //             layer.msg("success");
-                            //             location.href = path + "/adminControl/listLog";
-                            //         } else {
-                            //             layer.msg("fail");
-                            //         }
-                            //     }
-                            // });
-                        });
 
 
                         break;
@@ -230,7 +217,7 @@
                                     stateStr: "已启用",
                                     toolBar:''
                                 });
-
+                                tableIns.reload();
                             } else {
                                 layer.msg("fail");
                             }
@@ -258,6 +245,7 @@
                                     stateStr: "已禁用",
                                     toolBar:''
                                 });
+                                tableIns.reload();
                             } else {
                                 layer.msg("fail");
                             }
@@ -286,7 +274,7 @@
                                     stateStr: "已删除",
                                     toolBar:''
                                 });
-
+                                tableIns.reload();
                             } else {
                                 layer.msg("fail");
                             }
