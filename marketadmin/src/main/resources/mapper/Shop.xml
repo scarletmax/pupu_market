@@ -79,7 +79,7 @@
     <!--查询商店-->
     <select id="findShop" resultType="com.cykj.marketpojo.Shop">
 
-        select ts.id, ts.name, ts.address, ts.shop_pic, ts.longtitude,
+        select ts.id, ts.name, ts.address, ts.shop_pic, ts.longitude,
         ts.latitude, ts.info, ts.verifyID, ts.verify_pic,
         ts.create_time, ts.boss_name, ts.tel ,tp.name as stateStr
         from t_shop ts left join t_property tp on ts.state = tp.value and tp.type='shop_state'
@@ -142,5 +142,24 @@
         </where>
 
 
+    </select>
+
+    <insert id="insertShopAdmin">
+      insert into t_shop_admin ( account, name, pwd, shop_id, tel)values(#{account},#{name},#{pwd},#{shopId},#{tel})
+    </insert>
+    <!--查询商店名字-->
+    <select id="shopList" resultType="com.cykj.marketpojo.Shop">
+
+        select ts.id, ts.name
+        from t_shop ts
+
+
+    </select>
+    <update id="changeShoopState">
+        update t_shop set state=#{state} where id=#{id}
+    </update>
+
+    <select id="findProperty" resultType="com.cykj.marketpojo.Property">
+        select tp.value, tp.name from t_property tp where type=#{porperty}
     </select>
 </mapper>
