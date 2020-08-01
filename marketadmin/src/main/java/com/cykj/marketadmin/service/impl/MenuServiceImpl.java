@@ -6,18 +6,24 @@ import com.cykj.marketadmin.mapper.MenuMapper;
 import com.cykj.marketadmin.service.MenuService;
 
 import com.cykj.marketpojo.AttrMsg;
+import com.cykj.marketpojo.LayData;
 import com.cykj.marketpojo.Menu;
+import com.cykj.marketpojo.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service("menuService")
 public class MenuServiceImpl implements MenuService {
     @Autowired
     MenuMapper menuMapper;
-
+    @Override
+    public List<Role> getAllRole() {
+        return menuMapper.getAllRole();
+    }
     @Override
     public List<Menu> getMenu(int roleId) {
         return menuMapper.getMenu(roleId);
@@ -152,4 +158,32 @@ public class MenuServiceImpl implements MenuService {
 
         return attrList;
     }
+
+    @Override
+    public LayData<Menu> searchMenuList(HashMap<String,Object> condition) {
+        LayData<Menu> layData = new LayData<>();
+        layData.setData(menuMapper.selectMenuList(condition));
+        return layData;
+    }
+
+    @Override
+    public int editMenu(Menu menu) {
+        return menuMapper.updateMenu(menu);
+    }
+
+    @Override
+    public int addMenu(Menu menu) {
+        return menuMapper.insertMenu(menu);
+    }
+
+    @Override
+    public int removeMenu(String id) {
+        return menuMapper.deleteMenu(id);
+    }
+
+    @Override
+    public int isMenuRepeat(String name) {
+        return menuMapper.isMenuRepeat(name);
+    }
+
 }

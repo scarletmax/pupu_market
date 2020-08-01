@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -65,6 +67,47 @@ public class MenuControl {
             return "fail";
         }
 
+    }
+    @RequestMapping("getAllRole")
+    @ResponseBody
+    public String getAllRole() {
+        return JSON.toJSONString(menuService.getAllRole());
+    }
+
+    @RequestMapping("/searchMenuList")
+    @ResponseBody
+    public String searchMenuList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("菜单列表");
+        String name = request.getParameter("name");
+        String parentId = request.getParameter("parentId");
+        HashMap<String,Object> condition = new HashMap<>();
+        condition.put("name",name);
+        condition.put("parentId",parentId);//mysql中的int和传上的string可以兼容
+        return JSON.toJSONString(menuService.searchMenuList(condition));
+    }
+
+    @RequestMapping("/editMenu")
+    @ResponseBody
+    public String editMenu(Menu menu,HttpServletRequest request, HttpServletResponse response) throws IOException {
+        return JSON.toJSONString(menuService.editMenu(menu)+"");
+    }
+
+    @RequestMapping("/addMenu")
+    @ResponseBody
+    public String addMenu(Menu menu,HttpServletRequest request, HttpServletResponse response) throws IOException {
+        return JSON.toJSONString(menuService.addMenu(menu)+"");
+    }
+
+    @RequestMapping("/removeMenu")
+    @ResponseBody
+    public String deleteMenu(String id,HttpServletRequest request, HttpServletResponse response) throws IOException {
+        return JSON.toJSONString(menuService.removeMenu(id)+"");
+    }
+
+    @RequestMapping("/isMenuRepeat")
+    @ResponseBody
+    public String isMenuRepeat(String name,HttpServletRequest request, HttpServletResponse response) throws IOException {
+        return JSON.toJSONString(menuService.isMenuRepeat(name)+"");
     }
 
 

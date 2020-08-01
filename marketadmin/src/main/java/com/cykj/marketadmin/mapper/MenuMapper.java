@@ -2,9 +2,11 @@ package com.cykj.marketadmin.mapper;
 
 
 import com.cykj.marketpojo.Menu;
+import com.cykj.marketpojo.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -27,4 +29,13 @@ public interface MenuMapper {
      boolean newAttr(@Param("roleId") int roleId, @Param("id") int id);
     //获取还没插入的父级菜单
      List<Integer> getUnInsert(int roleId);
+    //     获取所有权限
+    List<Role> getAllRole();
+//菜单列表和增删改查
+    public List<Menu> selectMenuList(HashMap<String,Object> condition);
+    public int updateMenu(Menu menu);
+    public int insertMenu(Menu menu);
+    public int deleteMenu(String id);
+    public int isMenuRepeat(String name);
+
 }
