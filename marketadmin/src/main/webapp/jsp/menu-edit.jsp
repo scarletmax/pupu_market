@@ -29,7 +29,7 @@
             </div>
             <div class="layui-form-item">
                 <label for="name" class="layui-form-label">菜单名称</label>
-                <div class="layui-input-inline"><input type="text" id="name" name="name" lay-verify="required|nameRepeat" autocomplete="off" class="layui-input"></div>
+                <div class="layui-input-inline"><input type="text" id="name" name="name" lay-verify="required" autocomplete="off" class="layui-input"></div>
             </div>
             <div class="layui-form-item">
                 <label for="menuLevel" class="layui-form-label">菜单等级</label>
@@ -61,7 +61,7 @@
             nameRepeat: function(value){
                 var flag = 1;//1表示不重复
                 $.ajax({
-                    url:path+"/menuController/isMenuRepeat",
+                    url:path+"/menuControl/isMenuRepeat",
                     async:false,
                     data:{"name":value},
                     dataType:"text",
@@ -86,7 +86,7 @@
         form.on('submit(edit)', function(data) {
             console.log(JSON.stringify(data.field));
             $.ajax({
-                url:path+"/menuController/editMenu",
+                url:path+"/menuControl/editMenu",
                 async:false,
                 type:"POST",
                 data:data.field,

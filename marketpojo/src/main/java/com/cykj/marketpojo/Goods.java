@@ -23,6 +23,7 @@ public class Goods {
     private String stateStr;
     private String infoPic;
     private int shopId;
+    private String shopName;
     private String choiceProp1;
     private String choiceProp2;
     private String choiceProp3;
@@ -220,5 +221,13 @@ public class Goods {
 
     public void setChoiceProp3(String choiceProp3) {
         this.choiceProp3 = choiceProp3;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 }

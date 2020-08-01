@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class ShopServiceaImpl implements ShopService {
+public class ShopServiceImpl implements ShopService {
 
     @Autowired
     private ShopMapper shopMapper;
@@ -45,5 +45,10 @@ public class ShopServiceaImpl implements ShopService {
     @Override
     public int changeState(HashMap<String, Object> hashMap) {
         return shopMapper.changeState(hashMap);
+    }
+
+    @Override
+    public List<Shop> searchShop(){
+        return shopMapper.selectShop();
     }
 }

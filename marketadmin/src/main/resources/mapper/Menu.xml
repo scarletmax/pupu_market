@@ -71,4 +71,43 @@
     <select id="getAllRole" resultType="com.cykj.marketpojo.Role">
         select id,name from t_role
     </select>
+
+    <!--    菜单列表-->
+    <select id="selectMenuList" resultType="com.cykj.marketpojo.Menu">
+        select * from t_menu
+        <where>
+            <if test="name!=null and name!=''">
+                and name like concat ('%',#{name},'%')
+            </if>
+            <choose>
+                <when test="parentId==null or parentId==''">
+
+                </when>
+                <when test="parentId==0">
+                    and parent_id = 0
+                </when>
+                <otherwise>
+                    and parent_id != 0
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <!--    菜单改-->
+    <update id="updateMenu" parameterType="com.cykj.marketpojo.Menu">
+        update t_menu set name=#{name},url=#{url},icon_url=#{iconUrl} where id=#{id}
+    </update>
+    <!--    菜单增-->
+    <update id="insertMenu" parameterType="com.cykj.marketpojo.Menu">
+        insert into t_menu (name,parent_id,url,icon_url) values (#{name},#{parentId},#{url},#{iconUrl})
+    </update>
+    <!--    菜单删-->
+    <update id="deleteMenu" parameterType="java.lang.String">
+        delete from t_menu where id = #{id} or parent_id = #{id}
+    </update>
+    <!--    菜单查重-->
+    <select id="isMenuRepeat" resultType="java.lang.Integer" >
+        select count(*) from t_menu where name = #{name}
+    </select>
+
 </mapper>

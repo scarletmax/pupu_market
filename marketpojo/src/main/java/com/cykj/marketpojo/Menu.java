@@ -8,6 +8,7 @@ public class Menu {
     private Integer id;
     private String name;
     private String url;
+    private String iconUrl;
     private Integer parentId;
     private Integer orders;
     private List<Menu> childList;
@@ -90,6 +91,14 @@ public class Menu {
 
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
+    }
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
     }
 }
 

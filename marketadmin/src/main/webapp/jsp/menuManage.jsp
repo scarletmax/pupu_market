@@ -78,7 +78,7 @@
             ,id:'idTest'//结合checkStatus使用
             ,toolbar: '#toolbarDemo'
             ,height: 550
-            ,url: '${pageContext.request.contextPath}/menuController/searchMenuList' //数据接口
+            ,url: '${pageContext.request.contextPath}/menuControl/searchMenuList' //数据接口
             ,method:'get'
             ,request: {
                 pageName: 'curPage' //改变页码的参数名称，默认：page，接在url后
@@ -147,7 +147,7 @@
             }else if(layEvent=='删除'){
                 if(window.confirm("是否级联删除该菜单？")){
                     $.ajax({
-                        url:path+"/menuController/removeMenu",
+                        url:path+"/menuControl/removeMenu",
                         async:false,
                         type:"POST",
                         data:"id="+data.id,

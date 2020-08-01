@@ -17,4 +17,6 @@ public interface ShopMapper {
     int findShopAdminCount(HashMap<String, Object> hashMap);
 
     int changeState(HashMap<String, Object> hashMap);
+
+    List<Shop> selectShop();
 }
