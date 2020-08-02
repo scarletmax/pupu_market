@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.cykj.marketadmin.mapper.PropertyMapper">
+
+
+<!--查询参数-->
+    <select id="findProperty" resultType="com.cykj.marketpojo.Property">
+
+    select id, type_text, type, name, value
+    from t_property
+        <where>
+            <if test="typeText!=null and typeText!=''">
+                and type_text =#{typeText}
+
+            </if>
+
+            <if test="name!=null and name!=''">
+                and name like concat('%',#{name},'%')
+
+            </if>
+            <if test="type!=null and type!=''">
+                and type like concat('%',#{type},'%')
+
+            </if>
+            <if test="value!=null and value!=''">
+                and value like concat('%',#{value},'%')
+
+            </if>
+
+        </where>
+    limit #{page},#{limit}
+
+    </select>
+
+    <!--查询参数总数-->
+    <select id="findCount" resultType="java.lang.Integer">
+
+     select count(*) co
+     from t_property
+        <where>
+            <if test="typeText!=null and typeText!=''">
+                and type_text =#{typeText}
+
+            </if>
+
+            <if test="name!=null and name!=''">
+                and name like concat('%',#{name},'%')
+
+            </if>
+            <if test="type!=null and type!=''">
+                and type like concat('%',#{type},'%')
+
+            </if>
+            <if test="value!=null and value!=''">
+                and value like concat('%',#{value},'%')
+
+            </if>
+
+        </where>
+
+    </select>
+
+    <update id="changeProperty">
+        update  t_property
+         <set>
+             <if test="name!=null and name!=''">
+
+                 name= #{name},
+             </if>
+
+             <if test="value!=null and value!=''">
+                 value= #{value},
+             </if>
+         </set>
+          where id=#{id}
+    </update>
+
+
+
+</mapper>
