@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>分店订单统计</title>
+    <title>订单时间统计</title>
     <style>
         .btn {
             width: 80px;
@@ -27,19 +27,14 @@
             src="${pageContext.request.contextPath}/static/X-admin/js/xadmin.js"></script>
 
     <script type="text/javascript" charset="utf-8"
-            src="${pageContext.request.contextPath}/js/echarsOrderAddress.js"></script>
+            src="${pageContext.request.contextPath}/js/echarsOrderTime.js"></script>
 </head>
 <body>
 <input type="hidden" id="path" value="${pageContext.request.contextPath}">
 <div  style="text-align: center ">
     <div>
-        查询时间区间：
         <div class="layui-inline layui-show-xs-block">
-            <input class="layui-input" autocomplete="off"  name="beginTime" id="beginTime">
-        </div>
-        至
-        <div class="layui-inline layui-show-xs-block">
-            <input class="layui-input" autocomplete="off"   name="endTime" id="endTime">
+           查询日期： <input class="layui-input" autocomplete="off"  name="selectDay" id="selectDay">
         </div>
 
         <div class="layui-inline layui-show-xs-block">

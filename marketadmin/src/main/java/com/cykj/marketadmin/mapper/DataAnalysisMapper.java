@@ -9,4 +9,5 @@ import java.util.HashMap;
 @Mapper
 public interface DataAnalysisMapper {
     ArrayList<DataAnalysis> findOrderAddress(HashMap<String, Object> condition);
+    ArrayList<DataAnalysis> findOrderTime(HashMap<String, Object> condition);
 }

@@ -18,4 +18,8 @@ public class DataAnalysisServiceImpl implements DataAnalysisService {
     public ArrayList<DataAnalysis> findOrderAddress(HashMap<String, Object> condition) {
         return dataAnalysisMapper.findOrderAddress(condition);
     }
+    @Override
+    public ArrayList<DataAnalysis> findOrderTime(HashMap<String, Object> condition) {
+        return dataAnalysisMapper.findOrderTime(condition);
+    }
 }

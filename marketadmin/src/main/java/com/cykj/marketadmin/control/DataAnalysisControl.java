@@ -41,5 +41,20 @@ public class DataAnalysisControl {
         return JSON.toJSONString(dataAnalysisList);
     }
 
+    @RequestMapping(value = "/findOrderTime")
+    @ResponseBody
+    public String findOrderTime(HttpServletRequest request, HttpServletResponse response) {
+        HashMap<String, Object> condition = new HashMap<>();
+        String selectDay = request.getParameter("selectDay");
+        if (selectDay != null && !selectDay.trim().equals("")) {
+            condition.put("selectDay", selectDay);
+            condition.put("selectDayHour", selectDay+" 23");
+        } else {
+            selectDay = "";
+        }
+        ArrayList<DataAnalysis> dataAnalysisList = dataAnalysisService.findOrderTime(condition);
+        return JSON.toJSONString(dataAnalysisList);
+    }
+
 }
 
