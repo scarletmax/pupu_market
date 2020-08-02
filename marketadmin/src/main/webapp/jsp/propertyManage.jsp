@@ -87,18 +87,8 @@
 
 <script id="barDemo" type="text/html">
 
-    {{#  if(d.stateStr ==='已删除'){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-disabled" >删除</a>
-    {{# } else { }}
-    {{#  if(d.stateStr ==='已启用'){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-disabled">启用</a>
-    <a class="layui-btn layui-btn-xs " lay-event="disable">禁用</a>
-    {{# } else { }}
-    <a class="layui-btn layui-btn-xs " lay-event="enable">启用</a>
-    <a class="layui-btn layui-btn-xs layui-btn-disabled" >禁用</a>
-    {{# } }}
-    <a class="layui-btn layui-btn-xs " lay-event="del">删除</a>
-    {{# } }}
+    <a class="layui-btn layui-btn-xs " lay-event="changeState">修改参数</a>
+
 </script>
 <%--<script type="text/html" id="switchTpl">--%>
 <%--    <!-- 这里的checked的状态只是演示 -->--%>
@@ -122,7 +112,12 @@
         });
 
     });</script>
-<script>layui.use(['table', 'form', 'laytpl', 'layer'],
+<script>
+
+    var b=false;
+    var propertyDate;
+
+    layui.use(['table', 'form', 'laytpl', 'layer'],
     function () {
         var table = layui.table
             , form = layui.form
@@ -147,6 +142,7 @@
                 switch (obj.event) {
                     case 'addAdmin':
                         var data = checkStatus.data;
+                        b=true;
 
                         layer.confirm('新增管理员？', {
                             btn: ['确定','取消'] //按钮
@@ -157,7 +153,7 @@
                                 shadeClose:false,
                                 maxmin: true,
                                 type: 2,
-                                content: path + "/jsp/addShopAdmin.jsp",
+                                content: path + "/jsp/property-edit.jsp",
                                 area: ['500px', '400px']
                             });
                         },
@@ -173,8 +169,7 @@
                     case 'isAll':
                         layer.msg(checkStatus.isAll ? '全选' : '未全选');
                         break;
-                }
-                ;
+                };
             });
 
         $('#search').click(function () {
@@ -196,94 +191,25 @@
         });
         //监听行工具事件
         table.on('tool(test)', function (obj) {
-            var data = obj.data;
+            propertyDate = obj.data;
             console.log(obj);
-            if (obj.event === 'enable') {
+            if (obj.event === 'changeState') {
 
-                console.log("obj.event="+obj.tr.firstChild)
-                layer.confirm("是否启用？？", function () {
-
-
-                    $.ajax({
-                        url: path + "/shopControl/changeState",
-                        type: 'post',
-                        data: {"id": data.id, "purpose": "enable"},
-                        async: true,
-                        dataType: 'text',
-                        success: function (msg) {
-                            if (msg === "success") {
-                                layer.msg("success");
-                                obj.update({
-                                    stateStr: "已启用",
-                                    toolBar:''
-                                });
-                                tableIns.reload();
-                            } else {
-                                layer.msg("fail");
-                            }
-                        },
-                        error:function () {
-                            alert("网络错误")
-                        }
-                    });
-                })
-            } else if (obj.event === 'disable') {
-
-                layer.confirm("是否禁用？？", function () {
-
-
-                    $.ajax({
-                        url: path + "/shopControl/changeState",
-                        type: 'post',
-                        data: {"id": data.id, "purpose": "disable"},
-                        async: true,
-                        dataType: 'text',
-                        success: function (msg) {
-                            if (msg === "success") {
-                                layer.msg("success");
-                                obj.update({
-                                    stateStr: "已禁用",
-                                    toolBar:''
-                                });
-                                tableIns.reload();
-                            } else {
-                                layer.msg("fail");
-                            }
-                        },
-                        error:function () {
-                            alert("网络错误")
-                        }
-                    });
-                })
-            } else if (obj.event === 'del') {
-
-                layer.confirm("是否删除？？", function () {
-
-
-                    $.ajax({
-                        url: path + "/shopControl/changeState",
-                        type: 'post',
-                        data: {"id": data.id, "purpose": "del"},
-                        async: true,
-                        dataType: 'text',
-                        success: function (msg) {
-                            if (msg === "success") {
-                                layer.msg("success");
-
-                                obj.update({
-                                    stateStr: "已删除",
-                                    toolBar:''
-                                });
-                                tableIns.reload();
-                            } else {
-                                layer.msg("fail");
-                            }
-                        },
-                        error:function () {
-                            alert("网络错误")
-                        }
-                    });
-                })
+                b=false ;
+                layer.confirm('是否修改参数值和名称？', {
+                        btn: ['确定','取消'] //按钮
+                    }, function(){
+                        layer.msg("打开新窗口");
+                        layer.open({
+                            title: '订单详情',
+                            shadeClose:false,
+                            maxmin: true,
+                            type: 2,
+                            content: path + "/jsp/property-edit.jsp",
+                            area: ['500px', '400px']
+                        });
+                    },
+                );
             }
 
         });
@@ -291,26 +217,18 @@
         var tableIns = table.render({
             elem: '#test'
             , height: 700
-            ,toolbar: '#toolbarDemo'
-            , url: path + "/shopControl/findShopAdmin" //数据接口
+            // ,toolbar: '#toolbarDemo'
+            , url: path + "/propertyControl/findProperty" //数据接口
             , page: true //开启分页
             , limit: 10
             , id: 'id'
             , cols: [[ //表头
                 {checkbox: true, fixed: true}
-                , {field: 'shopName', title: '商店名', sort: true, fixed: 'left', width: 180}
-                , {field: 'name', title: '商店管理员', sort: true, fixed: 'left', width: 120}
-                , {
-                    field: 'createTime',
-                    width: 200,
-                    title: '创建时间',
-                    templet: "<div>{{#if(d.createTime!=null){}}{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}{{#} }}</div>"
-                }
+                , {field: 'typeText', title: '参数名称中文', sort: true, width: 150}
+                , {field: 'type', title: '参数名称英文', width: 150}
+                , {field: 'name', title: '属性名', sort: true, width: 150}
+                , {field: 'value', title: '属性值', sort: true, width: 150}
 
-                , {field: 'account', title: '账号', sort: true, width: 80}
-                , {field: 'pwd', title: '密码', width: 120}
-                , {field: 'tel', title: '电话', width: 180}
-                , {field: 'stateStr', title: '状态', width: 100}
                 , {title: '操作', toolbar: '#barDemo', width: 300}
 
             ]]
@@ -319,33 +237,5 @@
 
     });</script>
 
-
-<%--<script>--%>
-<%--    layui.use('table', function(){--%>
-<%--        var path=$("#path");--%>
-<%--        var table = layui.table;--%>
-
-<%--        //第一个实例--%>
-<%--        table.render({--%>
-<%--            elem: '#demo'--%>
-<%--            ,height: 312--%>
-<%--            ,url: path+'/adminServlet?methodName=listUser' //数据接口--%>
-<%--            ,page: true //开启分页--%>
-<%--            ,cols: [[ //表头--%>
-<%--                {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}--%>
-<%--                ,{field: 'username', title: '用户名', width:80}--%>
-<%--                ,{field: 'sex', title: '性别', width:80, sort: true}--%>
-<%--                ,{field: 'city', title: '城市', width:80}--%>
-<%--                ,{field: 'sign', title: '签名', width: 177}--%>
-<%--                ,{field: 'experience', title: '积分', width: 80, sort: true}--%>
-<%--                ,{field: 'score', title: '评分', width: 80, sort: true}--%>
-<%--                ,{field: 'classify', title: '职业', width: 80}--%>
-<%--                ,{field: 'wealth', title: '财富', width: 135, sort: true}--%>
-<%--            ]]--%>
-<%--          --%>
-<%--        });--%>
-
-<%--    });--%>
-<%--</script>--%>
 
 </html>

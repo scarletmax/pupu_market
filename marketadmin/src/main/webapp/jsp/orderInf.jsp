@@ -75,16 +75,19 @@
         var orderInf = parent.orderInf;
 
         var path = $("#path").val();
-
+        var formatTime=layui.util.toDateString(orderInf.createTime);
+        var receiveTime=layui.util.toDateString(orderInf.receiveTime);
+        var finishTime=layui.util.toDateString(orderInf.finishTime);
         $("#orderNum").text(orderInf.orderNum);
         $("#name").text(orderInf.name);
         $("#address").text(orderInf.address);
         $("#roomNum").text(orderInf.roomNum);
         $("#tel").text(orderInf.tel);
         // {{#if(d.createTime!=null){}}{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}{{#} }}
-        $("#createTime").text(orderInf.createTime);
-        $("#receiveTime").text(orderInf.receiveTime);
-        $("#finishTime").text(orderInf.finishTime);
+        // $("#createTime").html("<div>{{#if(orderInf.createTime!=null){}}{{layui.util.toDateString(c, 'yyyy-MM-dd HH:mm:ss')}}{{#} }}</div>")
+        $("#createTime").text(formatTime);
+        $("#receiveTime").text(receiveTime);
+        $("#finishTime").text(finishTime);
         $("#userName").text(orderInf.userName);
         $("#shopName").text(orderInf.shopName);
         $("#goodsName").text(orderInf.goodsName);
@@ -111,7 +114,7 @@
                     if (msg.length > 0) {
                         $("#deliveryComment").text(" " + msg[0].comment);
                         $("#deliverymanScore").text(" " + msg[0].point + "分");
-                        $("#deliverytime").text(" " + msg[0].createTime);
+                        $("#deliverytime").text(" " + layui.util.toDateString(msg[0].createTime));
                     }
 
 
@@ -136,7 +139,7 @@
 
                         " <div class=\"layui-card-body\"><div >商品名：<label id=\"goodsName\">" + msg[i].goodsName + "</label></div>\n" +
                         "<div>评价：<label id=\"goodsComment\">" + msg[i].comment + "</label></div>" +
-                        "                    <div>评价时间：<label id=\"goodsComment\">" + msg[i].createTime + "</label></div></div>" +
+                        "   <div>评价时间：<label id=\"goodsComment\">" + layui.util.toDateString(msg[i].createTime)+ "</label></div></div>" +
 
                         "  </div>")
 
@@ -161,7 +164,7 @@
                     $("#dcouponInf").append(
 
                         " <div class=\"layui-card-body\">" +
-                        " <div>使用时间:<label id=\"dcouponTime\">"+msg[i].createTime+"</label></div>\n" +
+                        " <div>使用时间:<label id=\"dcouponTime\">"+layui.util.toDateString(msg[i].createTime)+"</label></div>\n" +
                         " <div>状态:<label id=\"dcouponRule\">" + msg[i].stateStr + "</label></div>"+
                         // " <div>规则:<label id=\"dcouponRule\">" + msg[i].rule + "</label></div>"+
 

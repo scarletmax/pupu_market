@@ -64,7 +64,7 @@
             ,id:'idTest'//结合checkStatus使用
             ,height: 550
             ,toolbar: '#toolbarDemo'
-            ,url: '${pageContext.request.contextPath}/roleController/searchRoleList' //数据接口
+            ,url: '${pageContext.request.contextPath}/roleControl/searchRoleList' //数据接口
             ,method:'get'
             ,request: {
                 pageName: 'curPage' //改变页码的参数名称，默认：page，接在url后

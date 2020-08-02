@@ -1,9 +1,11 @@
 package com.cykj.marketadmin.service.impl;
 
 
+
 import com.cykj.marketadmin.mapper.ShopMapper;
 import com.cykj.marketadmin.service.ShopService;
 import com.cykj.marketpojo.LayData;
+import com.cykj.marketpojo.Property;
 import com.cykj.marketpojo.Shop;
 import com.cykj.marketpojo.ShopAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +47,25 @@ public class ShopServiceaImpl implements ShopService {
     @Override
     public int changeState(HashMap<String, Object> hashMap) {
         return shopMapper.changeState(hashMap);
+    }
+
+    @Override
+    public int insertShopAdmin(HashMap<String, Object> hashMap) {
+        return shopMapper.insertShopAdmin(hashMap);
+    }
+
+    @Override
+    public List<Shop> shopList() {
+        return shopMapper.shopList();
+    }
+
+    @Override
+    public int changeShoopState(HashMap<String, Object> hashMap) {
+        return shopMapper.changeShoopState(hashMap);
+    }
+
+    @Override
+    public List<Property> findProperty(HashMap<String, Object> hashMap) {
+        return shopMapper.findProperty(hashMap);
     }
 }
