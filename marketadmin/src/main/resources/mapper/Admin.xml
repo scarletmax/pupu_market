@@ -100,10 +100,10 @@
             and b.name = #{levelName}
         </if>
         <if test="startDate != null and startDate != '' ">
-        and DATE_FORMAT(reg_time,'%Y-%m-%d') gt; #{startDate}
+        and DATE_FORMAT(reg_time,'%Y-%m-%d') &gt; #{startDate}
         </if>
         <if test="endDate != null and endDate != '' ">
-        and DATE_FORMAT(reg_time,'%Y-%m-%d') lt; #{endDate}
+        and DATE_FORMAT(reg_time,'%Y-%m-%d') &lt; #{endDate}
         </if>
     </select>
 

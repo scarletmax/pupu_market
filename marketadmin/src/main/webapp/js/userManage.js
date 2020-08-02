@@ -93,8 +93,10 @@ $(function () {
     $("#search").click(function () {
         var account = $("#account").val();
         var name = $("#name").val();
-        var path = $("#path").val()
-        var stateStr = $("#mySelect").val()
+        var path = $("#path").val();
+        var stateStr = $("#mySelect").val();
+        var startDate = $("#start").val();
+        var endDate = $("#end").val();
 
         tabResult.reload({
             url: path + "/adminControl/findUserList" //数据接口
@@ -102,7 +104,9 @@ $(function () {
             , where: {
                 account: account,
                 name: name,
-                stateStr: stateStr
+                stateStr: stateStr,
+                startDate:startDate,
+                endDate:endDate
             }
 
         })
