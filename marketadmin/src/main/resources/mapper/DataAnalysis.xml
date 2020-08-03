@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketadmin.mapper.DataAnalysisMapper">
+    <select id="findOrderAddress" parameterType="java.util.HashMap" resultType="com.cykj.marketpojo.DataAnalysis">
+        select IFNULL(b.total,0) as record,a.name as 'name' from t_shop a LEFT JOIN
+        (select shop_id,count(*)as total from t_order_detail
+        <where>
+            <if test="startDate!=null">
+                and create_time between #{startDate}
+            </if>
+            <if test="endDate!=null">
+                and #{endDate}
+            </if>
+        </where>
+        group by shop_id) b
+        on a.id=b.shop_id where a.state=2
+    </select>
+
+    <select id="findOrderTime" parameterType="java.util.HashMap" resultType="com.cykj.marketpojo.DataAnalysis">
+        select DATE_FORMAT(a.HOUR,'%H') as 'name',IFNULL(b.count,0) as record from(
+        SELECT
+        DATE_FORMAT(
+        @cdate := DATE_ADD(@cdate, INTERVAL - 1 HOUR),
+        '%Y-%m-%d %H'
+        ) HOUR
+        FROM
+        (
+        SELECT
+        @cdate := DATE_ADD(
+        DATE_FORMAT(
+        <choose>
+            <when test="selectDayHour!=null">
+                #{selectDayHour}
+            </when>
+            <otherwise>
+                now()
+            </otherwise>
+        </choose>
+        , '%Y-%m-%d %H'),
+        INTERVAL + 1 HOUR
+        )
+        FROM
+        t_order_detail
+        ) t0
+        LIMIT 24
+        ) a
+        LEFT JOIN
+        (select DATE_FORMAT(create_time,'%Y-%m-%d %H') hours,count(id) count
+        from t_order_detail where  state='4' and TO_DAYS(create_time)= TO_DAYS(
+        <choose>
+            <when test="selectDay!=null">
+                #{selectDay}
+            </when>
+            <otherwise>
+                now()
+            </otherwise>
+        </choose>
+        ) group by hours) b
+        on a.HOUR=b.hours
+        ORDER BY a.HOUR
+    </select>
+
+</mapper>
