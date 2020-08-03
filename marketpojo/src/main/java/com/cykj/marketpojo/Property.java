@@ -5,9 +5,9 @@ public class Property {
     private String typeText;
     private String type;
     private String name;
-    private  int value;
+    private  String value;
 
-    public Property(int id, String typeText, String type, String name, int value) {
+    public Property(int id, String typeText, String type, String name, String value) {
         this.id = id;
         this.typeText = typeText;
         this.type = type;
@@ -51,11 +51,11 @@ public class Property {
         this.name = name;
     }
 
-    public int getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(String value) {
         this.value = value;
     }
 }

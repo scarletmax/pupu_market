@@ -42,27 +42,24 @@
             <div class="layui-card">
                 <div class="layui-card-body ">
                     <%--                    <form class="layui-form layui-col-space5">--%>
+                        <div class="layui-inline layui-show-xs-block">
+                        <input type="text" name="typeText" placeholder="参数中文名" autocomplete="off" class="layui-input"
+                               id="typeText">
+                        </div>
+
                     <div class="layui-inline layui-show-xs-block">
-                        <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="start">
+                        <input type="text" name="type" placeholder="参数英文名" autocomplete="off" class="layui-input"
+                               id="type">
                     </div>
                     <div class="layui-inline layui-show-xs-block">
-                        <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="end"></div>
-                    <div class="layui-inline layui-show-xs-block">
-                        <input type="text" name="userName" placeholder="管理员名字" autocomplete="off" class="layui-input"
-                               id="userName">
-                    </div>
-                    <div class="layui-inline layui-show-xs-block">
-                        <input type="text" name="shopName" placeholder="商店名" autocomplete="off" class="layui-input"
-                               id="shopName">
-                    </div>
-                    <div class="layui-inline layui-show-xs-block">
-                        <input type="text" name="account" placeholder="账号" autocomplete="off" class="layui-input"
-                               id="account">
+                        <input type="text" name="name" placeholder="值" autocomplete="off" class="layui-input"
+                               id="name">
                     </div>
                     <div class="layui-inline layui-show-xs-block">
                         <button class="layui-btn" id="search"><%--lay-submit="" lay-filter="search"--%>
                             <i class="layui-icon">&#xe615;</i></button>
                     </div>
+
                     <%--                    </form>--%>
                 </div>
                 <div class="layui-card-body layui-table-body layui-table-main">
@@ -176,11 +173,10 @@
             layer.msg("搜索中");
             tableIns.reload({
                 where: { //设定异步数据接口的额外参数，任意设
-                    startTime: $('#start').val()
-                    , endTime: $('#end').val()
-                    , account: $('#account').val()
-                    , shopName: $('#shopName').val()
-                    , userName: $('#userName').val()
+                    name: $('#name').val()
+                    , type: $('#type').val()
+                    , typeText: $('#typeText').val()
+
                     //…
                 }
                 , page: {
