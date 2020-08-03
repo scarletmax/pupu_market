@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cykj.marketadmin.mapper.DataAnalysisMapper">
-    <!--	管理员列表-->
     <select id="findOrderAddress" parameterType="java.util.HashMap" resultType="com.cykj.marketpojo.DataAnalysis">
         select IFNULL(b.total,0) as record,a.name as 'name' from t_shop a LEFT JOIN
         (select shop_id,count(*)as total from t_order_detail
@@ -15,8 +14,122 @@
                 and #{endDate}
             </if>
         </where>
-         group by shop_id) b
+        group by shop_id) b
         on a.id=b.shop_id where a.state=2
     </select>
 
+    <select id="findOrderTime" parameterType="java.util.HashMap" resultType="com.cykj.marketpojo.DataAnalysis">
+        select DATE_FORMAT(a.HOUR,'%H') as 'name',IFNULL(b.count,0) as record from(
+        SELECT
+        DATE_FORMAT(
+        @cdate := DATE_ADD(@cdate, INTERVAL - 1 HOUR),
+        '%Y-%m-%d %H'
+        ) HOUR
+        FROM
+        (
+        SELECT
+        @cdate := DATE_ADD(
+        DATE_FORMAT(
+        <choose>
+            <when test="selectDayHour!=null">
+                #{selectDayHour}
+            </when>
+            <otherwise>
+                now()
+            </otherwise>
+        </choose>
+        , '%Y-%m-%d %H'),
+        INTERVAL + 1 HOUR
+        )
+        FROM
+        t_order_detail
+        ) t0
+        LIMIT 24
+        ) a
+        LEFT JOIN
+        (select DATE_FORMAT(create_time,'%Y-%m-%d %H') hours,count(id) count
+        from t_order_detail where state='4' and TO_DAYS(create_time)= TO_DAYS(
+        <choose>
+            <when test="selectDay!=null">
+                #{selectDay}
+            </when>
+            <otherwise>
+                now()
+            </otherwise>
+        </choose>
+        ) group by hours) b
+        on a.HOUR=b.hours
+        ORDER BY a.HOUR
+    </select>
+    <!--    查询一周订单量详情-->
+    <select id="getOrderNumByWeek" resultType="com.cykj.marketpojo.DataAnalysis">
+        SELECT
+        a.text as name,
+        a.weekdate ,
+        IFNULL(b.total,0) as num
+        FROM
+        (
+        SELECT
+        date_sub(curdate(),INTERVAL WEEKDAY(curdate()) + 0 DAY) AS weekdate,'星期一' as text UNION ALL
+        SELECT
+        date_sub(curdate(),INTERVAL WEEKDAY(curdate()) -1 DAY) AS weekdate,'星期二' as text  UNION ALL
+        SELECT
+        date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 2 DAY) AS weekdate,'星期三' as text  UNION ALL
+        SELECT
+        date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 3 DAY) AS weekdate,'星期四' as text  UNION ALL
+        SELECT
+        date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 4 DAY) AS weekdate,'星期五' as text  UNION ALL
+        SELECT
+        date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 5 DAY) AS weekdate,'星期六' as text  UNION ALL
+        SELECT
+        date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 6 DAY) AS weekdate,'星期天' as text
+        ) a
+        LEFT JOIN (
+        SELECT
+        DATE_FORMAT( create_time, '%Y-%m-%d' ) AS datetime,
+        count( id ) AS total
+        FROM
+        t_order_detail
+        WHERE
+        create_time &lt; date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 6 DAY)
+        AND create_time &gt; date_sub(curdate(),INTERVAL WEEKDAY(curdate()) + 0 DAY)
+        GROUP BY
+        DATE_FORMAT( create_time, '%Y-%m-%d' )
+        ) b ON a.weekdate = b.datetime
+
+        order by a.weekdate;
+    </select>
+    <!--查询一个月的订单详情-->
+    <select id="getOrderNumByMonth" resultType="com.cykj.marketpojo.DataAnalysis">
+          select count(0) NUM, '第一周' as name,1 as numorder
+                                  from t_order_detail t
+                                  where create_time between DATE_ADD(curdate(),interval -day(curdate())+1 day) and DATE_ADD(curdate(),interval -day(curdate())+1 day) + 7
+                                  union
+                                  select count(0) NUM, '第二周' as name,2 as numorder
+                                  from t_order_detail t
+                                  where  create_time between DATE_ADD(curdate(),interval -day(curdate())+1 day)+7 and DATE_ADD(curdate(),interval -day(curdate())+1 day) + 14
+                                  union
+                                  select count(0) NUM, '第三周' as name,3 as numorder
+                                  from t_order_detail t
+                                  where  create_time between DATE_ADD(curdate(),interval -day(curdate())+1 day)+14 and DATE_ADD(curdate(),interval -day(curdate())+1 day) + 21
+                                  union
+                                  select count(0) NUM, '第四周' as name,4 as numorder
+                                  from t_order_detail t
+                                  where  create_time between DATE_ADD(curdate(),interval -day(curdate())+1 day)+21 and DATE_ADD(curdate(),interval -day(curdate())+1 day) + 28
+                                  union
+                                  select count(0) NUM, '第五周' as name,5 as numorder
+                                  from t_order_detail t
+                                  where  create_time between DATE_ADD(curdate(),interval -day(curdate())+1 day)+28 and last_day(curdate())
+    </select>
+    <!--    近半年订单数据-->
+    <select id="getOrderNumByYear" resultType="com.cykj.marketpojo.DataAnalysis">
+
+    SELECT DATE_FORMAT((CURDATE() - INTERVAL 5 MONTH), '%Y-%m') AS name,count(*) as num  from t_order_detail where DATE_FORMAT(create_time, '%Y-%m')= DATE_FORMAT((CURDATE() - INTERVAL 5 MONTH), '%Y-%m')
+ UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 4 MONTH), '%Y-%m') AS name,count(*) as num  from t_order_detail where DATE_FORMAT(create_time, '%Y-%m')= DATE_FORMAT((CURDATE() - INTERVAL 4 MONTH), '%Y-%m')
+ UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 3 MONTH), '%Y-%m') AS name,count(*) as num  from t_order_detail where DATE_FORMAT(create_time, '%Y-%m')= DATE_FORMAT((CURDATE() - INTERVAL 3 MONTH), '%Y-%m')
+ UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 2 MONTH), '%Y-%m') AS name,count(*) as num  from t_order_detail where DATE_FORMAT(create_time, '%Y-%m')= DATE_FORMAT((CURDATE() - INTERVAL 2 MONTH), '%Y-%m')
+ UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 1 MONTH), '%Y-%m') AS name,count(*) as num from t_order_detail where DATE_FORMAT(create_time, '%Y-%m')= DATE_FORMAT((CURDATE() - INTERVAL 1 MONTH), '%Y-%m')
+ UNION SELECT DATE_FORMAT(CURDATE(), '%Y-%m') AS name,count(*) as num  from t_order_detail where DATE_FORMAT(create_time, '%Y-%m')=DATE_FORMAT(CURDATE(), '%Y-%m')
+
+    </select>
 </mapper>
