@@ -1,6 +1,7 @@
 package com.cykj.marketadmin.mapper;
 
 
+import com.cykj.marketpojo.Property;
 import com.cykj.marketpojo.Shop;
 import com.cykj.marketpojo.ShopAdmin;
 import org.apache.ibatis.annotations.Mapper;

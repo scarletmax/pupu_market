@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: wVim
-  Date: 2020/7/30
-  Time: 22:09
+  Date: 2020/8/1
+  Time: 11:43
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html class="x-admin-sm">
 <head>
     <meta charset="UTF-8">
-    <title>新增菜单</title>
+    <title>新增类型</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=no, minimum-scale=0.8, initial-scale=1,target-densitydpi=low-dpi" />
@@ -24,30 +24,27 @@
     <div class="layui-row">
         <form class="layui-form" lay-filter="formTest">
             <div class="layui-form-item layui-hide">
-                <label for="parentId" class="layui-form-label">父菜单id</label>
+                <label for="parentId" class="layui-form-label">父类型id</label>
                 <div class="layui-input-inline"><input type="text" id="parentId" name="parentId" lay-verify="required" autocomplete="off" class="layui-input"></div>
             </div>
             <div class="layui-form-item">
-                <label for="name" class="layui-form-label">菜单名称</label>
+                <label for="name" class="layui-form-label">类型名称</label>
                 <div class="layui-input-inline"><input type="text" id="name" name="name" lay-verify="required" autocomplete="off" class="layui-input"></div>
             </div>
             <div class="layui-form-item">
-                <label for="menuLevel" class="layui-form-label">菜单等级</label>
+                <label for="menuLevel" class="layui-form-label">类型等级</label>
                 <div class="layui-input-inline"><input type="text" id="menuLevel" name="menuLevel"  lay-verify="required" autocomplete="off" class="layui-input" disabled></div>
             </div>
             <div class="layui-form-item">
-                <label for="url" class="layui-form-label">菜单url</label>
-                <div class="layui-input-inline"><input type="text" id="url" name="url"  autocomplete="off" class="layui-input"></div>
-            </div>
-            <div class="layui-form-item">
-                <label for="iconUrl" class="layui-form-label">菜单图标url</label>
-                <div class="layui-input-inline"><input type="text" id="iconUrl" name="iconUrl"  autocomplete="off" class="layui-input"></div>
+                <label for="iconUrl" class="layui-form-label">类型图标url</label>
+                <div class="layui-input-inline"><input type="text" id="iconUrl" name="iconUrl" lay-verify="" autocomplete="off" class="layui-input"></div>
             </div>
             <div class="layui-form-item">
                 <button type="button" class="layui-btn" lay-filter="edit" lay-submit="">确认新增</button>
             </div>
         </form>
     </div>
+</div>
 </div>
 <script>
     layui.use(['form', 'layer','jquery'], function() {
@@ -89,13 +86,12 @@
         form.on('submit(edit)', function(data) {
             console.log("表单提交的数据"+JSON.stringify(data.field));
             $.ajax({
-                url:path+"/menuControl/addMenu",
+                url:path+"/typeControl/addType",
                 async:false,
                 type:"POST",
                 data:data.field,
                 dataType:"json",
                 success:function(res){
-
                     if(res==1){
                         layer.alert("新增成功", {icon: 6}, function() {
                             //关闭当前frame

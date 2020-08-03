@@ -4,11 +4,13 @@ package com.cykj.marketadmin.service.impl;
 import com.cykj.marketadmin.mapper.ShopMapper;
 import com.cykj.marketadmin.service.ShopService;
 import com.cykj.marketpojo.LayData;
+import com.cykj.marketpojo.Property;
 import com.cykj.marketpojo.Shop;
 import com.cykj.marketpojo.ShopAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 
