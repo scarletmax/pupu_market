@@ -108,27 +108,10 @@
                     //
                     // });
 
+
                     obj.resetFile(index, myFile, '123.jpg');
 
                     demoListView.append(tr);
-                });
-            }
-            ,before: function(obj){//
-
-
-                obj.preview(function(index, myFile, result){//预读本地文件，如果是多文件，则会遍历index，为每个index都定义重传和删除的事件
-                //     tr.find('.demo-edit').on('click',function(){
-                        // $(this).parent().siblings().eq(0).text("fe556f");
-                        // debugger;
-                        // console.log(obj.pushFile()[index]["name"]);
-                        // console.log("缩印是"+index);
-                        // alert(obj.pushFile()[index] instanceof File);
-                        //
-                        // obj.pushFile()[index].name = "fef";//为何无法赋值？？
-
-                obj.resetFile(index, myFile, "fjjj.jpg");//无用。
-                    // });
-
                 });
             }
             ,done: function(res, index, upload){//每个文件提交一次触发一次，即每个index触发一次

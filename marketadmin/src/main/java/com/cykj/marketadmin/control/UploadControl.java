@@ -18,27 +18,24 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
-@RequestMapping("/typeIconUploadControl")
-public class TypeIconUploadControl {
+@RequestMapping("/uploadControl")
+public class UploadControl {
 
 //    @Resource
 //    private TypeService typeService;
 
 
-    @RequestMapping(value = "/upload")
+    @RequestMapping(value = "/typeIconUpload")
     @ResponseBody
     public String upload(HttpServletRequest request, HttpServletResponse response,@RequestParam("file") MultipartFile thisFile) throws ServletException, IOException {
 //        int downloadScore = Integer.parseInt(request.getParameter("downloadScore"));
 
-        System.out.println(thisFile);
-        System.out.println(thisFile.getName());
-        System.out.println(thisFile.getOriginalFilename());
+//        System.out.println(thisFile);
+//        System.out.println(thisFile.getName());
+//        System.out.println(thisFile.getOriginalFilename());
         try {
             //获取文件名
             String originalName = thisFile.getOriginalFilename();
@@ -46,12 +43,12 @@ public class TypeIconUploadControl {
             String suffix = originalName.substring(originalName.lastIndexOf(".") + 1);
             //使用UUID+后缀名保存文件名，防止中文乱码问题
             String uuid = UUID.randomUUID() + "";
-            Date date = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String dateStr = simpleDateFormat.format(date);
-            String savePath = request.getSession().getServletContext().getRealPath("/upload");
+//            Date date = new Date();
+//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//            String dateStr = simpleDateFormat.format(date);
+            String savePath = request.getSession().getServletContext().getRealPath("/upload/typeIcon");
             //最终实际保存路径
-            String filePath = savePath + File.separator+ dateStr + File.separator + uuid + "." + suffix;
+            String filePath = savePath + File.separator + uuid + "." + suffix;
 
 
 
@@ -62,6 +59,10 @@ public class TypeIconUploadControl {
                 files.getParentFile().mkdirs();
             }
             thisFile.transferTo(files); // 将接收的文件保存到指定文件中
+
+
+
+
 
 
 
@@ -76,11 +77,19 @@ public class TypeIconUploadControl {
 //            myFile.setUserId(user.getId());
 //            myFile.setPath(filePath);
 //            int fileId = fileService.insertFile(myFile);
+//            {
+//                "code": 0
+//                    ,"msg": ""
+//                    ,"data": {
+//                "src": "http://cdn.layui.com/123.jpg"
+//            }
+//            }
 //
 //
-            LayData layData=new LayData();
+            LayData<String> layData=new LayData<String>();
             layData.setCode(0);
             layData.setMsg("上传成功");
+            layData.setData(Collections.singletonList(filePath));
             return JSON.toJSONString(layData);
         } catch (Exception e) {
             e.printStackTrace();
