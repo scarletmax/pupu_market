@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 public class DataAnalysis {
     private String name;
     private BigDecimal record;
+    private int num;
 
     public DataAnalysis() {
     }
@@ -28,5 +29,13 @@ public class DataAnalysis {
 
     public void setRecord(BigDecimal record) {
         this.record = record;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 }

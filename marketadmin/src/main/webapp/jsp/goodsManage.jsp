@@ -73,8 +73,9 @@
             elem: '#list'//容器id
             ,id:'idTest'//结合checkStatus使用
             ,height: 350
-            ,url: '${pageContext.request.contextPath}/goodsControl/searchGoodsList' //数据接口
+            ,url: '${pageContext.request.contextPath}/goodsController/searchGoodsList' //数据接口
             ,method:'get'
+            ,where: {}//查询条件
             ,request: {
                 pageName: 'curPage' //改变页码的参数名称，默认：page，接在url后
                 ,limitName: 'pageSize' //改变每页数据量的参数名，默认：limit，接在url后
@@ -99,22 +100,20 @@
                 };
             }
             ,cols: [[ //表头
-                ,{field: 'id', title: 'ID',  align:'center',sort: true, hide:true}
-                ,{field: 'name', title: '商品名称',  align:'center',sort: true}
-                ,{field: 'price', title: '价格',  align:'center',sort: true},
-                ,{field: 'stateStr', title: '商品状态',  align:'center',sort: true},
-                ,{field: 'shopName', title: '所属店铺',  align:'center', sort: true}
+                { width:40, type:'checkbox'}//选择列，有选中的行才能通过checkStatus得到值
+                ,{field: 'id', title: 'ID', width:80, sort: true}
+                ,{field: 'name', title: '商品名称', width:160, sort: true}
+                ,{field: 'price', title: '价格', width:100, sort: true},
+                ,{field: 'stateStr', title: '商品状态', width:160, sort: true},
+                ,{field: 'shopName', title: '所属店铺', width:160, sort: true}
                 // ,{field: 'operation', title: '操作', width:250, sort: true,align:'center',toolbar: '#barDemo'}
             ]]
-            ,done: function(res, curr, count){//渲染完成的回调
-                //如果是异步请求数据方式，res即为你接口返回的信息。
-                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-
-            }
-            // table.resize("idTest");
         });
 
         form.on('submit(go)',function (data) {
+            //可设定异步数据接口的所有参数，如果不进行任何设置原参数会被保留，相当于做一次表格刷新
+            // 如果设置的参数和原参数冲突将会覆盖
+            // 翻页只会修改curr参数，不会修改其它任何参数
             tableIns.reload({
                 where: {
                     name: data.field.name
@@ -169,7 +168,7 @@
 
         $(function () {
             $.ajax({
-                url:path+"/shopControl/searchShop",
+                url:path+"/shopController/searchShop",
                 async:false,
                 type:"POST",
                 dataType:"json",
@@ -200,7 +199,7 @@
 <%--    {{#  } }}--%>
 <%--</script>--%>
 
-<input id="path" value="${pageContext.request.contextPath}" type="hidden">
+<input id="path" value="${pageContext.request.contextPath}">
 
 </html>
 
