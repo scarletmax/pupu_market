@@ -17,6 +17,7 @@
         <module>marketpojo</module>
         <module>marketadmin</module>
         <module>eurekaserver</module>
+        <module>marketshop</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>

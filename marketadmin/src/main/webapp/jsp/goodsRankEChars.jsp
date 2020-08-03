@@ -8,23 +8,24 @@
 <head>
     <meta charset="UTF-8">
     <title>EChars插件使用案例</title>
-	<meta name="renderer" content="webkit">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width,user-scalable=no, minimum-scale=0.8, initial-scale=1,target-densitydpi=low-dpi" />
+
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/EChars/css/style.css">
 
-	<script src="${pageContext.request.contextPath}/static/js/jquery-3.5.1.js"></script>
+
+<%--	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/order_count.css">--%>
+	<script src="${pageContext.request.contextPath}/static/EChars/js/jquery-3.4.1.js"></script>
 	<script src="${pageContext.request.contextPath}/static/EChars/js/echarts.js"></script>
 	<script src="${pageContext.request.contextPath}/static/EChars/js/json2.js"></script>
-	<script src="${pageContext.request.contextPath}/static/EChars/js/demo2.js"></script>
 
 </head>
+
+
 <body>
 <input type="hidden" value="<%=request.getContextPath()%>" id="path">
-<div id="echarts_div"></div>
+<div id="echarts_div"  style="width: 1000px;height:800px;"></div>
 
 
-<div id="echarts_div2"></div>
+
 
 <script type="text/javascript">
 
@@ -57,14 +58,15 @@ var path=$("#path").val();
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: 'ECharts 入门示例'
+            text: '商品销量排名'
         },
         tooltip: {},
         legend: {
             data: ['销量']
         },
-        xAxis: {
-            data: (function () {
+		xAxis : [ {
+			type : 'category',
+			data: (function () {
 				var arr=[];
 				$.ajax({
 					url: path + "/goodsRankControl/findgoodsRank",
@@ -80,15 +82,20 @@ var path=$("#path").val();
 
 						for(var i=0;i<rows.length;i++)
 						{
-							arr.push(rows[i].name);
-
+							arr.push(rows[i].goodsName);
+							console.log(arr);
 						}
 					}
 				});
 				return arr;
 
-			})()
-        },
+			})(),
+			axisLabel:{
+				interval:0,//横轴信息全部显示
+				rotate:-15,//-15度角倾斜显示
+			},
+		} ],
+
         yAxis: {},
         series: [{
             name: '销量',
@@ -117,11 +124,20 @@ var path=$("#path").val();
 				return arr;
 
 			})()
-        }]
+        }],
+		grid: {
+			y2: 150  //增加柱形图纵向的高度
+		},
+
     };
 
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
+
+
+
+
+
 </script>
 </body>
 </html>

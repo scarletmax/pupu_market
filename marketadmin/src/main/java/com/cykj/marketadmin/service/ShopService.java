@@ -26,4 +26,6 @@ public interface ShopService {
     int changeShoopState(HashMap<String, Object> hashMap);
     //参数集合
     List<Property> findProperty(HashMap<String, Object> hashMap);
+//验证账号
+    int verifyAccount(HashMap<String, Object> hashMap);
 }

@@ -25,4 +25,6 @@ public interface ShopMapper {
 
     int changeShoopState(HashMap<String, Object> hashMap);
     List<Property> findProperty(HashMap<String, Object> hashMap);
+
+    int verifyAccount(HashMap<String, Object> hashMap);
 }

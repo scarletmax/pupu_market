@@ -1,0 +1,149 @@
+
+body{
+    padding: 0;
+    margin: 0;
+    background-image: url("/Demo0710Maven/static/img/aulbg.png");
+}
+
+
+.logindiv,.login{
+    width:50%;
+    min-width: 300px;
+    max-width: 400px;
+    height: 450px;
+
+    border: 2px none;
+    margin: 100px auto;
+    color: darkgrey;
+    text-align: center;
+    line-height:35px;
+    display: block;
+    background-color: white;
+    position: relative;
+    top: 50%;
+    /*background-color: transparent;*/
+
+
+}
+.regdiv{
+    width:50%;
+    min-width: 300px;
+    max-width: 500px;
+    height: 520px;
+
+    border: 2px none;
+    margin: 100px auto;
+    color: darkgrey;
+    text-align: left;
+    line-height:30px;
+    display: block;
+    background-color: white;
+    position: relative;
+    top: 50%;
+    padding-left: 20px;
+    /*background-color: transparent;*/
+
+
+}
+div h1{
+    font-weight: 400;
+    padding-top: 10px;
+    text-align: center;
+}
+.button {
+    display: inline-block;
+    width: 210px;
+    height: 25px;
+    background-color: #FF6900;
+    color: white;
+    padding: -30px;
+
+}
+
+.reg {
+    width: 200px;
+    height: 20px;
+    color: darkgrey;
+}
+.top {
+    display: inline-block;
+    width: 90px;
+    height:60px;
+    color:#546378;
+    vertical-align: top;
+}
+.topTitle {
+    display: inline-block;
+    width: 260px;
+    height:60px;
+    color:#F26124;
+    font-size: 20px;
+    vertical-align: top;
+    font-family: 幼圆;
+    font-weight: 700 ;
+    text-space: 2px;
+    margin-bottom: 5px;
+
+}
+#tolog {
+    width: 210px;
+    height: 25px;
+    background-color: #FF6900;
+    color: white;
+    padding: -30px;
+    border: none;
+}
+.btn {
+    width: 150px;
+    height: 25px;
+    background-color: #FF6900;
+    color: white;
+    padding: -30px;
+    border: none;
+    text-align: center;
+
+}
+
+#toregi {
+    text-decoration: none;
+    color:#FF6900 ;
+}
+#tolog,#toregi:hover {
+    cursor: pointer;
+}
+#verifyCode,#notClear:hover {
+    cursor: pointer;
+}
+span {
+    color: red;
+}
+table {
+    color: #F26124;
+}
+input[type='button']:hover {
+    cursor: pointer;
+}
+/*屏幕尺寸大于min-width时 更改样式*/
+@media only screen and (min-width: 992px) {
+    /*.logindiv {*/
+    /*    background-color: #dddddd;*/
+    /*}*/
+    strong {
+        font-size: 25px;
+    }
+}
+/*屏幕尺寸小于max-width时 更改样式*/
+@media only screen and (max-width: 768px) {
+    /*.logindiv {*/
+    /*    background-color: #dddddd;*/
+    /*}*/
+    strong {
+        font-size: 20px;
+    }
+    .regdiv {
+        font-size: 15px;
+        width: 90%;
+        height: 600px;
+
+    }
+}
