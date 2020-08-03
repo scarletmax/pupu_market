@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/marketbean/pom.xml" />
         <option value="$PROJECT_DIR$/marketpojo/pom.xml" />
         <option value="$PROJECT_DIR$/eurekaserver/pom.xml" />
+        <option value="$PROJECT_DIR$/marketshop/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
