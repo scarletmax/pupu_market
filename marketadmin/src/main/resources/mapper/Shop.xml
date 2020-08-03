@@ -162,4 +162,8 @@
     <select id="findProperty" resultType="com.cykj.marketpojo.Property">
         select tp.value, tp.name from t_property tp where type=#{porperty}
     </select>
+
+    <select id="verifyAccount" resultType="java.lang.Integer">
+        select count(*)co from t_shop_admin where name=#{account}
+    </select>
 </mapper>

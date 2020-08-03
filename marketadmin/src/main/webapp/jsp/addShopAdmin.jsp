@@ -31,8 +31,10 @@
     <div class="layui-form-item">
         <label class="layui-form-label">账号</label>
         <div class="layui-input-inline">
-            <input name="account" class="layui-input" type="text" placeholder="请输入账号" autocomplete="off" lay-verify="required" lay-reqtext="账号是必填项，不能为空？">
+            <input id="account" name="account" class="layui-input" type="text" placeholder="请输入账号" autocomplete="off" lay-verify="required"
+                   lay-reqtext="账号是必填项，不能为空？" onblur="verify()">
         </div>
+        <div class="layui-form-mid layui-word-aux" ><span id="verify"></span></div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">用户名</label>
@@ -147,6 +149,39 @@
         });
 
     });
+
+    function verify() {
+
+        console.log($("#account").val());
+        var account=$("#account").val();
+        if(account.length>0){
+            var path=$("#path").val();
+            $.ajax({
+                url:path+"/shopControl/verifyAccount",
+                async:true,
+                type:"post",
+                data:"account="+account,
+                dataType:"Text",
+                success:function (msg) {
+
+                    console.log(msg);
+                    if(msg=="success"){
+
+                        // alert("账号可以使用")
+                        $("#verify").text("账号可以使用");
+                        console.log( $("#verify").text());
+                    }else if(msg=="fail"){
+                        // alert("账号已被注册");
+                        $("#verify").text("账号已被注册");
+
+                    }
+                }
+            })
+        }else {
+            $("#verify").text("账号不能为空")
+        }
+    }
+
 
 
 </script>
