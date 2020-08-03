@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("dataAnalysisControl")
@@ -48,12 +49,34 @@ public class DataAnalysisControl {
         String selectDay = request.getParameter("selectDay");
         if (selectDay != null && !selectDay.trim().equals("")) {
             condition.put("selectDay", selectDay);
-            condition.put("selectDayHour", selectDay+" 23");
+            condition.put("selectDayHour", selectDay + " 23");
         } else {
             selectDay = "";
         }
         ArrayList<DataAnalysis> dataAnalysisList = dataAnalysisService.findOrderTime(condition);
         return JSON.toJSONString(dataAnalysisList);
+    }
+
+    /**
+     * 王子默部分
+     **/
+    @RequestMapping("getOrderNumByWeek")
+    @ResponseBody
+    //  获取本周的订单量详情
+    public String getOrderNumByWeek() {
+        return JSON.toJSONString(dataAnalysisService.getOrderNumByWeek());
+    }
+    @RequestMapping("getOrderNumByMonth")
+    @ResponseBody
+    //  获取本月的订单量详情
+    public String getOrderNumByMonth() {
+        return JSON.toJSONString(dataAnalysisService.getOrderNumByMonth());
+    }
+    @RequestMapping("getOrderNumByYear")
+    @ResponseBody
+    //获取本年度的订单量详情
+    public String getOrderNumByYear() {
+        return JSON.toJSONString(dataAnalysisService.getOrderNumByYear());
     }
 
 }

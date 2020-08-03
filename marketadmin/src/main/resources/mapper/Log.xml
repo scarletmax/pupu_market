@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketadmin.mapper.LogMapper">
+
+    <insert id="insertLog" parameterType="com.cykj.marketpojo.LogInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into t_log
+        (operator,type,opr)
+        values (#{operator},#{type},#{opr})
+    </insert>
+    <!--    查看日志表-->
+    <select id="getLogRecords" parameterType="java.util.HashMap" resultType="com.cykj.marketpojo.LogInfo">
+        select operator,occur_time,type,opr
+        from t_log
+        where 1=1
+        <if test="type != null and type != '' ">
+            and  type = #{type}
+        </if>
+        <if test="startDate != null and startDate != '' ">
+            and DATE_FORMAT(occur_time,'%Y-%m-%d') &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and endDate != '' ">
+            and  DATE_FORMAT(occur_time,'%Y-%m-%d') &lt;= #{endDate}
+        </if>
+        limit #{pageSize} offset #{startNum}
+    </select>
+    <!--    查询积分明细记录总数-->
+    <select id="getLogCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+        select count(*) from t_log  where 1=1
+        <if test="type != null and type != '' ">
+            and  type = #{type}
+        </if>
+        <if test="startDate != null and startDate != '' ">
+            and DATE_FORMAT(occur_time,'%Y-%m-%d') &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and endDate != '' ">
+            and  DATE_FORMAT(occur_time,'%Y-%m-%d') &lt;= #{endDate}
+        </if>
+    </select>
+</mapper>
