@@ -4,12 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cykj.marketadmin.mapper.TypeMapper">
 
+
     <!--    分类列表-->
     <select id="selectTypeNum" resultType="java.lang.Integer">
         select count(*) from t_type
         <where>
             <if test="name!=null and name!=''">
                 and name like concat ('%',#{name},'%')
+            </if>
+            <if test="state!=null and state!=''">
+                and state = #{state}
             </if>
             <choose>
                 <when test="parentId==null or parentId==''">
@@ -31,6 +35,9 @@
         <where>
             <if test="name!=null and name!=''">
                 and name like concat ('%',#{name},'%')
+            </if>
+            <if test="state!=null and state!=''">
+                and state = #{state}
             </if>
             <choose>
                 <when test="parentId==null or parentId==''">
@@ -55,9 +62,16 @@
     <update id="insertType" parameterType="com.cykj.marketpojo.Type">
         insert into t_type (name,parent_id,icon_url) values (#{name},#{parentId},#{iconUrl})
     </update>
-    <!--    分类删-->
-    <update id="deleteMenu" parameterType="java.lang.String">
-        delete from t_type where id = #{id} or parent_id = #{id}
+    <!--    分类状态-->
+    <update id="changeTypeState" parameterType="java.lang.String">
+        <choose>
+            <when test="state==1">
+                update t_type set state=2 where id=#{id} or parent_id = #{id}
+            </when>
+            <otherwise>
+                update t_type set state=1 where id=#{id} or parent_id = #{id}
+            </otherwise>
+        </choose>
     </update>
     <!--    分类查重-->
     <select id="isTypeRepeat" resultType="java.lang.Integer" >

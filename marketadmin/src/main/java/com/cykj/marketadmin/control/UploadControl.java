@@ -31,11 +31,6 @@ public class UploadControl {
     @RequestMapping(value = "/typeIconUpload")
     @ResponseBody
     public String upload(HttpServletRequest request, HttpServletResponse response,@RequestParam("file") MultipartFile thisFile) throws ServletException, IOException {
-//        int downloadScore = Integer.parseInt(request.getParameter("downloadScore"));
-
-//        System.out.println(thisFile);
-//        System.out.println(thisFile.getName());
-//        System.out.println(thisFile.getOriginalFilename());
         try {
             //获取文件名
             String originalName = thisFile.getOriginalFilename();
@@ -49,10 +44,6 @@ public class UploadControl {
             String savePath = request.getSession().getServletContext().getRealPath("/upload/typeIcon");
             //最终实际保存路径
             String filePath = savePath + File.separator + uuid + "." + suffix;
-
-
-
-//            System.out.println("filePath==" + filePath);
             File files = new File(filePath);
             //打印查看上传路径
             if (!files.getParentFile().exists()) {//判断目录是否存在，否则创建父目录
@@ -60,36 +51,10 @@ public class UploadControl {
             }
             thisFile.transferTo(files); // 将接收的文件保存到指定文件中
 
-
-
-
-
-
-
-//            User user = (User)(request.getSession().getAttribute("user"));
-//            Type type = typeService.findTypeBySuffix(suffix);
-//
-//            MyFile myFile = new MyFile();
-//            myFile.setName(file.getOriginalFilename());
-//            myFile.setDownloadScore(downloadScore);
-//            myFile.setDescription("不错");
-//            myFile.setTypeId(type.getId());
-//            myFile.setUserId(user.getId());
-//            myFile.setPath(filePath);
-//            int fileId = fileService.insertFile(myFile);
-//            {
-//                "code": 0
-//                    ,"msg": ""
-//                    ,"data": {
-//                "src": "http://cdn.layui.com/123.jpg"
-//            }
-//            }
-//
-//
             LayData<String> layData=new LayData<String>();
             layData.setCode(0);
-            layData.setMsg("上传成功");
-            layData.setData(Collections.singletonList(filePath));
+            layData.setData(Collections.singletonList(File.separator + uuid + "." + suffix));
+            System.out.println("url"+layData.getData().toString());
             return JSON.toJSONString(layData);
         } catch (Exception e) {
             e.printStackTrace();

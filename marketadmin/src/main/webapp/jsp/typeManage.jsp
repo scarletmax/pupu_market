@@ -49,6 +49,9 @@
                             </select>
                         </div>
                         <div class="layui-inline layui-show-xs-block">
+                            <select class="layui-form-select" name="state" ></select>
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
                             <button type="button" class="layui-btn"  title="搜索" lay-submit=""  lay-filter="go"><i class="layui-icon">&#xe615;</i></button>
                         </div>
                     </form>
@@ -70,7 +73,25 @@
 
         var path = $("#path").val();
 
-
+        $(function () {
+            $.ajax({
+                url:path+"/typeControl/findTypeState",
+                async:false,
+                type:"POST",
+                dataType:"json",
+                success:function(res){
+                    window.properties = res;
+                    $("select[name=state]").append("<option value=''>分类状态</option>")
+                    $(res).get().forEach(function (item) {
+                        $("select[name=state]").append("<option value='"+item.value+"'>"+item.name+"</option>")
+                    });
+                    form.render();
+                },
+                error:function (xhr,textstatus) {
+                    layer.alert("错误:"+textstatus, {icon: 2});
+                },
+            });
+        });
 
 
         var tableIns = table.render({
@@ -114,14 +135,24 @@
             ,cols: [[ //表头
                 ,{field: 'id', title: 'ID',  sort: true, hide:true}
                 ,{field: 'name', title: '分类名称', align:'center', sort: true}
-                ,{field: 'parentId', title: '父分类id', align:'center', sort: true, hide:true},
-                ,{field: 'menuLevel', title: '分类级别', align:'center', sort: true},
-                ,{field:'iconUrl', title: '分类图标'
+                // ,{field: 'parentId', title: '父分类id', align:'center', sort: true, hide:true}
+                ,{field: 'menuLevel', title: '分类级别', align:'center', sort: true}
+                ,{field:'', title: '分类图标'
                     ,templet: function(d){
-                        return '<div id="'+'myIcon'+d.id+'"><img src="${pageContext.request.contextPath}/typeIcon/测试图片.jpg"></div>'
+                        var iconUrl = "${pageContext.request.contextPath}/upload/typeIcon"+d.iconUrl;
+                        return '<div id="'+'myIcon'+d.id+'"><img src="'+iconUrl+'"></div>';
                     }
                 }
-                <%--,{field: 'iconUrl', title: '分类图标', align:'center', sort: true,templet: '<div id="{{d.id}}"><img src="${pageContext.request.contextPath}/typeIcon/测试图片.jpg" ></div>'}--%>
+                ,{field: '', title: '分类状态', align:'center', sort: true ,templet: function(d){
+                        var temp;
+                        window.properties.forEach(function (item) {
+                            if(d.state==item.value){
+                                temp=item.name;
+                                return;
+                            }
+                        })
+                        return temp;
+                    }}
                 ,{field: 'operation', title: '操作',  sort: true,align:'center',toolbar: '#barDemo'}
             ]]
             ,done: function(res, curr, count){
@@ -142,6 +173,7 @@
                 where: {
                     name: data.field.name
                     ,parentId: $("select[name=parentId]").children(":selected").val()
+                    ,state:$("select[name=state]").children(":selected").val()
                 }
                 ,page: {
                     curr: 1 //重新从第 1 页开始
@@ -175,13 +207,13 @@
                 window.tempData = data;
                 window.tempData.menuLevel="二级分类";
                 xadmin.open('新增分类','${pageContext.request.contextPath}/jsp/type-add.jsp',600,400);
-            }else if(layEvent=='删除'){
-                if(window.confirm("是否级联删除该分类？")){
+            }else if(layEvent=='切换状态'){
+                if(true){
                     $.ajax({
-                        url:path+"/typeControl/removeType",
+                        url:path+"/typeControl/changeTypeState",
                         async:false,
                         type:"POST",
-                        data:"id="+data.id,
+                        data:"id="+data.id+"&state="+data.state,
                         dataType:"text",
                         success:function(res){
                             console.log(res);
@@ -202,12 +234,11 @@
 
 
 
-
     });
 </script>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="分类图片上传">分类图片上传</button>
+<%--        <button class="layui-btn layui-btn-sm" lay-event="分类图片上传">分类图片上传</button>--%>
         <button class="layui-btn layui-btn-sm" lay-event="添加一级分类">添加一级分类</button>
     </div>
 </script>
@@ -215,10 +246,10 @@
     {{#  if(d.menuLevel=='一级分类'){ }}
     <a class="layui-btn layui-btn-xs" lay-event="修改">修改</a>
     <a class="layui-btn layui-btn-xs" lay-event="添加子分类">添加子分类</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="删除">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="切换状态">切换状态</a>
     {{#  }else if(d.menuLevel=='二级分类'){ }}
     <a class="layui-btn layui-btn-xs" lay-event="修改">修改</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="删除">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="切换状态">切换状态</a>
     {{#  } }}
 </script>
 

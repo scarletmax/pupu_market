@@ -6,6 +6,8 @@ public class Type {
     private String name;
     private String parentId;
     private String iconUrl;
+    private int state;
+    private String stateStr;
 
 
     public Type() {
@@ -41,5 +43,21 @@ public class Type {
 
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public String getStateStr() {
+        return stateStr;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public void setStateStr(String stateStr) {
+        this.stateStr = stateStr;
     }
 }

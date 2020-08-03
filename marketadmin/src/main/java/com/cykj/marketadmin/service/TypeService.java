@@ -15,7 +15,7 @@ public interface TypeService {
     //菜单增加
     public int addType(Type type);
     //菜单移除
-    public int removeType(String id);
+    public int changeTypeState(String id,String state);
     //菜单查重
     public int isTypeRepeat(String name);
 }

@@ -21,9 +21,6 @@
 </head>
 <body>
 <div class="layui-fluid">
-
-<%--    <button type="button" class="layui-btn layui-btn-normal" id="testList">选择图片</button>--%>
-<%--    <button type="button" class="layui-btn" id="testListAction">开始上传</button>--%>
     <div class="layui-row">
         <form class="layui-form" lay-filter="formTest">
             <div class="layui-form-item layui-hide">
@@ -38,21 +35,20 @@
                 <label for="menuLevel" class="layui-form-label">类型等级</label>
                 <div class="layui-input-inline"><input type="text" id="menuLevel" name="menuLevel"  lay-verify="required" autocomplete="off" class="layui-input" disabled></div>
             </div>
-            <div class="layui-form-item">
-                <%--预览的图片--%>
-                <div class="layui-upload">
-                    <button type="button" class="layui-btn" id="test1">上传图片</button>
-                    <div class="layui-upload-list">
-                        <img class="layui-upload-img" id="demo1">
-                        <p id="demoText"></p><%--上传结果显示--%>
-                    </div>
-                </div>
-                <%--隐藏的url--%>
+            <%--隐藏的url--%>
+            <div class="layui-form-item  layui-hide">
                 <label for="iconUrl" class="layui-form-label" >类型图标url</label>
                 <div class="layui-input-inline"><input type="text" id="iconUrl" name="iconUrl" lay-verify="" autocomplete="off" class="layui-input"></div>
             </div>
-            <div class="layui-form-item">
-                <button type="button" class="layui-btn" lay-filter="edit" lay-submit="">确认新增</button>
+            <div class="layui-form-item" style="margin-left: 50px">
+                <%--预览的图片--%>
+                <div class="layui-form-item layui-upload">
+                    <button type="button" class="layui-btn" id="test1">上传图片</button><p style="display: inline-block" id="demoText"></p><%--上传结果显示--%>
+                    <button type="button" class="layui-btn" lay-filter="edit" lay-submit="">确认新增</button>
+                    <div class="layui-upload-list">
+                        <img class="layui-upload-img" id="demo1">
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -63,10 +59,11 @@
 
 
 
-    layui.use(['form', 'layer','jquery'], function() {
+    layui.use(['form', 'layer','jquery','upload'], function() {
         var $ = layui.jquery;
         var form = layui.form;
         var  layer = layui.layer;
+        var upload = layui.upload;
         var path =$("#path").val();
 
         //普通图片上传
@@ -75,7 +72,6 @@
             ,url: path+'/uploadControl/typeIconUpload' //改成您自己的上传接口
             ,accept: 'images'
             ,acceptMime: 'image/*'
-                // ,exts: suffixStr
             ,multiple: false
             ,auto: true
             ,before: function(obj){
@@ -85,15 +81,17 @@
                 });
             }
             ,done: function(res){
-                console.log(JSON.parse(res));
+                console.log(res);
+                console.log(res.data[0]);
                 //如果上传成功
                 if(res.code == 0){
                     var demoText = $('#demoText');
-                    demoText.html('<span style="color: #FF5722;">上传成功</span>');
-                    $(#iconUrl).val(res.data.filePath);
+                    demoText.html('<span style="color: #5bff39;">上传成功</span>');
+                    $("#iconUrl").val(res.data[0]);
+                }else{
+                    //上传失败
+                    this.error();
                 }
-                //上传失败
-                this.error();
             }
             ,error: function(){
                 //演示失败状态，并实现重传
@@ -104,42 +102,6 @@
                 });
             }
         });
-
-        // // 多文件列表示例
-        // var demoListView = $('#demoList');
-        //
-        // var uploadListIns = upload.render({
-        //     elem: '#testList'
-        //     ,url: path+'/typeControl/upload' //改成您自己的上传接口
-        //     ,accept: 'images'
-        //     ,acceptMime: 'image/*'
-        //     // ,exts: suffixStr
-        //     ,multiple: false
-        //     ,auto: false
-        //     ,bindAction: '#testListAction'
-        //     ,choose: function(obj){//选择后的回调,选择的都文件符合accept、acceptMime、exts后才会触发
-        //         var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列，不删除将一直存在files对象中
-        //
-        //
-        //     }
-        //     ,done: function(res, index, upload){//每个文件提交一次触发一次，即每个index触发一次
-        //         console.log(JSON.parse(res))
-        //         if(res.code==0){ //上传成功
-        //             var tr = demoListView.find('tr#upload-'+ index);
-        //             var tds = tr.children();
-        //             tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
-        //             tds.eq(3).html(''); //清空所有操作
-        //             return delete this.files[index]; //删除文件队列已经上传成功的文件，对应列表tr信息保留
-        //         }
-        //         this.error(index, upload);//上传失败调用error回调函数
-        //     }
-        //     ,error: function(index, upload){//上传失败
-        //         var tr = demoListView.find('tr#upload-'+ index);
-        //         var tds = tr.children();
-        //         tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
-        //         tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
-        //     }
-        // });
 
 
         form.verify({
@@ -178,7 +140,6 @@
 
         //监听提交
         form.on('submit(edit)', function(data) {
-            console.log("表单提交的数据"+JSON.stringify(data.field));
             $.ajax({
                 url:path+"/typeControl/addType",
                 async:false,

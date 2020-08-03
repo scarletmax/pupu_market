@@ -12,4 +12,5 @@ public interface PropertyMapper {
      List<Property> findProperty(HashMap<String, Object> hashMap);
      int findCount(HashMap<String, Object> hashMap);
      int changeProperty(HashMap<String, Object> hashMap);
+     List<Property> findTypeState();
 }

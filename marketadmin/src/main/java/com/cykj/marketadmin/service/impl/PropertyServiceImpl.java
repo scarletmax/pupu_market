@@ -38,4 +38,9 @@ public class PropertyServiceImpl implements PropertyService {
     public int changeProperty(HashMap<String, Object> hashMap) {
         return propertyMapper.changeProperty(hashMap);
     }
+
+    @Override
+    public List<Property> findTypeState() {
+        return propertyMapper.findTypeState();
+    }
 }

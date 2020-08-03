@@ -15,6 +15,6 @@ public interface TypeMapper {
     public List<Type> selectTypeList(HashMap<String, Object> condition);
     public int updateType(Type type);
     public int insertType(Type type);
-    public int deleteType(String id);
+    public int changeTypeState(String id,String state);
     public int isTypeRepeat(String name);
 }

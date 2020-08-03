@@ -34,8 +34,8 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public int removeType(String id) {
-        return typeMapper.deleteType(id);
+    public int changeTypeState(String id,String state) {
+        return typeMapper.changeTypeState(id,state);
     }
 
     @Override
