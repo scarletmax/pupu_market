@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class ShopServiceaImpl implements ShopService {
+public class ShopServiceImpl implements ShopService {
 
     @Autowired
     private ShopMapper shopMapper;
