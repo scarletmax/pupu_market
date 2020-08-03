@@ -68,4 +68,9 @@ public class ShopServiceImpl implements ShopService {
     public List<Property> findProperty(HashMap<String, Object> hashMap) {
         return shopMapper.findProperty(hashMap);
     }
+
+    @Override
+    public int verifyAccount(HashMap<String, Object> hashMap) {
+        return shopMapper.verifyAccount(hashMap);
+    }
 }

@@ -94,23 +94,45 @@ public class ShopControl {
 
         return JSON.toJSONString(shopService.findShop(hashMap));
     }
-    @RequestMapping(value = "/insertShopAdmin")
+    @RequestMapping(value = "/verifyAccount")
     @ResponseBody
-    public Object insertShopAdmin(String account,String userName,String tel,int shopId){
-        String msg=null;
+    public Object verifyAccount(String account){
+
         HashMap<String ,Object> hashMap=new HashMap<>();
         hashMap.put("account",account);
-        hashMap.put("name",userName);
+       int a=  shopService.verifyAccount(hashMap);
 
-        hashMap.put("tel",tel);
-        hashMap.put("shopId",shopId);
+       String str=null;
+       if(a>0){
+           str="fail";
+       }else {
+           str="success";
+       }
+        return str;
+    }
 
-        int a =shopService.insertShopAdmin(hashMap);
-        if (a>0){
-            msg="success";
-        }else{
+    @RequestMapping(value = "/insertShopAdmin")
+    @ResponseBody
+    public String insertShopAdmin(String account,String userName,String tel,int shopId,String pwd){
+        String msg=null;
+        if(verifyAccount(account).equals("success")){
+            HashMap<String ,Object> hashMap=new HashMap<>();
+            hashMap.put("account",account);
+            hashMap.put("pwd",pwd);
+            hashMap.put("name",userName);
+            hashMap.put("tel",tel);
+            hashMap.put("shopId",shopId);
+
+            int a =shopService.insertShopAdmin(hashMap);
+            if (a>0){
+                msg="success";
+            }else{
+                msg="fail";
+            }
+        }else {
             msg="fail";
         }
+
         return msg;
     }
     @RequestMapping(value = "/shopList")
