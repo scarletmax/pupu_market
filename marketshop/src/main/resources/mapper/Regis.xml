@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketshop.mapper.RegisMapper">
+
+	<!--注册验证-->
+
+	<select id="verifyName" resultType="java.lang.Integer">
+
+   select count(*)co from t_shop where name=#{name}
+	</select>
+
+	<insert id="insertShop" parameterType="com.cykj.marketpojo.Shop">
+     insert into t_shop
+     ( name, address, shop_pic, longitude, latitude, info, verifyID, verify_pic, boss_name, tel)
+     values
+     (#{name}, #{address}, #{shopPic}, #{longitude}, #{latitude},#{info}, #{verifyID},#{verifyPic}, #{bossName}, #{tel})
+	</insert>
+
+
+</mapper>

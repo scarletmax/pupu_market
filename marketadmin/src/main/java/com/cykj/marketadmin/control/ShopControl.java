@@ -2,6 +2,7 @@ package com.cykj.marketadmin.control;
 
 import com.alibaba.fastjson.JSON;
 import com.cykj.marketadmin.service.ShopService;
+import com.cykj.marketadmin.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -118,7 +119,7 @@ public class ShopControl {
         if(verifyAccount(account).equals("success")){
             HashMap<String ,Object> hashMap=new HashMap<>();
             hashMap.put("account",account);
-            hashMap.put("pwd",pwd);
+            hashMap.put("pwd", MD5Util.md5(pwd));
             hashMap.put("name",userName);
             hashMap.put("tel",tel);
             hashMap.put("shopId",shopId);
