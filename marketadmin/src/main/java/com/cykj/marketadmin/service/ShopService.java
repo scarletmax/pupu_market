@@ -18,6 +18,7 @@ public interface ShopService {
     //分店总数
     int changeState(HashMap<String, Object> hashMap);
     //分店管理员总数
+    List<Shop> searchShop();
     int insertShopAdmin(HashMap<String, Object> hashMap);
     //分店店名集合
     List<Shop> shopList();

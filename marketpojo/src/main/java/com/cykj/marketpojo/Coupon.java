@@ -7,28 +7,44 @@ public class Coupon {
     private int id;
     private String name;
 
-    private Date start_Time;
-    private Date end_Time;
-    private int shop_id;
-    private BigDecimal favor_price;
+    private Date startTime;
+    private Date endTime;
+    private int shopId;
+    private BigDecimal favorPrice;
     private int limitCount;
     private BigDecimal requirePrice;
     private String rule;
+    private String stateStr;
+    private int state;
 
-    public Coupon(int id, String name, Date start_Time, Date end_Time, int shop_id, BigDecimal favor_price, int limitCount, BigDecimal requirePrice, String rule) {
+    public Coupon() {
+    }
+
+    public Coupon(int id, String name, Date startTime, Date endTime, int shopId, BigDecimal favorPrice, int limitCount, BigDecimal requirePrice, String rule, String stateStr) {
         this.id = id;
         this.name = name;
-        this.start_Time = start_Time;
-        this.end_Time = end_Time;
-        this.shop_id = shop_id;
-        this.favor_price = favor_price;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.shopId = shopId;
+        this.favorPrice = favorPrice;
         this.limitCount = limitCount;
         this.requirePrice = requirePrice;
         this.rule = rule;
+        this.stateStr = stateStr;
     }
 
-    public Coupon() {
-        super();
+    public Coupon(int id, String name, Date startTime, Date endTime, int shopId, BigDecimal favorPrice, int limitCount, BigDecimal requirePrice, String rule, String stateStr, int state) {
+        this.id = id;
+        this.name = name;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.shopId = shopId;
+        this.favorPrice = favorPrice;
+        this.limitCount = limitCount;
+        this.requirePrice = requirePrice;
+        this.rule = rule;
+        this.stateStr = stateStr;
+        this.state = state;
     }
 
     public int getId() {
@@ -47,36 +63,36 @@ public class Coupon {
         this.name = name;
     }
 
-    public Date getStart_Time() {
-        return start_Time;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setStart_Time(Date start_Time) {
-        this.start_Time = start_Time;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-    public Date getEnd_Time() {
-        return end_Time;
+    public Date getEndTime() {
+        return endTime;
     }
 
-    public void setEnd_Time(Date end_Time) {
-        this.end_Time = end_Time;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
-    public int getShop_id() {
-        return shop_id;
+    public int getShopId() {
+        return shopId;
     }
 
-    public void setShop_id(int shop_id) {
-        this.shop_id = shop_id;
+    public void setShopId(int shopId) {
+        this.shopId = shopId;
     }
 
-    public BigDecimal getFavor_price() {
-        return favor_price;
+    public BigDecimal getFavorPrice() {
+        return favorPrice;
     }
 
-    public void setFavor_price(BigDecimal favor_price) {
-        this.favor_price = favor_price;
+    public void setFavorPrice(BigDecimal favorPrice) {
+        this.favorPrice = favorPrice;
     }
 
     public int getLimitCount() {
@@ -101,5 +117,21 @@ public class Coupon {
 
     public void setRule(String rule) {
         this.rule = rule;
+    }
+
+    public String getStateStr() {
+        return stateStr;
+    }
+
+    public void setStateStr(String stateStr) {
+        this.stateStr = stateStr;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }

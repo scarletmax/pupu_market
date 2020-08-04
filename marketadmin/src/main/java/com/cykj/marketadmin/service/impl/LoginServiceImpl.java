@@ -9,6 +9,8 @@ import com.cykj.marketpojo.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 @Service("loginService")
 public class LoginServiceImpl implements LoginService {
     @Autowired

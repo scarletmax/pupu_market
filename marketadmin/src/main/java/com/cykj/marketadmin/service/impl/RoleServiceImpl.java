@@ -5,6 +5,7 @@ import com.cykj.marketadmin.mapper.RoleMapper;
 import com.cykj.marketadmin.service.RoleService;
 import com.cykj.marketpojo.LayData;
 import com.cykj.marketpojo.Role;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,7 +13,7 @@ import javax.annotation.Resource;
 @Service("roleService")
 public class RoleServiceImpl implements RoleService {
 
-    @Resource
+    @Autowired
     private RoleMapper roleMapper;
 
     @Override

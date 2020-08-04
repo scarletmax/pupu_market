@@ -77,6 +77,10 @@
           where id=#{id}
     </update>
 
+    <select id="findTypeState" resultType="com.cykj.marketpojo.Property">
+        select * from t_property where type="type_state"
+    </select>
+
 
 
 </mapper>

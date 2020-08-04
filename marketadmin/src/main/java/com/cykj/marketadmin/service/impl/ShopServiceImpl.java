@@ -50,6 +50,11 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
+    public List<Shop> searchShop() {
+        return shopMapper.shopList();
+    }
+
+    @Override
     public int insertShopAdmin(HashMap<String, Object> hashMap) {
         return shopMapper.insertShopAdmin(hashMap);
     }

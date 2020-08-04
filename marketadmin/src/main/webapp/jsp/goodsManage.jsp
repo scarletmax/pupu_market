@@ -35,12 +35,6 @@
                         <div class="layui-inline layui-show-xs-block">
                             <input type="text" name="name"  placeholder="请输入商品名称" autocomplete="off" class="layui-input" id="name" >
                         </div>
-<%--                        <div class="layui-inline layui-show-xs-block">--%>
-<%--                            <input class="layui-input"  autocomplete="off" placeholder="开始日" name="startTime" id="startTime">--%>
-<%--                        </div>--%>
-<%--                        <div class="layui-inline layui-show-xs-block">--%>
-<%--                            <input class="layui-input"  autocomplete="off" placeholder="截止日" name="endTime" id="endTime">--%>
-<%--                        </div>--%>
                         <div class="layui-inline layui-show-xs-block">
                             <select class="layui-form-select" name="shop" ></select>
                         </div>
@@ -72,8 +66,8 @@
         var tableIns = table.render({
             elem: '#list'//容器id
             ,id:'idTest'//结合checkStatus使用
-            ,height: 350
-            ,url: '${pageContext.request.contextPath}/goodsController/searchGoodsList' //数据接口
+            ,height: 480
+            ,url: '${pageContext.request.contextPath}/goodsControl/searchGoodsList' //数据接口
             ,method:'get'
             ,where: {}//查询条件
             ,request: {
@@ -82,7 +76,7 @@
             }
             ,page: { //可以是boolean值，也支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem,这两个参数需要将table模块的page设为false，单独使用laypage模块并render）
                 layout: ['limit', 'count', 'prev', 'page', 'next', 'skip','refresh'] //自定义分页布局排版
-                ,limit:6 //每页显示6条数据
+                ,limit:10 //每页显示6条数据
                 ,limits:[3,6,9,12,15,20]//可选每页分页数
                 ,curr: 1 //设定初始在第 1 页
                 ,groups: 3 //只显示 3 个连续页码
@@ -101,11 +95,11 @@
             }
             ,cols: [[ //表头
                 { width:40, type:'checkbox'}//选择列，有选中的行才能通过checkStatus得到值
-                ,{field: 'id', title: 'ID', width:80, sort: true}
-                ,{field: 'name', title: '商品名称', width:160, sort: true}
-                ,{field: 'price', title: '价格', width:100, sort: true},
-                ,{field: 'stateStr', title: '商品状态', width:160, sort: true},
-                ,{field: 'shopName', title: '所属店铺', width:160, sort: true}
+                ,{field: 'id', title: 'ID', sort: true}
+                ,{field: 'name', title: '商品名称',  sort: true}
+                ,{field: 'price', title: '价格',  sort: true},
+                ,{field: 'stateStr', title: '商品状态',  sort: true},
+                ,{field: 'shopName', title: '所属店铺',  sort: true}
                 // ,{field: 'operation', title: '操作', width:250, sort: true,align:'center',toolbar: '#barDemo'}
             ]]
         });
@@ -127,48 +121,10 @@
         });
 
 
-        // table.on('tool(test)', function(obj){ //注：tool 显示是工具条的事件名，test 是 table的lay-filter=属性值
-        //     var data = obj.data; //获得当前行数据
-        //     var layEvent = obj.event; //获得 lay-event 对应的自定义事件名（也可以是表头的 event 参数对应的事件名）
-        //     var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
-        //
-        //     if(layEvent!='下载'){
-        //         var statusId = null;
-        //         for(var i=0;i<statusParams.length;i++){
-        //             if(statusParams[i].name==layEvent){
-        //                 statusId=statusParams[i].value;
-        //                 break;
-        //             }
-        //         }
-        //
-        //         $.ajax({
-        //             url:path+"/adminController/changeFileStatus",
-        //             async:false,
-        //             type:"POST",
-        //             data:"id="+data.id+"&statusId="+statusId+"&typeId="+data.typeId,
-        //             dataType:"text",
-        //             success:function(data5){
-        //                 console.log(data5);
-        //                 if(data5==1){
-        //                     layer.msg("操作成功",{time:1000});
-        //                     tableIns.reload();
-        //                 }else{
-        //                     layer.msg("操作失败",{time:1000});
-        //                 }
-        //             },
-        //             error:function (xhr,textstatus) {
-        //                 layer.alert("错误:"+textstatus, {icon: 2});
-        //             },
-        //         });
-        //     }
-        //
-        // });
-
-
 
         $(function () {
             $.ajax({
-                url:path+"/shopController/searchShop",
+                url:path+"/shopControl/shopList",
                 async:false,
                 type:"POST",
                 dataType:"json",

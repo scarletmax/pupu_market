@@ -144,6 +144,11 @@
 
     </select>
 
+    <!--    下拉select菜单查找店铺名称和id-->
+    <select id="selectShop"  resultType="com.cykj.marketpojo.Shop">
+        select id,name from t_shop
+    </select>
+
     <insert id="insertShopAdmin">
       insert into t_shop_admin ( account, name, pwd, shop_id, tel)values(#{account},#{name},#{pwd},#{shopId},#{tel})
     </insert>

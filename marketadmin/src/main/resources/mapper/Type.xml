@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketadmin.mapper.TypeMapper">
+
+
+    <!--    分类列表-->
+    <select id="selectTypeNum" resultType="java.lang.Integer">
+        select count(*) from t_type
+        <where>
+            <if test="name!=null and name!=''">
+                and name like concat ('%',#{name},'%')
+            </if>
+            <if test="state!=null and state!=''">
+                and state = #{state}
+            </if>
+            <choose>
+                <when test="parentId==null or parentId==''">
+
+                </when>
+                <when test="parentId==0">
+                    and parent_id = 0
+                </when>
+                <otherwise>
+                    and parent_id != 0
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+
+    <select id="selectTypeList" resultType="com.cykj.marketpojo.Type">
+        select * from t_type
+        <where>
+            <if test="name!=null and name!=''">
+                and name like concat ('%',#{name},'%')
+            </if>
+            <if test="state!=null and state!=''">
+                and state = #{state}
+            </if>
+            <choose>
+                <when test="parentId==null or parentId==''">
+
+                </when>
+                <when test="parentId==0">
+                    and parent_id = 0
+                </when>
+                <otherwise>
+                    and parent_id != 0
+                </otherwise>
+            </choose>
+        </where>
+        limit #{pageSize} offset #{offset}
+    </select>
+
+    <!--    分类改-->
+    <update id="updateType" parameterType="com.cykj.marketpojo.Type">
+        update t_type set name=#{name},icon_url=#{iconUrl} where id=#{id}
+    </update>
+    <!--    分类增-->
+    <update id="insertType" parameterType="com.cykj.marketpojo.Type">
+        insert into t_type (name,parent_id,icon_url) values (#{name},#{parentId},#{iconUrl})
+    </update>
+    <!--    分类状态-->
+    <update id="changeTypeState" parameterType="java.lang.String">
+        <choose>
+            <when test="state==1">
+                update t_type set state=2 where id=#{id} or parent_id = #{id}
+            </when>
+            <otherwise>
+                update t_type set state=1 where id=#{id} or parent_id = #{id}
+            </otherwise>
+        </choose>
+    </update>
+    <!--    分类查重-->
+    <select id="isTypeRepeat" resultType="java.lang.Integer" >
+        select count(*) from t_type where name = #{name}
+    </select>
+
+</mapper>
