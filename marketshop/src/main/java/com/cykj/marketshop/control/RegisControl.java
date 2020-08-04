@@ -3,10 +3,13 @@ package com.cykj.marketshop.control;
 import com.alibaba.fastjson.JSON;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
+import com.cykj.marketpojo.LayData;
 import com.cykj.marketpojo.Shop;
 
+import com.cykj.marketpojo.ShopAdmin;
 import com.cykj.marketshop.service.LoginService;
 import com.cykj.marketshop.service.RegisService;
+import com.cykj.marketshop.util.MD5Util;
 import com.cykj.marketshop.util.SmsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,6 +45,17 @@ public class RegisControl {
 
         return "success";
     }
+    @RequestMapping(value = "/verifyTel")
+    @ResponseBody
+    public String verifyTel(String tel){
+
+        int a=regisService.verifyTel(tel);
+        if(a>0){
+            return "fail";
+        }
+
+        return "success";
+    }
     @RequestMapping(value = "/insertShop")
     @ResponseBody
     public String insertShop(HttpServletRequest request,String name,String address,String bossName,String verifyID,String pwd,String tel,String info,Shop shop){
@@ -49,6 +63,7 @@ public class RegisControl {
         System.out.println("name="+name+" address="+address+" bossName="+bossName+" verifyID="+verifyID+" pwd="+pwd+" tel="+tel+" info="+info);
         System.out.println("shop="+shop.toString());
         HttpSession httpSession=request.getSession();
+        shop.setPwd(MD5Util.md5(shop.getPwd()));
         httpSession.setAttribute("shop",shop);
 
 //        int a=regisService.insertShop(shop);
@@ -65,6 +80,7 @@ public class RegisControl {
         try {
             //获取文件名
             String originalName = file.getOriginalFilename();
+            System.out.println("originalName=" + originalName);
             //扩展名
             String prefix = originalName.substring(originalName.lastIndexOf(".") + 1);
             Date date = new Date();
@@ -150,14 +166,26 @@ public class RegisControl {
         Shop shop=(Shop) httpSession.getAttribute("shop");
         if(shop.getShopPic()!=null&&!shop.getShopPic().equals("")&&shop.getVerifyPic()!=null&&!shop.getVerifyPic().equals("")){
 
-            int a=regisService.insertShop(shop);
-        if(a>0){
-            return "success";
-        }
+            String oldcode = (String) httpSession.getAttribute("code");
+            System.out.println("oldcode="+oldcode);
+
+            if(shop.getCode().equals(oldcode)){
+                System.out.println("shop====="+shop.toString());
+             String str=   regisService.insertShop(shop);
+             if(str.equals("success")){
+                 return "success";
+             }else {
+                 return "fail";
+             }
+
+            }
+
         }
 
         return "fail";
     }
+
+
 
 
 

@@ -10,13 +10,22 @@
 
    select count(*)co from t_shop where name=#{name}
 	</select>
+    <!--注册手机验证-->
+    <select id="verifyTel" resultType="java.lang.Integer">
 
-	<insert id="insertShop" parameterType="com.cykj.marketpojo.Shop">
+   select count(*)co from t_shop where tel=#{tel}
+	</select>
+
+	<insert id="insertShop" parameterType="com.cykj.marketpojo.Shop"  useGeneratedKeys="true" keyProperty="id">
      insert into t_shop
      ( name, address, shop_pic, longitude, latitude, info, verifyID, verify_pic, boss_name, tel)
      values
      (#{name}, #{address}, #{shopPic}, #{longitude}, #{latitude},#{info}, #{verifyID},#{verifyPic}, #{bossName}, #{tel})
 	</insert>
+
+    <insert id="insertShopAdmin" parameterType="com.cykj.marketpojo.ShopAdmin">
+        insert into t_shop_admin( name, account, pwd, shop_id, tel)values(#{name},#{account},#{pwd},#{shopId},#{tel})
+    </insert>
 
 
 </mapper>
