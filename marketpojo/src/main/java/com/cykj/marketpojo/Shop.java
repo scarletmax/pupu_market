@@ -18,11 +18,14 @@ public class Shop {
     private String tel;
     private int state;
     private  String stateStr;
+    private String code;//短信验证
+    private String pwd;//密码
 
     public Shop() {
     }
 
-    public Shop(int id, String name, String address, String shopPic, Double longitude, Double latitude, String info, String verifyID, String verifyPic, Date createTime, String bossName, String tel, int state, String stateStr) {
+
+    public Shop(int id, String name, String address, String shopPic, Double longitude, Double latitude, String info, String verifyID, String verifyPic, Date createTime, String bossName, String tel, int state, String stateStr, String code, String pwd) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -37,6 +40,24 @@ public class Shop {
         this.tel = tel;
         this.state = state;
         this.stateStr = stateStr;
+        this.code = code;
+        this.pwd = pwd;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public int getState() {
@@ -149,5 +170,26 @@ public class Shop {
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+    @Override
+    public String toString() {
+        return "Shop{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", shopPic='" + shopPic + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", info='" + info + '\'' +
+                ", verifyID='" + verifyID + '\'' +
+                ", verifyPic='" + verifyPic + '\'' +
+                ", createTime=" + createTime +
+                ", bossName='" + bossName + '\'' +
+                ", tel='" + tel + '\'' +
+                ", state=" + state +
+                ", stateStr='" + stateStr + '\'' +
+                ", code=" + code +
+                '}';
     }
 }

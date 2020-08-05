@@ -22,4 +22,10 @@ public class LoginServiceImpl implements LoginService {
         return admin;
     }
 
+    @Override
+    public ShopAdmin telLogin(String tel) {
+
+        return loginMapper.telLogin(tel);
+    }
+
 }

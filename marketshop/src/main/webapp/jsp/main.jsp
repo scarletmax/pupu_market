@@ -108,7 +108,7 @@
                             <cite>广告管理</cite></a>
                     </li>
                     <li>
-                        <a onclick="xadmin.add_tab('优惠卷管理','')">
+                        <a onclick="xadmin.add_tab('优惠卷管理','../jsp/couponManage.jsp')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>优惠卷管理</cite></a>
                     </li>

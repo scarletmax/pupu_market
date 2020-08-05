@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface LoginMapper {
     //管理员登录
     ShopAdmin login(ShopAdmin admin);
+    ShopAdmin telLogin(String tel);
 }

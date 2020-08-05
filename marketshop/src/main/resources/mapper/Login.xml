@@ -9,4 +9,12 @@
 	    where account=#{account} and pwd=#{pwd}
 	</select>
 
+	<select id="telLogin"  resultType="com.cykj.marketpojo.ShopAdmin">
+	    select id,account,pwd,shop_id from t_shop_admin
+	    where tel=#{tel}
+
+	</select>
+
+
+
 </mapper>

@@ -29,6 +29,15 @@
 <%--    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>--%>
 <%--    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>--%>
 <%--    <![endif]-->--%>
+    <style>
+
+        /* 元素 | http://localhost:8081/jsp/login.jsp */
+
+        #bt {
+            margin-left: 200px;
+        }
+
+    </style>
 </head>
 <body class="login-bg">
 <input hidden value="${pageContext.request.contextPath}" id="path">
@@ -36,15 +45,101 @@
 <div class="login layui-anim layui-anim-up">
     <div class="message">掌上超市分店管理系统</div>
     <div id="darkbannerwrap"></div>
+    <div id="sbmit1">
     <form method="post" class="layui-form" >
+
         <input name="account" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
         <hr class="hr15">
         <input name="pwd" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
         <hr class="hr15">
         <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
         <hr class="hr20" >
-    </form>
+
+     </form>
+    </div>
+    <div id="sbmit2" style="display: none">
+        <form method="post" class="layui-form" >
+
+            <input id="tel" name="tel" placeholder="请输入手机号"  type="text" lay-verify="required" class="layui-input" >
+            <hr class="hr15">
+            <input name="code" lay-verify="required" placeholder="短信验证码"  type="password" class="layui-input">
+            <hr class="hr15">
+            <button id="msg" class="layui-btn" type="button" >获取短信验证</button>
+            <hr class="hr15">
+            <input value="登录" lay-submit lay-filter="telLogin" style="width:100%;" type="submit">
+            <hr class="hr20" >
+
+
+        </form>
+    </div>
+    <div>
+        <a href="<%=request.getContextPath()%>/jsp/regis.jsp" class="r_a"> <span style="font-size: larger"> >>>注册</span></a>
+        <button id="bt" class="layui-btn" type="button" onclick="changeSbmit()">短信登录</button>
+
+    </div>
+
 </div>
 
 </body>
+
+<script>
+    layui.use(['layer', 'laypage'],
+        function () {
+            var layer = layui.layer;
+            var laypage = layui.laypage;
+            var path = $('#path').val();
+
+            $("#msg").click(function () {
+                var tel=$("#tel").val();
+                console.log("tel="+tel);
+                if(tel.length>0){
+                    $.ajax({
+                        url:path+"/loginControl/telverify",
+                        async:false,
+                        type:"post",
+                        data:"tel="+tel,
+                        dataType:"text",
+                        success:function (msg) {
+
+                            if(msg==="success"){
+                                layer.msg("已发送短信")
+                            }else {
+                                layer.msg("短信发送错误")
+                            }
+                        },
+                        error:function () {
+
+                            layer.msg("网络错误")
+
+                        }
+
+                    })
+                }else {
+                    layer.msg("请填写手机号")
+                }
+
+            })
+
+
+        });
+    function changeSbmit() {
+        var  bt=$("#bt").text();
+        console.log("bt="+ $("#bt").text());
+        if(bt=="短信登录"){
+            $("#bt").text("密码登录");
+            $("#sbmit1").hide();
+            $("#sbmit2").show();
+        }else {
+            $("#bt").text("短信登录");
+            $("#sbmit2").hide();
+            $("#sbmit1").show();
+        }
+
+    }
+
+
+
+
+</script>
+
 </html>
