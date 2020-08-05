@@ -2,6 +2,7 @@ package com.cykj.marketshop.service.impl;
 
 import com.cykj.marketpojo.Admin;
 import com.cykj.marketpojo.Coupon;
+import com.cykj.marketpojo.CouponUser;
 import com.cykj.marketpojo.LayData;
 import com.cykj.marketshop.mapper.CouponMapper;
 import com.cykj.marketshop.service.CouponService;
@@ -53,5 +54,15 @@ public class CouponServiceImpl implements CouponService {
         int a=0;
         a = couponMapper.addCouppon(coupon);
         return a;
+    }
+    @Override
+    public List<Coupon> findCoupon(HashMap<String, Object> hashMap) {
+
+        return couponMapper.findCoupon(hashMap);
+    }
+
+    @Override
+    public List<CouponUser> findCouponUser(HashMap<String, Object> hashMap) {
+        return couponMapper.findCouponUser(hashMap);
     }
 }

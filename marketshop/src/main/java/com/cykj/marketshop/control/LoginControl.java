@@ -6,6 +6,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.cykj.marketpojo.Admin;
 import com.cykj.marketpojo.ShopAdmin;
 import com.cykj.marketshop.service.LoginService;
+import com.cykj.marketshop.util.MD5Util;
 import com.cykj.marketshop.util.SmsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
 
 import static com.cykj.marketshop.util.SmsUtils.sendSms;
 
@@ -83,7 +85,7 @@ public class LoginControl {
 
         if(code!=null&&!code.equals("")){
             HttpSession session = request.getSession();
-          String oldcode = (String) session.getAttribute("code");
+             String oldcode = (String) session.getAttribute("code");
             System.out.println("oldcode="+oldcode);
             if(code.equals(oldcode)){
                 ShopAdmin admin= loginService.telLogin(tel);
@@ -102,6 +104,41 @@ public class LoginControl {
         }else {
             return "vCodeError";
         }
+    }
+    @RequestMapping(value = "/changePwd")
+    @ResponseBody
+    public  String changePwd(String newPwd,String oldPwd,String tel,String code,HttpServletRequest request){
+
+        HashMap<String ,Object> hashMap=new HashMap<>();
+        hashMap.put("pwd", MD5Util.md5(newPwd));
+        hashMap.put("tel",tel);
+
+        if(code!=null&&!code.equals("")){
+            HttpSession session = request.getSession();
+            String oldcode = (String) session.getAttribute("code");
+            System.out.println("oldcode="+oldcode);
+            if(code.equals(oldcode)){
+                int a=loginService.changePwd(hashMap);
+
+                if(a>0){
+                    return "success";
+                }
+
+            }else {
+                return "vCodeError";
+            }
+        }
+
+        return "vCodeError";
+    }
+    @RequestMapping(value = "/extShop")
+    @ResponseBody
+    public String extShop(HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+
+        session.setAttribute("admin", new Admin());
+        return "success";
     }
 
 }

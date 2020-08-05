@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketshop.mapper.OrderMapper">
+
+    <!--查询订单列表-->
+    <select id="findOrderList" resultType="com.cykj.marketpojo.OrderDetail">
+        select
+        tod.id,
+        tod.total_price,
+        tod.create_time,
+        tod.receive_time,
+        tod.finish_time,
+        tod.state, tp.name as stateStr,
+        tod.order_num,
+        tod.name,
+        tod.address,
+        tod.room_num,
+        tod.longitude,
+        tod.latitude,
+        tod.tel,
+        tod.deliveryman_id, td.name as deliverymanName,
+        tod.user_id , tu.name as userName,
+        tod.shop_id , ts.name as shopName,
+        tod.pay_type,
+        tod.coupon_id , tc.name as couponName
+        from t_order_detail tod left join t_deliveryman td on td.id=tod.deliveryman_id
+        left join t_user tu on tod.user_id = tu.id
+        left join t_shop ts on tod.shop_id = ts.id
+        left join t_coupon tc on tod.coupon_id = tc.id
+        left join t_property tp on tod.state = tp.value and tp.type='order_state'
+        <where>
+            <if test="shopId!=null and shopId!=''">
+                and ts.id =#{shopId}
+
+            </if>
+            <if test="userName!=null and userName!=''">
+            and tu.name like concat('%',#{userName},'%')
+
+            </if>
+            <if test="userId!=null and userId!=''">
+                and tod.user_id like concat('%',#{userId},'%')
+
+            </if>
+            <if test="deliverymanName!=null and deliverymanName!=''">
+                and td.name like concat('%',#{deliverymanName},'%')
+
+            </if>
+            <if test="shopName!=null and shopName!=''">
+                and ts.name like concat('%',#{shopName},'%')
+
+            </if>
+            <if test="receiptName!=null and receiptName!=''">
+                and tod.name like concat('%',#{receiptName},'%')
+
+            </if>
+            <if test="startTime!=null and startTime!=''">
+                and date_format(tod.create_time,'%Y-%m-%d')&gt;=#{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and date_format(tod.create_time,'%Y-%m-%d')&lt;=#{endTime}
+            </if>
+        </where>
+
+        limit #{page},#{limit}
+
+    </select>
+
+    <!--查询订单总数-->
+    <select id="findOrderCount" resultType="java.lang.Integer">
+        select count(*) co from  t_order_detail  tod left join t_deliveryman td on td.id=tod.deliveryman_id
+    left join t_user tu on tod.user_id = tu.id
+    left join t_shop ts on tod.shop_id = ts.id
+    left join t_coupon tc on tod.coupon_id = tc.id
+    left join t_property tp on tod.state = tp.value and tp.type='order_state'
+
+        <where>
+            <if test="shopId!=null and shopId!=''">
+                and ts.id =#{shopId}
+
+            </if>
+
+            <if test="userName!=null and userName!=''">
+                and tu.name like concat('%',#{userName},'%')
+
+            </if>
+            <if test="user_id!=null and user_id!=''">
+                and tu.user_id like concat('%',#{user_id},'%')
+
+            </if>
+            <if test="deliverymanName!=null and deliverymanName!=''">
+                and tu.name like concat('%',#{deliverymanName},'%')
+
+            </if>
+            <if test="shopName!=null and shopName!=''">
+                and tu.name like concat('%',#{shopName},'%')
+
+            </if>
+
+            <if test="startTime!=null and startTime!=''">
+                and date_format(tod.create_time,'%Y-%m-%d')&gt;=#{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and date_format(tod.create_time,'%Y-%m-%d')&lt;=#{endTime}
+            </if>
+        </where>
+
+    </select>
+
+</mapper>

@@ -63,7 +63,7 @@
                 <dd>
                     <a onclick="xadmin.open('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
                 <dd>
-                    <a href="./login.html">退出</a></dd>
+                    <a href="${pageContext.request.contextPath}/jsp/login.jsp" onclick="extShop()">退出</a></dd>
             </dl>
         </li>
         <li class="layui-nav-item to-index">
@@ -89,7 +89,7 @@
                                             <cite>商品管理</cite></a>
                                     </li>
                             <li>
-                                <a onclick="xadmin.add_tab('订单管理','')">
+                                <a onclick="xadmin.add_tab('订单管理','../jsp/orderManage.jsp')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>订单管理</cite></a>
                             </li>
@@ -112,6 +112,11 @@
                         <a onclick="xadmin.add_tab('优惠卷管理','../jsp/couponManage.jsp')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>优惠卷管理</cite></a>
+                    </li>
+                    <li>
+                        <a onclick="xadmin.add_tab('推送消息管理','../jsp/noticeManage.jsp')">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>推送消息管理</cite></a>
                     </li>
                 </ul>
             </li>
@@ -365,7 +370,7 @@
         </div>
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
-                <iframe src='${pageContext.request.contextPath}/jsp/deliverymanManage.jsp' frameborder="0" scrolling="yes"  class="x-iframe"></iframe>
+                <iframe src='${pageContext.request.contextPath}/jsp/welcome_main.jsp' frameborder="0" scrolling="yes"  class="x-iframe"></iframe>
             </div>
         </div>
         <div id="tab_show"></div>
@@ -373,6 +378,26 @@
 </div>
 <div class="page-content-bg"></div>
 <style id="theme_style"></style>
+
+<script>
+
+    function extShop() {
+
+        var path = $("#path").val();
+        $.ajax({
+            url: path + "/loginControl/extShop",
+            async: true,
+            type: "post",
+            // data: "name=" + name,
+            dataType: "text",
+            success: function (msg) {
+
+            }
+
+        })
+    }
+
+</script>
 
 </body>
 

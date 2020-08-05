@@ -116,7 +116,7 @@ var path=$("#path").val();
 
 						for(var i=0;i<rows.length;i++)
 						{
-							arr.push(rows[i].co);
+							arr.push(rows[i].tatol);
 
 						}
 					}

@@ -77,6 +77,9 @@
                         <input id="address" type="text" name="address" required lay-verify="required"
                                placeholder="请输入店铺地址" autocomplete="off" class="layui-input">
                     </div>
+<%--                    <div class="layui-input-inline">--%>
+<%--                        <input name="code" lay-verify="required" placeholder="短信验证码"  type="text" class="layui-input">--%>
+<%--                    </div>--%>
                     <div class="layui-form-mid layui-word-aux address">请输入你的店铺地址</div>
                 </div>
                 <div class="layui-form-item">
@@ -103,7 +106,7 @@
 
                 <div class="layui-upload upload1">
                     <button class="layui-btn layui-btn-normal" id="test1" type="button">选择商店照片</button>
-                    <button class="layui-btn" id="test2" type="button">开始上传</button>
+                    <button style="display: none" class="layui-btn  hide" id="test2" type="button">开始上传</button>
                 </div>
                 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
                     <legend>选择身份证照片上传</legend>
@@ -111,7 +114,7 @@
 
                 <div class="layui-upload upload2">
                     <button class="layui-btn layui-btn-normal" id="test3" type="button">选择身份证照片</button>
-                    <button class="layui-btn" id="test4" type="button">开始上传</button>
+                    <button style="display: none" class="layui-btn  hide" id="test4" type="button">开始上传</button>
                 </div>
 
 
@@ -289,9 +292,17 @@
                     async: true,
                     type: "post",
                     dataType: "text",
-                    success: function (msg) {
+                    before:function () {
+
+                        $("#regis").attr("disabled",disabled);
+
+                    }
+                    ,success: function (msg) {
                         if (msg === "success") {
                             layer.msg('注册成功，等待审核');
+
+                            location.href="../jsp/login.jsp"
+
                         } else if(msg==='codeFail'){
                             layer.msg('短信验证失败');
                         }else{
@@ -314,6 +325,8 @@
         $("#msg").click(function () {
             var tel=$("#tel").val();
             console.log("tel="+tel);
+
+
             if(tel.length>0){
                 $.ajax({
                     url:path+"/loginControl/telverify",
@@ -321,10 +334,19 @@
                     type:"post",
                     data:"tel="+tel,
                     dataType:"text",
-                    success:function (msg) {
+                    beforeSend:function () {
+                        console.log("beforesend=====")
+
+                        $("#msg").attr("disabled",true);
+                        // $("#msg").setAttribute("disabled", true);
+
+                        settime();
+                    }
+                    ,success:function (msg) {
 
                         if(msg==="success"){
                             layer.msg("已发送短信")
+
                         }else {
                             layer.msg("短信发送错误")
                         }
@@ -343,6 +365,24 @@
         })
 
     });
+    var countdown=60;
+    function settime() {
+        var m=$("#msg");
+
+        if (countdown == 0) {
+            m.attr("disabled", false);
+            m.text("获取短信验证");
+            countdown = 60;
+            return;
+        } else {
+            m.attr("disabled", true);
+            m.text("重新发送(" + countdown + ")");
+            countdown--;
+        }
+        setTimeout(function() {
+            settime()
+        },1000)
+    }
 </script>
 
 </html>
