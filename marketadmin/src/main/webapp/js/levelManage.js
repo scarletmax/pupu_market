@@ -33,12 +33,17 @@ $(function () {
         table.on('tool(demo)', function (obj) {
             var data = obj.data;
             console.log(obj.tr)
-            if (obj.event === 'modifyLevel') {
-                layer.confirm('确定修改等级信息吗？', function (index) {
-                    if (updateLevel(data.id)) {
-                    }
+            if (obj.event === 'updateLevel') {
+                window.tempData = data;
+                layer.open({
+                    title: '修改等级',
+                    shadeClose:false,
+                    maxmin: true,
+                    type: 2,
+                    content: path + "/jsp/levelEdit.jsp",
+                    area: ['500px', '400px']
                 });
-            } else if (obj.event === 'deleteAdmin') {
+            } else if (obj.event === 'deleteLevel') {
                 layer.confirm('确定删除该等级吗？', function (index) {
                     if (deleteLevel(data.id)) {
                     }
@@ -65,49 +70,49 @@ function add() {
     });
 }
 
-function updateLevel(id) {
-    var path= $("#path").val();
-    var str="";
-    $.ajax({
-        url:path+"/adminControl/updateLevel",
-        async:false,
-        type:"post",
-        data:"id="+id,
-        dataType:"text",
-        success:function (msg) {
-            if(msg == "success") {
-                layer.msg('操作成功')
-                str="success"
-            }else if(msg == "fail"){
-                layer.msg("操作失败")
-            }
-        },
-        error:function () {
-            alert("网络错误")
-        }
-    })
-    console.log(str)
-    if(str=="success" ){
-        return true
-    }
-    return  false;
-}
+// function updateLevel(id) {
+//     var path= $("#path").val();
+//     var str="";
+//     $.ajax({
+//         url:path+"/adminControl/updateLevel",
+//         async:false,
+//         type:"post",
+//         data:"id="+id,
+//         dataType:"text",
+//         success:function (msg) {
+//             if(msg == "success") {
+//                 layer.msg('操作成功')
+//                 str="success"
+//             }else if(msg == "fail"){
+//                 layer.msg("操作失败")
+//             }
+//         },
+//         error:function () {
+//             alert("网络错误")
+//         }
+//     })
+//     console.log(str)
+//     if(str=="success" ){
+//         return true
+//     }
+//     return  false;
+// }
 
 function deleteLevel(id) {
     var path= $("#path").val();
     var str="";
     $.ajax({
-        url:path+"/adminControl/deleteLevel",
+        url:path+"/levelControl/deleteLevel",
         async:false,
         type:"post",
         data:"id="+id,
         dataType:"text",
         success:function (msg) {
             if(msg == "success") {
-                layer.msg('重置成功')
+                layer.msg('删除成功')
                 str="success"
             }else if(msg == "fail"){
-                layer.msg("重置失败")
+                layer.msg("删除失败")
             }
         },
         error:function () {
