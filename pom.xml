@@ -18,6 +18,7 @@
         <module>marketadmin</module>
         <module>eurekaserver</module>
         <module>marketshop</module>
+        <module>marketuser</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>

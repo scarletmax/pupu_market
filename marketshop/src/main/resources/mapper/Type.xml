@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketshop.mapper.TypeMapper">
+
+
+    <!--    一级分类-->
+   <select id="parentTypeList" resultType="com.cykj.marketpojo.Type">
+       select * from t_type where parent_id = 0
+   </select>
+    <!--    二级分类-->
+    <select id="typeList" resultType="com.cykj.marketpojo.Type">
+       select * from t_type where parent_id = #{parentId}
+   </select>
+
+</mapper>

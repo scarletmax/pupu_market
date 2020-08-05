@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketshop.mapper.GoodsMapper">
+	<!--    商品数量 -->
+	<select id="selectGoodsNum" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		select count(*) from t_goods where shop_id=1
+		<if test="name!=null and name!=''">
+			and name like concat ('%',#{name},'%')
+		</if>
+		<if test="typeId!=null and typeId!=''">
+			and type_id= #{typeId}
+		</if>
+		<if test="parentTypeId!=null and parentTypeId!=''">
+			and parent_type_id = #{parentTypeId}
+		</if>
+		<if test="price_min!=null and price_min!=''">
+			and pirce gt; #{price_min}
+		</if>
+		<if test="price_max!=null and price_max!=''">
+			and pirce lt; #{price_max}
+		</if>
+		<if test="state!=null and state!=''">
+			and state = #{state}
+		</if>
+	</select>
+	<!--    商品列表 -->
+	<select id="selectGoodsList" parameterType="java.util.HashMap" resultType="com.cykj.marketpojo.Goods">
+		select g.*,t_parent.name as parentTypeString,t_child.name as typeString,p.name as state_str from t_goods as g,t_property as p,t_type as t_parent, t_type as t_child
+		where g.shop_id=1 and g.state = p.value and p.type = 'goods_state' and g.parent_type_id = t_parent.id and g.type_id = t_child.id
+		<if test="name!=null and name!=''">
+			and g.name like concat ('%',#{name},'%')
+		</if>
+		<if test="typeId!=null and typeId!=''">
+			and g.type_id= #{typeId}
+		</if>
+		<if test="parentTypeId!=null and parentTypeId!=''">
+			and g.parent_type_id = #{parentTypeId}
+		</if>
+		<if test="price_min!=null and price_min!=''">
+			and g.pirce gt; #{price_min}
+		</if>
+		<if test="price_max!=null and price_max!=''">
+			and g.pirce lt; #{price_max}
+		</if>
+		<if test="state!=null and state!=''">
+			and g.state = #{state}
+		</if>
+		limit #{pageSize} offset #{offset}
+	</select>
+	<!--开关推荐和特价-->
+	<update id="startRecommended">
+		update t_goods set recommended=1 where id=#{id}
+	</update>
+	<update id="endRecommended">
+		update t_goods set recommended=0 where id=#{id}
+	</update>
+	<update id="startSpecial">
+		update t_goods set special=1 where id=#{id}
+	</update>
+	<update id="endSpecial">
+		update t_goods set special=0 where id=#{id}
+	</update>
+	<!--上架下架,state是否要查出来？-->
+	<update id="putaway">
+		update t_goods set state=1 where id in
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</update>
+	<update id="unshelve">
+		update t_goods set state=4 where id in
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</update>
+	<!--删除商品-->
+	<delete id="deleteGoods">
+		delete t_goods where id in
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+
+
+
+
+</mapper>

@@ -3,6 +3,7 @@ package com.cykj.marketadmin.control;
 import com.alibaba.fastjson.JSON;
 import com.cykj.marketadmin.service.LevelService;
 import com.cykj.marketpojo.LayData;
+import com.cykj.marketpojo.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,6 +36,21 @@ public class LevelControl {
         LayData layuiData = new LayData();
         layuiData = levelService.findLevelList(condition);
         return JSON.toJSONString(layuiData);
+    }
+
+    @RequestMapping(value = "/addLevel")
+    @ResponseBody
+    public String addLevel(HttpServletRequest request, HttpServletResponse response) {
+        String levelInfo = request.getParameter("levelInfo");
+        Level level = JSON.parseObject(levelInfo, Level.class);
+        int a = 0;
+
+        a = levelService.addLevel(level);
+        if (a == 1) {
+            return "success";
+        } else {
+            return "fail";
+        }
     }
 
 

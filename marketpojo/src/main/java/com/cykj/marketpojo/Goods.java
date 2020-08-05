@@ -27,6 +27,7 @@ public class Goods {
     private String choiceProp1;
     private String choiceProp2;
     private String choiceProp3;
+    private Album album;
 
     public Goods() {
     }
@@ -229,5 +230,13 @@ public class Goods {
 
     public void setShopName(String shopName) {
         this.shopName = shopName;
+    }
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
     }
 }

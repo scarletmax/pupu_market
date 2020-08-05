@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="eurekaserver" />
-        <module name="marketbean" />
-        <module name="marketpojo" />
         <module name="marketshop" />
         <module name="marketadmin" />
+        <module name="marketbean" />
+        <module name="marketuser" />
+        <module name="eurekaserver" />
+        <module name="marketpojo" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -19,6 +20,7 @@
       <module name="marketbean" target="1.8" />
       <module name="marketpojo" target="1.8" />
       <module name="marketshop" target="1.8" />
+      <module name="marketuser" target="1.8" />
       <module name="pupu_market" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -29,6 +31,7 @@
       <module name="marketbean" options="-parameters" />
       <module name="marketpojo" options="-parameters" />
       <module name="marketshop" options="-parameters" />
+      <module name="marketuser" options="-parameters" />
     </option>
   </component>
 </project>

@@ -12,4 +12,8 @@
         select count(*) from t_level
     </select>
 
+    <insert id="addLevel" parameterType="com.cykj.marketpojo.Level">
+       INSERT INTO t_level(name,mini_point,max_point) value(#{name},#{minPoint},#{maxPoint})
+    </insert>
+
 </mapper>

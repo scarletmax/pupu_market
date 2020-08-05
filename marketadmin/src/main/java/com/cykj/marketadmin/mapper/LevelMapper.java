@@ -11,4 +11,5 @@ import java.util.List;
 public interface LevelMapper {
     List<Level> findLevelList(HashMap<String, Object> condition);
     int  findLevelCount(HashMap<String, Object> condition);
+    int  addLevel(Level level);
 }

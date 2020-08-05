@@ -94,20 +94,15 @@
                 };
             }
             ,cols: [[ //表头
-                { width:40, type:'checkbox'}//选择列，有选中的行才能通过checkStatus得到值
-                ,{field: 'id', title: 'ID', sort: true}
-                ,{field: 'name', title: '商品名称',  sort: true}
-                ,{field: 'price', title: '价格',  sort: true},
-                ,{field: 'stateStr', title: '商品状态',  sort: true},
-                ,{field: 'shopName', title: '所属店铺',  sort: true}
+                ,{field: 'name', title: '商品名称', align:'center', sort: true}
+                ,{field: 'price', title: '价格', align:'center', sort: true}
+                ,{field: 'stateStr', title: '商品状态', align:'center', sort: true}
+                ,{field: 'shopName', title: '所属店铺', align:'center', sort: true}
                 // ,{field: 'operation', title: '操作', width:250, sort: true,align:'center',toolbar: '#barDemo'}
             ]]
         });
 
         form.on('submit(go)',function (data) {
-            //可设定异步数据接口的所有参数，如果不进行任何设置原参数会被保留，相当于做一次表格刷新
-            // 如果设置的参数和原参数冲突将会覆盖
-            // 翻页只会修改curr参数，不会修改其它任何参数
             tableIns.reload({
                 where: {
                     name: data.field.name
@@ -143,17 +138,6 @@
 
     });
 </script>
-<%--<script type="text/html" id="barDemo">--%>
-<%--    {{#  if(d.statusName=='待审核'){ }}--%>
-<%--    <a class="layui-btn layui-btn-xs" lay-event="下载">下载</a>--%>
-<%--    <a class="layui-btn layui-btn-xs" lay-event="审核通过">审核通过</a>--%>
-<%--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="审核不通过">审核不通过</a>--%>
-<%--    {{#  }else if(d.statusName=='审核通过'){ }}--%>
-<%--    <a class="layui-btn layui-btn-xs" lay-event="下载">下载</a>--%>
-<%--    {{#  }if(d.statusName=='审核不通过'){ }}--%>
-<%--    <a class="layui-btn layui-btn-xs" lay-event="下载">下载</a>--%>
-<%--    {{#  } }}--%>
-<%--</script>--%>
 
 <input id="path" value="${pageContext.request.contextPath}">
 
