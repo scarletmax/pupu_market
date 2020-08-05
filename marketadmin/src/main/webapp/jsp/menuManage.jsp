@@ -103,11 +103,11 @@
                 };
             }
             ,cols: [[ //表头
-                ,{field: 'id', title: 'ID',  sort: true, hide:true}
+                {field: 'id', title: 'ID',  sort: true, hide:true}
                 ,{field: 'name', title: '菜单名称', align:'center', sort: true}
-                ,{field: 'parentId', title: '父菜单id', align:'center', sort: true, hide:true},
-                ,{field: 'menuLevel', title: '菜单级别', align:'center', sort: true},
-                ,{field: 'url', title: '菜单url', align:'center' ,sort: true},
+                ,{field: 'parentId', title: '父菜单id', align:'center', sort: true, hide:true}
+                ,{field: 'menuLevel', title: '菜单级别', align:'center', sort: true}
+                ,{field: 'url', title: '菜单url', align:'center' ,sort: true}
                 ,{field: 'iconUrl', title: '菜单图标url', align:'center', sort: true}
                 ,{field: 'operation', title: '操作',  sort: true,align:'center',toolbar: '#barDemo'}
             ]]
@@ -169,9 +169,6 @@
             }
         });
 
-        // $(function () {
-        //     table.resize('test');
-        // });
 
 
 

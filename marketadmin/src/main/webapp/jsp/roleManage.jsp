@@ -80,7 +80,7 @@
                 };
             }
             ,cols: [[ //表头
-                ,{field: 'id', title: 'ID', align:'center', sort: true}
+                {field: 'id', title: 'ID', align:'center', sort: true}
                 ,{field: 'name', title: '角色名称', align:'center', sort: true}
                 ,{field: 'operation', title: '操作',  sort: true,align:'center',toolbar: '#barDemo'}
             ]]
