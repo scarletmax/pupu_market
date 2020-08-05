@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @EnableEurekaClient
 @SpringBootApplication
+
 public class MarketshopApplication {
 
     public static void main(String[] args) {
