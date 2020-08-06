@@ -28,6 +28,13 @@
 </button>
 
 <div id="allmap" style="width: 60%; height: 60%; position: absolute; display: none"></div>
+
+<div id="r-result">请输入:<input type="text" id="test" size="20" style="width:150px;" /></div>
+<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+
+
+
+
 </body>
 
 <script type="text/javascript">
@@ -90,5 +97,39 @@
         });
         addMarker(e.point);
     }
+
+    // 百度地图API功能
+    function G(id) {
+        return document.getElementById(id);
+    }
+
+    var ac = new BMap.Autocomplete({"input" : "test"});
+
+    ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+        var str = "";
+        var _value = e.fromitem.value;
+        var value = "";
+        if (e.fromitem.index > -1) {
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+        value = "";
+        if (e.toitem.index > -1) {
+            _value = e.toitem.value;
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+        G("searchResultPanel").innerHTML = str;
+    });
+
+    var myValue;
+    ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+        var _value = e.item.value;
+        myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+    });
+
+
+
 </script>
 </html>
