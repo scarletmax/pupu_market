@@ -30,7 +30,7 @@ public class GoodsControl {
     public String searchGoodsList(HttpServletRequest request, HttpServletResponse response){
         String curPage = request.getParameter("curPage");
         String pageSize = request.getParameter("pageSize");
-        //int shopId = ((ShopAdmin)(request.getSession().getAttribute("shopAdmin"))).getShopId();
+        int shopId = ((ShopAdmin)(request.getSession().getAttribute("admin"))).getShopId();
         String name = request.getParameter("name");
         String typeId = request.getParameter("typeId");
         String parentTypeId = request.getParameter("parentTypeId");
@@ -46,7 +46,7 @@ public class GoodsControl {
         HashMap<String,Object> condition = new HashMap<>();
         condition.put("offset",offset1);
         condition.put("pageSize",pageSize1);//name和shopid为可选搜索项，因此没点击搜索失为null或，点击时可能有数值或者为""
-//        condition.put("shopId",shopId);//mysql中的int和传上的string可以兼容
+        condition.put("shopId",shopId);//mysql中的int和传上的string可以兼容
         condition.put("name",name);
         condition.put("typeId",typeId);
         condition.put("parentTypeId",parentTypeId);
@@ -74,6 +74,16 @@ public class GoodsControl {
     @RequestMapping("/endSpecial")
     public String endSpecial(String id,HttpServletRequest request, HttpServletResponse response){
         return JSON.toJSONString(goodsService.endSpecial(id)+"");
+    }
+
+    @RequestMapping("/startFlashSale")
+    public String startSFlashSale(String id,HttpServletRequest request, HttpServletResponse response){
+        return JSON.toJSONString(goodsService.startFlashSale(id)+"");
+    }
+
+    @RequestMapping("/endFlashSale")
+    public String endFlashSale(String id,HttpServletRequest request, HttpServletResponse response){
+        return JSON.toJSONString(goodsService.endFlashSale(id)+"");
     }
 
     @RequestMapping("/putaway")
@@ -106,9 +116,6 @@ public class GoodsControl {
             String suffix = originalName.substring(originalName.lastIndexOf(".") + 1);
             //使用UUID+后缀名保存文件名，防止中文乱码问题
             String uuid = UUID.randomUUID() + "";
-//            Date date = new Date();
-//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//            String dateStr = simpleDateFormat.format(date);
             String savePath = request.getSession().getServletContext().getRealPath("/upload/goods_pic");
             //最终实际保存路径
             String filePath = savePath + File.separator + uuid + "." + suffix;
@@ -133,8 +140,8 @@ public class GoodsControl {
 
     @RequestMapping("/addGoods")
     public String addGoods(Goods goods,HttpServletRequest request, HttpServletResponse response){
-//        int shopId = ((ShopAdmin)(request.getSession().getAttribute("shopAdmin"))).getShopId();
-        goods.setShopId(1);
+        int shopId = ((ShopAdmin)(request.getSession().getAttribute("admin"))).getShopId();
+        goods.setShopId(shopId);
         return JSON.toJSONString(goodsService.addGoods(goods)+"");
     }
 

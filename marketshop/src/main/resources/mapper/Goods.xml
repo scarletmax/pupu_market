@@ -16,10 +16,10 @@
 			and parent_type_id = #{parentTypeId}
 		</if>
 		<if test="price_min!=null and price_min!=''">
-			and pirce gt; #{price_min}
+			and convert (pirce,float) &gt;= #{price_min}
 		</if>
 		<if test="price_max!=null and price_max!=''">
-			and pirce lt; #{price_max}
+			and convert (pirce,float) &lt;= #{price_max}
 		</if>
 		<if test="state!=null and state!=''">
 			and state = #{state}
@@ -39,10 +39,10 @@
 			and g.parent_type_id = #{parentTypeId}
 		</if>
 		<if test="price_min!=null and price_min!=''">
-			and g.pirce gt; #{price_min}
+			and convert (g.pirce,float) &gt;= #{price_min}
 		</if>
 		<if test="price_max!=null and price_max!=''">
-			and g.pirce lt; #{price_max}
+			and convert (g.pirce,float) &lt;= #{price_max}
 		</if>
 		<if test="state!=null and state!=''">
 			and g.state = #{state}
@@ -54,7 +54,7 @@
 		select pic1,pic2,pic3,pic4 from t_goods where id = #{id}
 	</select>
 
-	<!--开关推荐和特价-->
+	<!--开关推荐和特价和秒杀-->
 	<update id="startRecommended">
 		update t_goods set recommended=1 where id=#{id}
 	</update>
@@ -67,6 +67,13 @@
 	<update id="endSpecial">
 		update t_goods set special=0 where id=#{id}
 	</update>
+	<update id="startFlashSale">
+		update t_goods set flash_sale=1 where id=#{id}
+	</update>
+	<update id="endFlashSale">
+		update t_goods set flash_sale=0 where id=#{id}
+	</update>
+
 	<!--上架下架,state是否要查出来？-->
 	<update id="putaway">
 		update t_goods set state=1 where id in
@@ -90,17 +97,17 @@
 	<!--增加商品-->
 	<insert id="addGoods" parameterType="com.cykj.marketpojo.Goods">
 		insert into t_goods (shop_id,name,intro,pic1,pic2,pic3,pic4,recommended,special,total_count,
-		price,special_price,parent_type_id,type_id,flash_sale,state,info_pic) values
-		(#{shopId},#{name},#{intro},#{pic1},#{pic2},#{pic3},#{pic4},0,0,#{totalCount},#{price},#{specialPrice},#{parentTypeId},
-		#{typeId},0,1,#{infoPic}
-		)
+		price,special_price,parent_type_id,type_id,flash_sale,state,info_pic,choice_prop1,choice_prop2,choice_prop3) values
+		(#{shopId},#{name},#{intro},#{pic1},#{pic2},#{pic3},#{pic4},#{recommended},#{special},
+		#{totalCount},#{price},#{specialPrice},#{parentTypeId},#{typeId},#{flashSale},3,#{infoPic},#{choiceProp1},#{choiceProp2},#{choiceProp3})
 	</insert>
 
 	<!--修改商品-->
 	<update id="editGoods" parameterType="com.cykj.marketpojo.Goods">
 		update t_goods
 		<set>
-			name = #{name},intro=#{intro},price=#{price},special_price=#{specialPrice},total_count=#{totalCount},parent_type_id=#{parentTypeId},type_id=#{typeId},
+			name = #{name},intro=#{intro},price=#{price},special_price=#{specialPrice},total_count=#{totalCount},
+			parent_type_id=#{parentTypeId},type_id=#{typeId},choice_prop1=#{choiceProp1},choice_prop2=#{choiceProp2},choice_prop3=#{choiceProp3}
 			<if test="infoPic !=null and infoPic!=''">
 				info_pic = #{infoPic},
 			</if>

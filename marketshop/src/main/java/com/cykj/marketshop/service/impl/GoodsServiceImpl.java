@@ -57,6 +57,16 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    public int startFlashSale(String id) {
+        return goodsMapper.startFlashSale(id);
+    }
+
+    @Override
+    public int endFlashSale(String id) {
+        return goodsMapper.endFlashSale(id);
+    }
+
+    @Override
     public int putaway(int[] idArr) {
         return goodsMapper.putaway(idArr);
     }

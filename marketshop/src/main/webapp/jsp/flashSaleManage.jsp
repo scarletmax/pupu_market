@@ -9,7 +9,7 @@
 <html class="x-admin-sm">
 <head>
     <meta charset="UTF-8">
-    <title>分店商品管理</title>
+    <title>秒杀管理</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=no, minimum-scale=0.8, initial-scale=1,target-densitydpi=low-dpi" />
