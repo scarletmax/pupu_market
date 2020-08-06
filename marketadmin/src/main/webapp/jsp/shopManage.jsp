@@ -24,6 +24,7 @@
 
 <body>
 <input type="hidden" value="<%=request.getContextPath()%>" id="path">
+<input type="hidden" value="<%=application.getInitParameter("shopImg")%>" id="shopImg">
 <div class="x-nav">
             <span class="layui-breadcrumb">
                 <a href="">首页</a>
@@ -151,6 +152,7 @@
             , form = layui.form
             , laytpl = layui.laytpl;
         var path = $('#path').val();
+        var shopImg=$('#shopImg').val();
 
         //监听单元格编辑
         table.on('edit(test)',
@@ -333,6 +335,19 @@
                 , {field: 'latitude', title: '经度', sort: true, width: 120}
                 , {field: 'pwd', title: '密码', width: 120}
                 , {field: 'tel', title: '电话', width: 180}
+                , {field: 'verifyID', title: '身份证', width: 180}
+                , {field: 'verifyPic', title: '', width: 180,
+                    templet: function(d) {
+
+                        return '<div  class="verifyImg" onclick="show_verifyImg(this)" ><img src="'+"http://localhost:8081/"+ d.verifyPic + '" alt="" width="50px" height="50px"></a></div>';
+                    }}
+                , {field: 'shopPic', title: '', width: 180,
+                    templet: function(d){
+
+                        return '<div class="shopImg" onclick="show_shopImg(this)" ><img src="'+"http://localhost:8081/"+d.shopPic+'" alt="" width="50px" height="50px"></a></div>';
+
+                    }
+                }
                 , {field: 'stateStr', title: '状态', width: 100}
                 , {title: '操作', toolbar: '#barDemo', width: 300}
 
@@ -364,7 +379,70 @@
 
         });
 
-    });</script>
+    });
+//查看照片
+function show_verifyImg(t) {
+
+    var t = $(t).find("img");
+
+    console.log("$(t).attr('src')===="+$(t).attr('src'));
+
+    //页面层
+
+    layer.open({
+
+        type: 1,
+
+        skin: 'layui-layer-rim', //加上边框
+
+        area: ['80%', '80%'], //宽高
+
+        shadeClose: true, //开启遮罩关闭
+
+        end: function (index, layero) {
+
+            return false;
+
+        },
+
+        content: '<div style="text-align:center"><img src="'+ $(t).attr('src') + '" /></div>'
+
+    });
+
+}
+//查看照片
+function show_shopImg(t) {
+
+    var t = $(t).find("img");
+
+    //页面层
+
+    layer.open({
+
+        type: 1,
+
+        skin: 'layui-layer-rim', //加上边框
+
+        area: ['80%', '80%'], //宽高
+
+        shadeClose: true, //开启遮罩关闭
+
+        end: function (index, layero) {
+
+            return false;
+
+        },
+
+        content: '<div style="text-align:center"><img src="'+ $(t).attr('src') + '" /></div>'
+
+    });
+
+}
+
+
+
+
+</script>
 
 
 <%--<script>--%>

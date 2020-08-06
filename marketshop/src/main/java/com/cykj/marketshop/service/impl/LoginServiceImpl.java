@@ -8,6 +8,8 @@ import com.cykj.marketshop.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+
 @Service("loginService")
 public class LoginServiceImpl implements LoginService {
     @Autowired
@@ -26,6 +28,11 @@ public class LoginServiceImpl implements LoginService {
     public ShopAdmin telLogin(String tel) {
 
         return loginMapper.telLogin(tel);
+    }
+
+    @Override
+    public int changePwd(HashMap<String, Object> hashMap) {
+        return loginMapper.changePwd(hashMap);
     }
 
 }

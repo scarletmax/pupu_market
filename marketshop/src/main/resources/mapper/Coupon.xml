@@ -46,6 +46,15 @@
        #{favorPrice},#{limitCount},#{requirePrice},#{rule},1)
     </insert>
 
+    <!--查询优惠券-->
+    <select id="findCouponUser" resultType="com.cykj.marketpojo.CouponUser">
+
+      select tc.name,tcu.create_time,tc.rule,tp.name as stateStr
+      from t_coupon_user tcu
+         left join t_coupon tc on tc.id = tcu.id
+         left join t_property tp on tcu.state = tp.value and tp.type='coupon_state'
+      where tc.id = #{id}
+    </select>
 
 
 </mapper>

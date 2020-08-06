@@ -30,7 +30,7 @@ public class RegisServiceImpl implements RegisService {
             ShopAdmin shopAdmin=new ShopAdmin();
             shopAdmin.setPwd(shop.getPwd());
             shopAdmin.setShopId(shop.getId());
-            shopAdmin.setAccount(shop.getBossName());
+            shopAdmin.setAccount(shop.getTel());
             shopAdmin.setName(shop.getBossName());
             shopAdmin.setTel(shop.getTel());
             int b=regisMapper.insertShopAdmin(shopAdmin);

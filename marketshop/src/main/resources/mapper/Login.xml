@@ -15,6 +15,13 @@
 
 	</select>
 
+	<update id="changePwd">
+
+		update t_shop_admin set  pwd =#{pwd}  where tel=#{tel}
+	</update>
+
+
+
 
 
 </mapper>

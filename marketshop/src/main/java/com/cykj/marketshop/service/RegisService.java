@@ -8,4 +8,6 @@ public interface RegisService {
     String insertShop(Shop shop);
     int verifyTel(String tel);
     int insertShopAdmin(ShopAdmin shopAdmin);//注册商店管理员
+
+
 }
