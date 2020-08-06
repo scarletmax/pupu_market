@@ -53,5 +53,32 @@ public class LevelControl {
         }
     }
 
+    @RequestMapping(value = "/editLevel")
+    @ResponseBody
+    public String editLevel(HttpServletRequest request, HttpServletResponse response) {
+        String levelInfo = request.getParameter("levelInfo");
+        Level level = JSON.parseObject(levelInfo, Level.class);
+        int a = 0;
+
+        a = levelService.editLevel(level);
+        if (a == 1) {
+            return "success";
+        } else {
+            return "fail";
+        }
+    }
+    @RequestMapping(value = "/deleteLevel")
+    @ResponseBody
+    public String deleteLevel(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        int a = 0;
+        a = levelService.deleteLevel(id);
+        if (a == 1) {
+            return "success";
+        } else {
+            return "fail";
+        }
+    }
+
 
 }

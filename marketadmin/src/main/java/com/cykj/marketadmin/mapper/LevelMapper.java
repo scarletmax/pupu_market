@@ -12,4 +12,6 @@ public interface LevelMapper {
     List<Level> findLevelList(HashMap<String, Object> condition);
     int  findLevelCount(HashMap<String, Object> condition);
     int  addLevel(Level level);
+    int editLevel(Level level);
+    int deleteLevel(int id);
 }

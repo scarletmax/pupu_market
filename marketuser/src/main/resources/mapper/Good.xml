@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketuser.mapper.GoodMapper">
+    <!--	根据商店id获取特价商品信息-->
+    <select id="getSpecialGood" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.Goods">
+        select id,name,pic1,pic2,pic3,pic4,special_price from t_goods
+        where shop_id=#{shopId} and special='1'
+	</select>
+
+    <select id="getHighSaleGood" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.Goods">
+        select id,name,pic1,pic2,pic3,pic4,special_price from t_goods
+        where id in (select t.id from (select goods_id as 'id' from t_order_goods group by goods_id limit 1,5 )t) and shop_id=#{shopId} and special='1'
+	</select>
+
+    <select id="getRecommendedGood" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.Goods">
+       select id,name,pic1,pic2,pic3,pic4,special_price from t_goods
+       where  recommended='1' and shop_id=#{shopId}
+	</select>
+
+</mapper>

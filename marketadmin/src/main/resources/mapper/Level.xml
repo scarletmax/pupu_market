@@ -13,7 +13,14 @@
     </select>
 
     <insert id="addLevel" parameterType="com.cykj.marketpojo.Level">
-       INSERT INTO t_level(name,mini_point,max_point) value(#{name},#{minPoint},#{maxPoint})
+       INSERT INTO t_level(name,min_point,max_point) value(#{name},#{minPoint},#{maxPoint})
     </insert>
 
+    <update id="editLevel" parameterType="com.cykj.marketpojo.Level">
+        update t_level set name=#{name},min_point=#{minPoint},max_point=#{maxPoint}  where id=#{id}
+    </update>
+
+    <delete id="deleteLevel" parameterType="java.lang.Integer">
+        delete  from t_level where id=#{id}
+    </delete>
 </mapper>
