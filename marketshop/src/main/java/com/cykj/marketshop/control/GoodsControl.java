@@ -1,18 +1,22 @@
 package com.cykj.marketshop.control;
 
 import com.alibaba.fastjson.JSON;
-import com.cykj.marketpojo.ShopAdmin;
+import com.cykj.marketpojo.*;
 import com.cykj.marketshop.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 @RestController
 @RequestMapping("goodsControl")
@@ -20,6 +24,7 @@ public class GoodsControl {
 
     @Autowired
     private GoodsService goodsService;
+
 
     @RequestMapping("/searchGoodsList")
     public String searchGoodsList(HttpServletRequest request, HttpServletResponse response){
@@ -84,6 +89,58 @@ public class GoodsControl {
     @RequestMapping("/deleteGoods")
     public String deleteGoods(int[] idArr,HttpServletRequest request, HttpServletResponse response){
         return JSON.toJSONString(goodsService.deleteGoods(idArr)+"");
+    }
+
+    @RequestMapping("/detailPic")
+    public String detailPic(String id){
+        return JSON.toJSONString(goodsService.detailPic(id));
+    }
+
+    @RequestMapping(value = "/detailPicUpload")
+    @ResponseBody
+    public String upload(HttpServletRequest request, HttpServletResponse response,@RequestParam("file") MultipartFile thisFile) throws ServletException, IOException {
+        try {
+            //获取文件名
+            String originalName = thisFile.getOriginalFilename();
+            //获取扩展名
+            String suffix = originalName.substring(originalName.lastIndexOf(".") + 1);
+            //使用UUID+后缀名保存文件名，防止中文乱码问题
+            String uuid = UUID.randomUUID() + "";
+//            Date date = new Date();
+//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//            String dateStr = simpleDateFormat.format(date);
+            String savePath = request.getSession().getServletContext().getRealPath("/upload/goods_pic");
+            //最终实际保存路径
+            String filePath = savePath + File.separator + uuid + "." + suffix;
+            File files = new File(filePath);
+            //打印查看上传路径
+            if (!files.getParentFile().exists()) {//判断目录是否存在，否则创建父目录
+                files.getParentFile().mkdirs();
+            }
+            thisFile.transferTo(files); // 将接收的文件保存到指定文件中
+
+            LayData<String> layData=new LayData<String>();
+            layData.setCode(0);
+            layData.setData(Collections.singletonList(File.separator + uuid + "." + suffix));
+            System.out.println("url"+layData.getData().toString());
+            return JSON.toJSONString(layData);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    @RequestMapping("/addGoods")
+    public String addGoods(Goods goods,HttpServletRequest request, HttpServletResponse response){
+//        int shopId = ((ShopAdmin)(request.getSession().getAttribute("shopAdmin"))).getShopId();
+        goods.setShopId(1);
+        return JSON.toJSONString(goodsService.addGoods(goods)+"");
+    }
+
+    @RequestMapping("/editGoods")
+    public String editGoods(Goods goods,HttpServletRequest request, HttpServletResponse response){
+        return JSON.toJSONString(goodsService.editGoods(goods)+"");
     }
 
 }

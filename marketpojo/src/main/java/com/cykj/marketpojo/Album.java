@@ -1,5 +1,7 @@
 package com.cykj.marketpojo;
 
+import java.util.List;
+
 public class Album {
 
     private String title;//相册标题
@@ -10,12 +12,13 @@ public class Album {
     public Album() {
     }
 
-    public Album(String title, int id, int start, Photo[] data) {
+    public Album(String title, int id, int start, com.cykj.marketpojo.Photo[] data) {
         this.title = title;
         this.id = id;
         this.start = start;
         this.data = data;
     }
+
 
     public String getTitle() {
         return title;
@@ -29,8 +32,7 @@ public class Album {
         return start;
     }
 
-
-    public Photo[] getData() {
+    public com.cykj.marketpojo.Photo[] getData() {
         return data;
     }
 
@@ -46,7 +48,7 @@ public class Album {
         this.title = title;
     }
 
-    public void setData(Photo[] data) {
+    public void setData(com.cykj.marketpojo.Photo[] data) {
         this.data = data;
     }
 }

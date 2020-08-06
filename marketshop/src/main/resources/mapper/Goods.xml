@@ -49,6 +49,11 @@
 		</if>
 		limit #{pageSize} offset #{offset}
 	</select>
+
+	<select id="detailPic" resultType="com.cykj.marketpojo.Goods">
+		select pic1,pic2,pic3,pic4 from t_goods where id = #{id}
+	</select>
+
 	<!--开关推荐和特价-->
 	<update id="startRecommended">
 		update t_goods set recommended=1 where id=#{id}
@@ -82,6 +87,38 @@
 			#{item}
 		</foreach>
 	</delete>
+	<!--增加商品-->
+	<insert id="addGoods" parameterType="com.cykj.marketpojo.Goods">
+		insert into t_goods (shop_id,name,intro,pic1,pic2,pic3,pic4,recommended,special,total_count,
+		price,special_price,parent_type_id,type_id,flash_sale,state,info_pic) values
+		(#{shopId},#{name},#{intro},#{pic1},#{pic2},#{pic3},#{pic4},0,0,#{totalCount},#{price},#{specialPrice},#{parentTypeId},
+		#{typeId},0,1,#{infoPic}
+		)
+	</insert>
+
+	<!--修改商品-->
+	<update id="editGoods" parameterType="com.cykj.marketpojo.Goods">
+		update t_goods
+		<set>
+			name = #{name},intro=#{intro},price=#{price},special_price=#{specialPrice},total_count=#{totalCount},parent_type_id=#{parentTypeId},type_id=#{typeId},
+			<if test="infoPic !=null and infoPic!=''">
+				info_pic = #{infoPic},
+			</if>
+			<if test="pic1 !=null and pic1!=''">
+				pic1 = #{pic1},
+			</if>
+			<if test="pic2 !=null and pic2!=''">
+				pic2 = #{pic2},
+			</if>
+			<if test="pic3 !=null and pic3!=''">
+				pic3 = #{pic3},
+			</if>
+			<if test="pic4 !=null and pic4!=''">
+				pic4 = #{pic4},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
 
 
 

@@ -24,37 +24,44 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-header">名称:<label id="name"></label></div>
+                <div class="layui-card-header" style="font-size: 20px">名称:<label id="name"></label></div>
                 <div class="layui-card-body">
-                    <div class="layui-card-header"></div>
-                    <div class="layui-card-body">
-                        <div>市场价：<label id="price"></label></div>
-                        <div>一级分类：<label id="parentTypeString"></label></div>
-                        <div>二级分类：<label id="typeString"></label></div>
-                        <div>是否掌柜推荐：<label id="recommended"></label></div>
-                        <div>是否特价：<label id="special"></label></div>
-                        <div>特别价格：<label id="specialPrice"></label></div>
-                        <div>剩余总数：<label id="totalCount"></label></div>
-                        <div>状态：<label id="stateStr"></label></div>
-                    </div>
-                    <div class="layui-card-header">详细信息</div>
-                    <div class="layui-card-body">
-                        <div>介绍：<label id="intro"></label></div>
-                        <div><p>图片：</p>
-                            <button id="albumBtn">查看商品图册</button>
+                    <div class="layui-card">
+                        <div class="layui-card-header">基本信息</div>
+                        <div class="layui-card-body">
+                            <div>市场价：<label id="price"></label></div>
+                            <div>一级分类：<label id="parentTypeString"></label></div>
+                            <div>二级分类：<label id="typeString"></label></div>
+                            <div>是否掌柜推荐：<label id="recommended"></label></div>
+                            <div>是否特价：<label id="special"></label></div>
+                            <div>特别价格：<label id="specialPrice"></label></div>
+                            <div>剩余总数：<label id="totalCount"></label></div>
+                            <div>状态：<label id="stateStr"></label></div>
                         </div>
-                        <div id="infoPicContent"><p>长图：</p>
-                            <img id="infoPic"  src="">
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header">详细信息</div>
+                        <div class="layui-card-body">
+                            <div>介绍：<label id="intro"></label></div>
+                            <div><p>图片：</p>
+                                <button id="albumBtn" class="layui-btn-normal">查看商品图册</button>
+                            </div>
+                            <div id="infoPicContent"><p>长图：</p>
+                                <img id="infoPic"  src="">
+                            </div>
+
                         </div>
-
                     </div>
-                    <div class="layui-card-header">秒杀信息</div>
-                    <div class="layui-card-body">
-                        <span>AAAA</span>
-
+                    <div class="layui-card" id="flashSaleDiv">
+                        <div class="layui-card-header">秒杀信息</div>
+                        <div class="layui-card-body">
+                            <div>开始时间：<label id="startTime"></label></div>
+                            <div>截止时间：<label id="endTime"></label></div>
+                            <div>限制总量：<label id="limitCount"></label></div>
+                            <div>已售总量：<label id="saleCount"></label></div>
+                            <div>秒杀价：<label id="salePrice"></label></div>
+                        </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -89,18 +96,58 @@
             $("#typeString").text(data.typeString);
             $("#stateStr").text(data.stateStr);
             $("#totalCount").text(data.totalCount);
+
             $("#albumBtn").click(function () {
-                layer.photos({
-                    photos: data.album
-                    ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+                $.ajax({
+                    url:"/goodsControl/detailPic?id="+data.id,
+                    async:false,
+                    type:"GET",
+                    dataType:"json",
+                    success:function(res){
+                        console.log(res)
+                        layer.photos({
+                            photos: res
+                            ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+                        });
+                    },
+                    error:function (xhr,textStatus) {
+                        layer.alert("错误:"+textStatus, {icon: 2});
+                    },
                 });
-            })
-            console.log(data.album);
+            });
             $("#infoPic").attr("src","${pageContext.request.contextPath}/upload/goods_pic/主板.jpg");
             layer.photos({
                 photos: '#infoPicContent'
                 ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
             });
+
+            if(data.flashSale==0){
+                $("#flashSaleDiv").css("display","none")
+            }else{
+                $.ajax({
+                    url:path+"/flashControl/showFlashByGoodsId?id"+data.id,
+                    async:false,
+                    type:"GET",
+                    dataType:"text",
+                    success:function(res){
+                        console.log(res);
+                        if(res=="success"){
+                            $("#startTime").text(res.startTime);
+                            $("#totalCount").text(res.endTime);
+                            $("#limitCount").text(res.limitCount);
+                            $("#saleCount").text(res.saleCount);
+                            $("#salePrice").text(res.salePrice);
+                            $("#flashSaleDiv").css("display","block")
+                        }else{
+                            layer.msg("操作失败",{time:1000});
+                        }
+                    },
+                    error:function (xhr,textStatus) {
+                        layer.alert("错误:"+textStatus, {icon: 2});
+                    },
+                });
+            }
+
 
         })
 

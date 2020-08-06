@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketshop.mapper.FlashSaleMapper">
+    <!--查询商品秒杀信息-->
+    <select id="showFlashByGoodsId"  resultType="com.cykj.marketpojo.FlashSale">
+	    select * from t_flash_sale where goods_id = #{id}
+	</select>
+
+</mapper>

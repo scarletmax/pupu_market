@@ -1,10 +1,8 @@
 package com.cykj.marketshop.control;
 
 import com.alibaba.fastjson.JSON;
-import com.cykj.marketpojo.Admin;
 import com.cykj.marketpojo.Coupon;
-import com.cykj.marketpojo.LayData;
-import com.cykj.marketpojo.ShopAdmin;
+import com.cykj.marketpojo.*;
 import com.cykj.marketshop.service.CouponService;
 import com.cykj.marketshop.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,11 +1,9 @@
 package com.cykj.marketshop.service.impl;
 
-import com.cykj.marketpojo.Admin;
 import com.cykj.marketpojo.Coupon;
-import com.cykj.marketpojo.LayData;
+import com.cykj.marketpojo.*;
 import com.cykj.marketshop.mapper.CouponMapper;
 import com.cykj.marketshop.service.CouponService;
-import com.cykj.marketshop.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
