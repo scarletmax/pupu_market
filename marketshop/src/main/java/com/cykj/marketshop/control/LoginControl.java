@@ -39,6 +39,7 @@ public class LoginControl {
         if (admin != null) {
             HttpSession session = request.getSession();
             session.setAttribute("admin", admin);
+            session.setAttribute("shopId",admin.getShopId());
             request.getSession().setAttribute("isLogin", true);
             return "success";
         } else {
