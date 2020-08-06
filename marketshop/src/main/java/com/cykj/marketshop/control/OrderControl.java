@@ -57,5 +57,29 @@ public class OrderControl {
 
         return JSON.toJSONString(orderService.findOrderList(hashMap));
     }
+    @RequestMapping(value = "/changeState")
+    @ResponseBody
+    public String changeState(int id ,String purpose){
+
+        System.out.println("id=="+id+"  purpose=="+purpose);
+        String msg=null;
+        HashMap<String ,Object> hashMap=new HashMap<>();
+        if(purpose!=null&&!purpose.equals("")){
+            hashMap.put("id",id);
+            if(purpose.equals("disable")){
+
+                hashMap.put("state",5);
+            }else if(purpose.equals("enable")){
+                hashMap.put("state",2);
+            }
+        }
+        int a =orderService.changeState(hashMap);
+        if (a>0){
+            msg="success";
+        }else{
+            msg="fail";
+        }
+        return msg;
+    }
 
 }

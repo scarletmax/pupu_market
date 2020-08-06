@@ -200,29 +200,7 @@ var orderInf;
                     }
                     ;
                 });
-            table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
 
-                console.log("sdfsdf");
-                // debugger
-                 orderInf = obj.data; //获得当前行数据
-                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-                var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
-
-               if(layEvent === 'viewOrder'){ //审核
-                    //do something
-                   layui.use('layer', function () {
-                       layer.open({
-                           title: '订单详情',
-                           shadeClose:false,
-                           maxmin: true,
-                           type: 2,
-                           content: path + "/jsp/orderInf.jsp",
-                           area: ['500px', '600px']
-                       });
-                   });
-
-                }
-            });
 
 
 
@@ -235,11 +213,12 @@ var orderInf;
 <script>
 
     $(function () {
+        var path=$('#path').val();
         layui.use(
             'table',function () {
                 var table = layui.table;
                 var form = layui.form;
-                var path=$('#path').val();
+
 
                 console.log("dddddd");
              var tableIns =  table.render({
@@ -294,9 +273,157 @@ var orderInf;
                         }
                     });
 
-                })
+                });
+
+                table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+
+                    console.log("sdfsdf");
+                    // debugger
+                    orderInf = obj.data; //获得当前行数据
+                    var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                    var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+                    if(layEvent === 'viewOrder'){ //审核
+                        //do something
+                        layui.use('layer', function () {
+                            layer.open({
+                                title: '订单详情',
+                                shadeClose:false,
+                                maxmin: true,
+                                type: 2,
+                                content: path + "/jsp/orderInf.jsp",
+                                area: ['500px', '600px']
+                            });
+                        });
+
+                    }else if (obj.event === 'enable') {
+
+                        console.log("obj.event="+obj.tr.firstChild);
+                        layer.confirm("是否接单？？", function () {
+
+
+                            $.ajax({
+                                url: path + "/order/changeState",
+                                type: 'post',
+                                data: {"id": orderInf.id, "purpose": "enable"},
+                                async: true,
+                                dataType: 'text',
+                                success: function (msg) {
+                                    if (msg === "success") {
+                                        layer.msg("success");
+                                        obj.update({
+                                            stateStr: "已接单",
+                                            toolBar:''
+                                        });
+                                        tableIns.reload();
+                                    } else {
+                                        layer.msg("fail");
+                                    }
+                                },
+                                error:function () {
+                                    alert("网络错误")
+                                }
+                            });
+                        })
+                    } else if (obj.event === 'disable') {
+
+                        layer.confirm("拒绝接单？？", function () {
+
+
+                            $.ajax({
+                                url: path + "/order/changeState",
+                                type: 'post',
+                                data: {"id": orderInf.id, "purpose": "disable"},
+                                async: true,
+                                dataType: 'text',
+                                success: function (msg) {
+                                    if (msg === "success") {
+                                        layer.msg("success");
+                                        obj.update({
+                                            stateStr: "订单取消",
+                                            toolBar:''
+                                        });
+                                        tableIns.reload();
+                                    } else {
+                                        layer.msg("fail");
+                                    }
+                                },
+                                error:function () {
+                                    alert("网络错误")
+                                }
+                            });
+                        })
+                    }
+
+
+
+                });
             })
 
+        //监听行工具事件
+        // table.on('tool(test)', function (obj) {
+        //     var data = obj.data;
+        //     console.log(obj);
+        //     if (obj.event === 'enable') {
+        //
+        //         console.log("obj.event="+obj.tr.firstChild);
+        //         layer.confirm("是否接单？？", function () {
+        //
+        //
+        //             $.ajax({
+        //                 url: path + "/order/changeState",
+        //                 type: 'post',
+        //                 data: {"id": data.id, "purpose": "enable"},
+        //                 async: true,
+        //                 dataType: 'text',
+        //                 success: function (msg) {
+        //                     if (msg === "success") {
+        //                         layer.msg("success");
+        //                         obj.update({
+        //                             stateStr: "已接单",
+        //                             toolBar:''
+        //                         });
+        //                         tableIns.reload();
+        //                     } else {
+        //                         layer.msg("fail");
+        //                     }
+        //                 },
+        //                 error:function () {
+        //                     alert("网络错误")
+        //                 }
+        //             });
+        //         })
+        //     } else if (obj.event === 'disable') {
+        //
+        //         layer.confirm("拒绝接单？？", function () {
+        //
+        //
+        //             $.ajax({
+        //                 url: path + "/order/changeState",
+        //                 type: 'post',
+        //                 data: {"id": data.id, "purpose": "disable"},
+        //                 async: true,
+        //                 dataType: 'text',
+        //                 success: function (msg) {
+        //                     if (msg === "success") {
+        //                         layer.msg("success");
+        //                         obj.update({
+        //                             stateStr: "订单取消",
+        //                             toolBar:''
+        //                         });
+        //                         tableIns.reload();
+        //                     } else {
+        //                         layer.msg("fail");
+        //                     }
+        //                 },
+        //                 error:function () {
+        //                     alert("网络错误")
+        //                 }
+        //             });
+        //         })
+        //     }
+        //
+        // });
     })
 </script>
 
@@ -304,6 +431,21 @@ var orderInf;
 <%--    <a class="layui-btn layui-btn-xs" lay-event="download">下载</a>--%>
 <%--    <a class="layui-btn layui-btn-xs" lay-event="pass">通过审核</a>--%>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="viewOrder">查看订单详情</a>
+
+
+{{#  if(d.stateStr ==='订单取消'){ }}
+
+<a class="layui-btn layui-btn-xs layui-btn-disabled">已取消</a>
+{{# } else { }}
+{{#  if(d.stateStr ==='未接单'){ }}
+
+<a class="layui-btn layui-btn-xs " lay-event="enable">接单</a>
+<a class="layui-btn layui-btn-xs "  lay-event="disable">拒绝接单</a>
+{{# } else { }}
+<a class="layui-btn layui-btn-xs layui-btn-warm layui-btn-disabled" >已接单</a>
+{{# } }}
+
+{{# } }}
 
 </script>
 

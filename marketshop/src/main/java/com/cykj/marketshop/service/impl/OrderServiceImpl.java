@@ -32,4 +32,9 @@ public class OrderServiceImpl implements OrderService {
 
         return layData;
     }
+
+    @Override
+    public int changeState(HashMap<String, Object> hashMap) {
+        return orderMapper.changeState(hashMap);
+    }
 }
