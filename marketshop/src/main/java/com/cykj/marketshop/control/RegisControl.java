@@ -58,9 +58,9 @@ public class RegisControl {
     }
     @RequestMapping(value = "/insertShop")
     @ResponseBody
-    public String insertShop(HttpServletRequest request,String name,String address,String bossName,String verifyID,String pwd,String tel,String info,Shop shop){
-
-        System.out.println("name="+name+" address="+address+" bossName="+bossName+" verifyID="+verifyID+" pwd="+pwd+" tel="+tel+" info="+info);
+    public String insertShop(HttpServletRequest request,Shop shop){
+//,String name,String address,String bossName,String verifyID,String pwd,String tel,String info
+//        System.out.println("name="+name+" address="+address+" bossName="+bossName+" verifyID="+verifyID+" pwd="+pwd+" tel="+tel+" info="+info);
         System.out.println("shop="+shop.toString());
         HttpSession httpSession=request.getSession();
         shop.setPwd(MD5Util.md5(shop.getPwd()));
@@ -88,9 +88,13 @@ public class RegisControl {
             String uuid = UUID.randomUUID() + "";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String dateStr = simpleDateFormat.format(date);
+            String  str="/uploadVerifyPic/";
+
             String savePath = request.getSession().getServletContext().getRealPath("/uploadVerifyPic/");
             //要保存的问题件路径和名称
             String projectPath = savePath + dateStr + File.separator + uuid + "." + prefix;
+            //数据库保存名称
+            String datePath=str+dateStr + File.separator + uuid + "." + prefix;
 
             System.out.println("projectPath==" + projectPath);
             File files = new File(projectPath);
@@ -107,7 +111,7 @@ public class RegisControl {
 
             HttpSession httpSession=request.getSession();
            Shop shop=(Shop) httpSession.getAttribute("shop");
-           shop.setVerifyPic(projectPath);
+           shop.setVerifyPic(datePath);
 
             return JSON.toJSONString(layuiData);
         } catch (Exception e) {
@@ -130,11 +134,16 @@ public class RegisControl {
             String uuid = UUID.randomUUID() + "";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String dateStr = simpleDateFormat.format(date);
-            String savePath = request.getSession().getServletContext().getRealPath("/uploadShopPic/");
+            String  str="/uploadShopPic/";
+            String savePath = request.getSession().getServletContext().getRealPath(str);
             //要保存的问题件路径和名称
             String projectPath = savePath + dateStr + File.separator + uuid + "." + prefix;
 
+            //数据库保存名称
+            String datePath=str+dateStr + File.separator + uuid + "." + prefix;
+
             System.out.println("projectPath==" + projectPath);
+            System.out.println("datePath==" + datePath);
             File files = new File(projectPath);
             //打印查看上传路径
             if (!files.getParentFile().exists()) {//判断目录是否存在
@@ -150,7 +159,7 @@ public class RegisControl {
 
             HttpSession httpSession=request.getSession();
             Shop shop=(Shop) httpSession.getAttribute("shop");
-            shop.setShopPic(projectPath);
+            shop.setShopPic(datePath);
 
             return JSON.toJSONString(layuiData);
         } catch (Exception e) {

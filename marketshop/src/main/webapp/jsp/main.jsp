@@ -12,6 +12,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/X-admin/css/font.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/X-admin/css/xadmin.css">
+    <!-- <link rel="stylesheet" href="./css/theme5.css"> -->
     <script src="${pageContext.request.contextPath}/static/X-admin/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/X-admin/js/xadmin.js"></script>
     <script>
@@ -62,7 +63,7 @@
                 <dd>
                     <a onclick="xadmin.open('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
                 <dd>
-                    <a href="./login.html">退出</a></dd>
+                    <a href="${pageContext.request.contextPath}/jsp/login.jsp" onclick="extShop()">退出</a></dd>
             </dl>
         </li>
         <li class="layui-nav-item to-index">
@@ -88,7 +89,7 @@
                                             <cite>商品管理</cite></a>
                                     </li>
                             <li>
-                                <a onclick="xadmin.add_tab('订单管理','')">
+                                <a onclick="xadmin.add_tab('订单管理','../jsp/orderManage.jsp')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>订单管理</cite></a>
                             </li>
@@ -98,12 +99,12 @@
 
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont left-nav-li" lay-tips="用户管理">&#xe6b8;</i>
+                    <i class="iconfont left-nav-li" lay-tips="业务管理">&#xe6b8;</i>
                     <cite>业务管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
                     <li>
-                        <a onclick="xadmin.add_tab('广告管理','')">
+                        <a onclick="xadmin.add_tab('广告管理','../jsp/adManage.jsp')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>广告管理</cite></a>
                     </li>
@@ -111,6 +112,11 @@
                         <a onclick="xadmin.add_tab('优惠卷管理','../jsp/couponManage.jsp')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>优惠卷管理</cite></a>
+                    </li>
+                    <li>
+                        <a onclick="xadmin.add_tab('推送消息管理','../jsp/noticeManage.jsp')">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>推送消息管理</cite></a>
                     </li>
                 </ul>
             </li>
@@ -364,7 +370,7 @@
         </div>
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
-                <iframe src='${pageContext.request.contextPath}/jsp/deliverymanManage.jsp' frameborder="0" scrolling="yes"  class="x-iframe"></iframe>
+                <iframe src='${pageContext.request.contextPath}/jsp/welcome_main.jsp' frameborder="0" scrolling="yes"  class="x-iframe"></iframe>
             </div>
         </div>
         <div id="tab_show"></div>
@@ -372,6 +378,26 @@
 </div>
 <div class="page-content-bg"></div>
 <style id="theme_style"></style>
+
+<script>
+
+    function extShop() {
+
+        var path = $("#path").val();
+        $.ajax({
+            url: path + "/loginControl/extShop",
+            async: true,
+            type: "post",
+            // data: "name=" + name,
+            dataType: "text",
+            success: function (msg) {
+
+            }
+
+        })
+    }
+
+</script>
 
 </body>
 

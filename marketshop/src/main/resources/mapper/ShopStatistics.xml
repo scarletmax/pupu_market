@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketshop.mapper.ShopStatisticsMapper">
+
+    <!--商品总库存统计-->
+    <select id="totalInventory" resultType="java.lang.Integer">
+       select sum(tg.total_count)
+      from t_goods tg
+      where tg.shop_id = #{shopId}
+    </select>
+    <!--商品总销量统计-->
+    <select id="totalSales" resultType="java.lang.Integer">
+     select sum(tog.goods_count)
+     from t_order_goods tog,
+     t_order_detail tod
+    where tog.order_detail_id = tod.id
+     and tod.shop_id = #{shopId}
+    </select>
+    <!--商品总订单统计-->
+    <select id="totalOrder" resultType="java.lang.Integer">
+     select count(shop_id) from t_order_detail where shop_id=#{shopId}
+    </select>
+    <!--商品总金额统计-->
+    <select id="totalAmount" resultType="java.math.BigDecimal">
+
+   select sum(tod.total_price)
+   from t_order_detail tod
+   where tod.shop_id = #{shopId}
+
+    </select>
+
+
+    <!--&lt;!&ndash;查询优惠券&ndash;&gt;-->
+    <!--    <select id="findCouponUser" resultType="com.cykj.marketpojo.CouponUser">-->
+
+    <!--      select tc.name,tcu.create_time,tc.rule,tp.name as stateStr-->
+    <!--      from t_coupon_user tcu-->
+    <!--         left join t_coupon tc on tc.id = tcu.id-->
+    <!--         left join t_property tp on tcu.state = tp.value and tp.type='coupon_state'-->
+    <!--      where tc.id = #{id}-->
+    <!--    </select>-->
+
+    <!--    &lt;!&ndash;查询订单总数&ndash;&gt;-->
+    <!--    <select id="" resultType="java.lang.Integer">-->
+
+
+    <!--    </select>-->
+
+</mapper>

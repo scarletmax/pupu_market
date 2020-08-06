@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketshop.mapper.GoodsTypeRankMapper">
+
+    <!--商品类型排名-->
+    <select id="findGoodsTypeRank" resultType="com.cykj.marketpojo.GoodsTypeRank">
+    select count(tt.name) as value,tt.name
+     from t_goods tg left join t_type  tt on tg.parent_type_id =tt.id where tg.shop_id=#{shopId} group by tt.name
+
+    </select>
+    <select id="findGoodsRank2" resultType="com.cykj.marketpojo.GoodsTypeRank">
+
+    </select>
+    <!--&lt;!&ndash;查询优惠券&ndash;&gt;-->
+    <!--    <select id="findCouponUser" resultType="com.cykj.marketpojo.CouponUser">-->
+
+    <!--      select tc.name,tcu.create_time,tc.rule,tp.name as stateStr-->
+    <!--      from t_coupon_user tcu-->
+    <!--         left join t_coupon tc on tc.id = tcu.id-->
+    <!--         left join t_property tp on tcu.state = tp.value and tp.type='coupon_state'-->
+    <!--      where tc.id = #{id}-->
+    <!--    </select>-->
+
+    <!--    &lt;!&ndash;查询订单总数&ndash;&gt;-->
+    <!--    <select id="" resultType="java.lang.Integer">-->
+
+
+    <!--    </select>-->
+
+</mapper>

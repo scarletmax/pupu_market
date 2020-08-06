@@ -24,8 +24,8 @@ $(function () {
             , cols: [[ //表头
                 // {checkbox: true, fixed: true }
                 {field: 'name', title: '等级名称', sort: true}
-                , {field: 'min_point', title: '等级最小积分', sort: true}
-                , {field: 'max_point', title: '等级最大积分', sort: true,}
+                , {field: 'minPoint', title: '等级最小积分', sort: true}
+                , {field: 'maxPoint', title: '等级最大积分', sort: true,}
                 , {title: '操作', field: "toolBar", templet: '#tools', align: "left"}
                 , {field: 'id', title: '等级id', hide: true}
             ]]

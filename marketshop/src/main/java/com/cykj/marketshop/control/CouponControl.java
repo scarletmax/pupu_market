@@ -97,4 +97,12 @@ public class CouponControl {
             return "fail";
         }
     }
+    @RequestMapping(value = "findCouponUser")
+    @ResponseBody
+    public Object findCouponUser(int id){
+        HashMap<String ,Object> hashMap=new HashMap<>();
+        hashMap.put("id",id);
+        System.out.println("findCouponUser");
+        return JSON.toJSONString(couponService.findCouponUser(hashMap));
+    }
 }

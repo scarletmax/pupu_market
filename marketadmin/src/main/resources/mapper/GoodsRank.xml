@@ -6,24 +6,29 @@
 
     <!--查询优惠券-->
     <select id="findGoodsRank" resultType="com.cykj.marketpojo.GoodsRank">
-    select  tog.goods_id, tg.name  goodsName, count(tog.goods_id) co
-   from  t_order_goods tog
-          left join t_goods tg on tg.id = tog.goods_id
-   group by tog.goods_id
-   order by count(tog.goods_id) desc
-    limit 0,20;
+  select t1.*,(t1.co*t1.goods_count)total
+from (select  tog.goods_id, tg.name  goodsName, count(tog.goods_id) co,tog.goods_count ,tod.shop_id
+      from  t_order_goods tog
+                left join t_goods tg on tg.id = tog.goods_id
+                left join t_order_detail tod on tog.order_detail_id = tod.id
+
+      group by tog.goods_id)t1
+order by total desc
+limit 0,20;
 
 -- select t_goods.name  from  t_goods
 
     </select>
     <select id="findGoodsRank2" resultType="com.cykj.marketpojo.GoodsRank">
-       select  tog.goods_id, tg.name  goodsName, count(tog.goods_id) co
+select t1.*,(t1.co*t1.goods_count)total
+from (select  tog.goods_id, tg.name  goodsName, count(tog.goods_id) co,tog.goods_count ,tod.shop_id
       from  t_order_goods tog
-          left join t_goods tg on tg.id = tog.goods_id
-      group by tog.goods_id
-      order by count(tog.goods_id) desc
-      limit 0,20;
+                left join t_goods tg on tg.id = tog.goods_id
+                left join t_order_detail tod on tog.order_detail_id = tod.id
 
+      group by tog.goods_id)t1
+order by total desc
+limit 0,20;
     </select>
     <!--&lt;!&ndash;查询优惠券&ndash;&gt;-->
     <!--    <select id="findCouponUser" resultType="com.cykj.marketpojo.CouponUser">-->

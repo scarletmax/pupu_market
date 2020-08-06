@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketshop.mapper.NoticeMapper">
+    <select id="findNoticeState" resultType="java.lang.String">
+        select name from t_property
+        where type='notice_state'
+    </select>
+
+    <select id="findNoticeList" parameterType="java.util.HashMap" resultType="com.cykj.marketpojo.Notice">
+        select a.*,b.`name` as 'stateStr' from t_notice a,t_property b
+        where a.shop_id=#{id} and b.type='notice_state' and a.state=b.`value`
+        <if test="name!=null">
+            and a.title like '%${name}%'
+        </if>
+        <if test="startDate!=null">
+            and a.notice_time between #{startDate}
+        </if>
+        <if test="endDate!=null">
+            and #{endDate}
+        </if>
+        <if test="stateStr!=null">
+            and b.name = #{stateStr}
+        </if>
+    </select>
+
+    <select id="findNoticeCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+        select count(*) from t_notice a,t_property b
+        where a.shop_id=#{id} and b.type='notice_state' and a.state=b.`value`
+        <if test="name!=null">
+            and a.title like '%${name}%'
+        </if>
+        <if test="startDate!=null">
+            and a.notice_time between #{startDate}
+        </if>
+        <if test="endDate!=null">
+            and #{endDate}
+        </if>
+        <if test="stateStr!=null">
+            and b.name = #{stateStr}
+        </if>
+    </select>
+
+    <update id="updateNoticeState">
+        update t_notice set state=(select value from t_property where type='notice_state' and name=#{state} )
+        WHERE id = #{id}
+    </update>
+
+    <insert id="addNotice" parameterType="com.cykj.marketpojo.Notice">
+       INSERT INTO t_notice(title,content,pic_url,shop_id,notice_time,state)
+       value(#{title},#{content},#{picUrl},#{shopId},
+       #{noticeTime},1)
+    </insert>
+
+    <update id="updateNotice" parameterType="com.cykj.marketpojo.Notice">
+        update t_notice set title=#{title},content=#{content},pic_url=#{picUrl},notice_time=#{noticeTime} where id=#{id}
+    </update>
+
+</mapper>

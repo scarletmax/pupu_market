@@ -35,4 +35,11 @@ public class LevelServiceImpl implements LevelService {
         return layuiData;
     }
 
+    @Override
+    public int addLevel(Level level) {
+        int a=0;
+        a = levelMapper.addLevel(level);
+        return a;
+    }
+
 }

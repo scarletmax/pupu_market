@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketshop.mapper.GoodsRankMapper">
+
+    <!--查询订单排名-->
+    <select id="findGoodsRank" resultType="com.cykj.marketpojo.GoodsRank">
+select t1.*,(t1.co*t1.goods_count)total
+from (select  tog.goods_id, tg.name  goodsName, count(tog.goods_id) co,tog.goods_count ,tod.shop_id
+      from  t_order_goods tog
+                left join t_goods tg on tg.id = tog.goods_id
+                left join t_order_detail tod on tog.order_detail_id = tod.id
+      where tod.shop_id=#{shopId}
+      group by tog.goods_id)t1
+order by total desc
+limit 0,10;
+-- select t_goods.name  from  t_goods
+
+    </select>
+    <select id="findGoodsRank2" resultType="com.cykj.marketpojo.GoodsRank">
+  select t1.*,(t1.co*t1.goods_count)total
+from (select  tog.goods_id, tg.name  goodsName, count(tog.goods_id) co,tog.goods_count ,tod.shop_id
+      from  t_order_goods tog
+                left join t_goods tg on tg.id = tog.goods_id
+                left join t_order_detail tod on tog.order_detail_id = tod.id
+      where tod.shop_id=#{shopId}
+      group by tog.goods_id)t1
+order by total desc
+limit 0,10;
+
+    </select>
+    <!--&lt;!&ndash;查询优惠券&ndash;&gt;-->
+    <!--    <select id="findCouponUser" resultType="com.cykj.marketpojo.CouponUser">-->
+
+    <!--      select tc.name,tcu.create_time,tc.rule,tp.name as stateStr-->
+    <!--      from t_coupon_user tcu-->
+    <!--         left join t_coupon tc on tc.id = tcu.id-->
+    <!--         left join t_property tp on tcu.state = tp.value and tp.type='coupon_state'-->
+    <!--      where tc.id = #{id}-->
+    <!--    </select>-->
+
+    <!--    &lt;!&ndash;查询订单总数&ndash;&gt;-->
+    <!--    <select id="" resultType="java.lang.Integer">-->
+
+
+    <!--    </select>-->
+
+</mapper>
