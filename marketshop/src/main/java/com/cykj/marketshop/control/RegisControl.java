@@ -58,9 +58,9 @@ public class RegisControl {
     }
     @RequestMapping(value = "/insertShop")
     @ResponseBody
-    public String insertShop(HttpServletRequest request,String name,String address,String bossName,String verifyID,String pwd,String tel,String info,Shop shop){
-
-        System.out.println("name="+name+" address="+address+" bossName="+bossName+" verifyID="+verifyID+" pwd="+pwd+" tel="+tel+" info="+info);
+    public String insertShop(HttpServletRequest request,Shop shop){
+//,String name,String address,String bossName,String verifyID,String pwd,String tel,String info
+//        System.out.println("name="+name+" address="+address+" bossName="+bossName+" verifyID="+verifyID+" pwd="+pwd+" tel="+tel+" info="+info);
         System.out.println("shop="+shop.toString());
         HttpSession httpSession=request.getSession();
         shop.setPwd(MD5Util.md5(shop.getPwd()));

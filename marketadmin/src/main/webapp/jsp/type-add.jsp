@@ -35,7 +35,7 @@
                 <label for="menuLevel" class="layui-form-label">类型等级</label>
                 <div class="layui-input-inline"><input type="text" id="menuLevel" name="menuLevel"  lay-verify="required" autocomplete="off" class="layui-input" disabled></div>
             </div>
-            <%--隐藏的url--%>
+            <%--隐藏的返回的url--%>
             <div class="layui-form-item  layui-hide">
                 <label for="iconUrl" class="layui-form-label" >类型图标url</label>
                 <div class="layui-input-inline"><input type="text" id="iconUrl" name="iconUrl" lay-verify="" autocomplete="off" class="layui-input"></div>

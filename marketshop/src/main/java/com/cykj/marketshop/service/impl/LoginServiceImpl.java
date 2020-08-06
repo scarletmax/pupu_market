@@ -1,7 +1,6 @@
 package com.cykj.marketshop.service.impl;
 
-import com.cykj.marketpojo.Admin;
-import com.cykj.marketpojo.ShopAdmin;
+import com.cykj.marketpojo.*;
 import com.cykj.marketshop.mapper.LoginMapper;
 import com.cykj.marketshop.service.LoginService;
 import com.cykj.marketshop.util.MD5Util;
@@ -26,7 +25,6 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public ShopAdmin telLogin(String tel) {
-
         return loginMapper.telLogin(tel);
     }
 

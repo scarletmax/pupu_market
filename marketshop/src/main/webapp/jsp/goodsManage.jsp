@@ -111,7 +111,7 @@
             }
             ,parseData: function(res){ //res 即为原始返回的数据
                 console.log(res);
-                console.log(res.album);
+                console.log("商品列表信息中的第一个相册"+res.data[0].album);
                 return {
                     "code": res.code, //解析数据接口返回状态
                     "msg": "", //解析提示文本
@@ -121,6 +121,7 @@
             }
             ,cols: [[ //表头
                 {type:'checkbox'}
+                ,{field: 'id', title: '商品id', width: '180px',align:'center', sort: true}
                 ,{field: 'name', title: '商品名称', width: '180px',align:'center', sort: true}
                 ,{field: 'price', title: '价格',width: '100px', align:'center', sort: true}
                 ,{ title: '特价状态',width: '100px', align:'center', sort: true,templet:function (d) {
@@ -130,6 +131,9 @@
                     return d.recommended==1?'<span style="color: #cc1c2f;">是</span>':'<span style="color: #3734cc;">否</span>';
                     }}
                 ,{field: 'specialPrice',width: '100px', title: '特价', align:'center', sort: true}
+                ,{ title: '秒杀状态', width: '100px',align:'center', sort: true ,templet:function (d) {
+                        return d.flashSale==1?'<span style="color: #cc1c2f;">是</span>':'<span style="color: #3734cc;">否</span>';
+                    }}
                 ,{field: 'parentTypeString',width: '100px', title: '一级分类', align:'center', sort: true}
                 ,{field: 'typeString', title: '二级分类',width: '150px', align:'center', sort: true}
                 ,{field: 'totalCount', title: '剩余总数',width: '150px', align:'center', sort: true}
@@ -168,6 +172,7 @@
             return false;
         });
 
+        //头部工具栏
         table.on('toolbar(test)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);
             var idArr = [];
@@ -177,12 +182,14 @@
                         idArr.push(item.id);
                     }
                 });
+                debugger;
                 $.ajax({
                     url:path+"/goodsControl/putaway?idArr="+idArr,
                     async:false,
                     type:"GET",
                     dataType:"text",
                     before:function(){
+                        debugger;
                         if(idArr.length==0){
                             layer.msg("请选择状态为待上架中的商品上架！");
                             return false;
@@ -261,6 +268,8 @@
                         layer.alert("错误:"+textStatus, {icon: 2});
                     },
                 });
+            }else if(obj.event=="新增商品"){
+                window.open("./goods-add.jsp","_blank");
             }
 
         });
@@ -274,11 +283,10 @@
 
             if(layEvent=='查看详情'){
                 window.tempData = data;
-                xadmin.open('商品详情','${pageContext.request.contextPath}/jsp/good-detail.jsp',600,400);
+                xadmin.open('商品详情','${pageContext.request.contextPath}/jsp/good-detail.jsp',900,600);
             }else if(layEvent=='修改'){
                 window.tempData = data;
-                window.tempData.menuLevel="二级菜单"
-                xadmin.open('新增菜单','${pageContext.request.contextPath}/jsp/menu-add.jsp',600,400);
+                xadmin.open('修改商品','${pageContext.request.contextPath}/jsp/goods-edit.jsp',900,600);
             }else if(layEvent=='开启特价'){
                 $.ajax({
                     url:path+"/goodsControl/startSpecial",
@@ -452,6 +460,7 @@
         <button class="layui-btn layui-btn-sm" lay-event="新增商品">新增商品</button>
         <button class="layui-btn layui-btn-sm" lay-event="上架">上架</button>
         <button class="layui-btn layui-btn-sm" lay-event="下架">下架</button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="删除">删除</button>
     </div>
 </script>
 

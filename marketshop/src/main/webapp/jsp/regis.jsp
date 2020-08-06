@@ -25,7 +25,7 @@
 
     <script src="${pageContext.request.contextPath}/static/X-admin/lib/layui/layui.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/js/regis.js" charset="utf-8"></script>
-
+    <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=UUftmgWr60AqpWKxtkXSMY9hFvSnzzUY"></script>
 
     <%--    <!--[if lt IE 9]>--%>
     <%--    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>--%>
@@ -51,6 +51,19 @@
             /* height: 50px; */
             height: 40px;
         }
+        #l-map{
+            width: 600px;
+            height: 600px;
+        }
+
+        /* 内联 #3 | http://localhost:8081/jsp/regis.jsp */
+
+        #l-map {
+            /* top: 20px; */
+            float: right;
+            top: -1000px;
+            right: 50px;
+        }
 
 
     </style>
@@ -74,14 +87,32 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">输入店铺地址</label>
                     <div class="layui-input-inline">
-                        <input id="address" type="text" name="address" required lay-verify="required"
-                               placeholder="请输入店铺地址" autocomplete="off" class="layui-input">
+<%--                        <input id="suggestId" type="text" name="suggestId" required lay-verify="required"--%>
+<%--                               placeholder="请输入店铺地址" autocomplete="off" class="layui-input"  value="" onblur="openMap()">--%>
+                        <button style="display: none" id="setTop" class="layui-btn" data-method="setTop">多窗口模式，层叠置顶</button>
+                        <div id="r-result"><input  onblur="openMap()" type="text" id="suggestId" size="20" value="百度" /></div>
+
                     </div>
 <%--                    <div class="layui-input-inline">--%>
 <%--                        <input name="code" lay-verify="required" placeholder="短信验证码"  type="text" class="layui-input">--%>
 <%--                    </div>--%>
                     <div class="layui-form-mid layui-word-aux address">请输入你的店铺地址</div>
                 </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">经度</label>
+                    <div class="layui-input-inline">
+                <input id="longitude" type="text" name="longitude" required lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux ">点击地图选择店铺的确切位置</div>
+                </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">纬度</label>
+                        <div class="layui-input-inline">
+                <input id="latitude" type="text" name="latitude" required lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux ">点击地图选择店铺的确切位置</div>
+                    </div>
+
                 <div class="layui-form-item">
                     <label class="layui-form-label">你的名字</label>
                     <div class="layui-input-inline">
@@ -176,15 +207,18 @@
     </div>
 
 </div>
+<div id="l-map" style="display: none"></div>
+<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:500px;height:500px; display:none;"></div>
 
 </body>
 
 <script>
     //Demo
-    layui.use(['form', 'upload'], function () {
+    layui.use(['form', 'upload','layer'], function () {
         var form = layui.form;
         var $ = layui.jquery
-            , upload = layui.upload;
+            , upload = layui.upload,
+        layer = layui.layer;
         var path = $("#path").val();
 
         //监听提交表单信息
@@ -205,13 +239,15 @@
                             type: "post",
                             data: {
                                 "name": $("#name").val(),
-                                "address": $("#address").val(),
+                                "address": $("#suggestId").val(),
                                 "bossName": $("#bossName").val(),
                                 "verifyID": $("#verifyID").val(),
                                 "pwd": $("#pwd").val(),
                                 "tel": $("#tel").val(),
                                 "info": $("#info").val(),
-                                "code":$("#code").val()
+                                "code":$("#code").val(),
+                                "longitude":$("#longitude").val(),
+                                "latitude": $("#latitude").val()
                             },
                             dataType: "text",
                             success: function (msg) {
@@ -363,6 +399,31 @@
             }
 
         })
+        $("#setTop").click(function () {
+            //多窗口模式，层叠置顶
+            layer.open({
+                type: 2 //此处以iframe举例
+                ,title: '当你选择该窗体时，即会在最顶端'
+                ,area: ['390px', '260px']
+                ,shade: 0
+                ,maxmin: true
+                ,content:"<div id=\"l-map\"></div>\n" +
+                    "<div id=\"searchResultPanel\" style=\"border:1px solid #C0C0C0;width:500px;height:500px; display:none;\"></div>"
+                ,btn: ['确定位置', '关闭窗口'] //只是为了演示
+                ,yes: function(){
+                    // $(that).click();
+                }
+                ,btn2: function(){
+                    layer.closeAll();
+                }
+
+                ,zIndex: layer.zIndex //重点1
+                ,success: function(layero){
+                    layer.setTop(layero); //重点2
+                }
+            });
+        })
+
 
     });
     var countdown=60;
@@ -383,6 +444,99 @@
             settime()
         },1000)
     }
+
+    function  openMap() {
+        // $("#setTop").click();
+        $("#l-map").show()
+    }
 </script>
+
+<script type="text/javascript">
+    // 百度地图API功能
+    function G(id) {
+        return document.getElementById(id);
+    }
+
+    var map = new BMap.Map("l-map");
+    map.centerAndZoom("北京",12);                   // 初始化地图,设置城市和地图级别。
+
+    var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+        {"input" : "suggestId"
+            ,"location" : map
+        });
+
+    ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+        var str = "";
+        var _value = e.fromitem.value;
+        var value = "";
+        if (e.fromitem.index > -1) {
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+        value = "";
+        if (e.toitem.index > -1) {
+            _value = e.toitem.value;
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+        G("searchResultPanel").innerHTML = str;
+    });
+
+    var myValue;
+    ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+        var _value = e.item.value;
+        myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+
+        setPlace();
+    });
+
+    function setPlace(){
+        map.clearOverlays();    //清除地图上所有覆盖物
+        function myFun(){
+            var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+            map.centerAndZoom(pp, 18);
+            map.addOverlay(new BMap.Marker(pp));    //添加标注
+        }
+        var local = new BMap.LocalSearch(map, { //智能搜索
+            onSearchComplete: myFun
+        });
+        local.search(myValue);
+    }
+    //地图点击事件
+    function showInfo(e){
+        layer.msg(e.point.lng + ", " + e.point.lat);
+        $("#longitude").val(e.point.lng)
+        $("#latitude").val(e.point.lat)
+
+    }
+    map.addEventListener("click", showInfo);
+
+    //自动定位
+    // var geolocation = new BMap.Geolocation();
+    // geolocation.getCurrentPosition(function(r){
+    //     if(this.getStatus() == BMAP_STATUS_SUCCESS){
+    //         var mk = new BMap.Marker(r.point);
+    //         map.addOverlay(mk);
+    //         map.panTo(r.point);
+    //         alert('您的位置：'+r.point.lng+','+r.point.lat);
+    //     }
+    //     else {
+    //         alert('failed'+this.getStatus());
+    //     }
+    // },{enableHighAccuracy: true})
+    //关于状态码
+    //BMAP_STATUS_SUCCESS	检索成功。对应数值“0”。
+    //BMAP_STATUS_CITY_LIST	城市列表。对应数值“1”。
+    //BMAP_STATUS_UNKNOWN_LOCATION	位置结果未知。对应数值“2”。
+    //BMAP_STATUS_UNKNOWN_ROUTE	导航结果未知。对应数值“3”。
+    //BMAP_STATUS_INVALID_KEY	非法密钥。对应数值“4”。
+    //BMAP_STATUS_INVALID_REQUEST	非法请求。对应数值“5”。
+    //BMAP_STATUS_PERMISSION_DENIED	没有权限。对应数值“6”。(自 1.1 新增)
+    //BMAP_STATUS_SERVICE_UNAVAILABLE	服务不可用。对应数值“7”。(自 1.1 新增)
+    //BMAP_STATUS_TIMEOUT	超时。对应数值“8”。(自 1.1 新增)
+</script>
+
 
 </html>
