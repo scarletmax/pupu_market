@@ -99,12 +99,12 @@
 
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont left-nav-li" lay-tips="用户管理">&#xe6b8;</i>
+                    <i class="iconfont left-nav-li" lay-tips="业务管理">&#xe6b8;</i>
                     <cite>业务管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
                     <li>
-                        <a onclick="xadmin.add_tab('广告管理','')">
+                        <a onclick="xadmin.add_tab('广告管理','../jsp/adManage.jsp')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>广告管理</cite></a>
                     </li>
