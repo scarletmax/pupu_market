@@ -12,5 +12,4 @@ public class MarketuserApplication {
     public static void main(String[] args) {
         SpringApplication.run(MarketuserApplication.class, args);
     }
-
 }
