@@ -13,6 +13,8 @@ public interface GoodsService {
     public int endRecommended(String id);
     public int startSpecial(String id);
     public int endSpecial(String id);
+    public int startFlashSale(String id);
+    public int endFlashSale(String id);
     public int putaway(int[] idArr);
     public int unshelve(int[] idArr);
     public int deleteGoods(int[] idArr);

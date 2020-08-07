@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/X-admin/lib/layui/css/layui.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/X-admin/css/font.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/X-admin/css/xadmin.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/X-admin/js/xadmin.js">
     <script src="${pageContext.request.contextPath}/static/X-admin/lib/layui/layui.js"></script>
     <script src="${pageContext.request.contextPath}/static/X-admin/js/xadmin.js"></script>
 </head>
@@ -33,9 +34,11 @@
                             <label for="name" class="layui-form-label">商品名称</label>
                             <div class="layui-input-inline"><input type="text" id="name" name="name" lay-verify="required" autocomplete="off" class="layui-input"></div>
                         </div>
-                        <div class="layui-form-item">
-                            <label for="intro" class="layui-form-label">商品简介</label>
-                            <div class="layui-input-inline"><input type="text" id="intro" name="intro"  lay-verify="required" autocomplete="off" class="layui-input"></div>
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">商品简介</label>
+                            <div class="layui-input-block">
+                                <textarea id="intro" name="intro" placeholder="请输入商品简介（100字以内）" class="layui-textarea" maxlength="100"> </textarea>
+                            </div>
                         </div>
                         <div class="layui-form-item">
                             <label for="price" class="layui-form-label">市场价</label>
@@ -43,7 +46,7 @@
                         </div>
                         <div class="layui-form-item">
                             <label for="specialPrice" class="layui-form-label">特价价格</label>
-                            <div class="layui-input-inline"><input type="text" id="specialPrice" name="specialPrice" autocomplete="off" class="layui-input"></div>
+                            <div class="layui-input-inline"><input type="text" id="specialPrice" name="specialPrice"  lay-verify="money" autocomplete="off" class="layui-input"></div>
                         </div>
                         <div class="layui-form-item">
                             <label for="parentTypeId" class="layui-form-label">一级分类</label>
@@ -65,6 +68,40 @@
                             <label for="totalCount" class="layui-form-label">剩余总数</label>
                             <div class="layui-input-inline"><input type="text" id="totalCount" name="totalCount" lay-verify="noPositive" autocomplete="off" class="layui-input"></div>
                         </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">是否开启特价</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="special" value="1" title="是">
+                                <input type="radio" name="special" value="0" title="否" checked>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">是否掌柜推荐</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="recommended" value="1" title="是">
+                                <input type="radio" name="recommended" value="0" title="否" checked>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">是否开启秒杀</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="flashSale" value="1" title="是" >
+                                <input type="radio" name="flashSale" value="0" title="否" checked>
+                            </div>
+                        </div>
+                        <label class="layui-form-label" style="color:#bfdff6;">可选属性遵循“title:option1,option2···”的形式，如“尺码:大,中,小”</label>
+                        <div class="layui-form-item">
+                            <label for="choiceProp1" class="layui-form-label">可选属性1</label>
+                            <div class="layui-input-inline"><input type="text" id="choiceProp1" name="choiceProp1" lay-verify="choiceProp" autocomplete="off" class="layui-input"></div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="choiceProp2" class="layui-form-label">可选属性2</label>
+                            <div class="layui-input-inline"><input type="text" id="choiceProp2" name="choiceProp2" lay-verify="choiceProp" autocomplete="off" class="layui-input"></div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="choiceProp3" class="layui-form-label">可选属性3</label>
+                            <div class="layui-input-inline"><input type="text" id="choiceProp3" name="choiceProp3" lay-verify="choiceProp" autocomplete="off" class="layui-input"></div>
+                        </div>
 
                         <div class="layui-form-item layui-upload">
                             <label for="test1" class="layui-form-label" >大图</label>
@@ -81,8 +118,8 @@
                         <input type="text" name="infoPic" style="display: none" lay-verify="picRequest" value="">
 
 
-                        <div class="layui-form-item">
-                            <button type="button" class="layui-btn" lay-filter="edit" lay-submit="">确认新增</button>
+                        <div class="layui-form-item layui-hide"><%--隐藏，使用外部按钮触发--%>
+                            <button type="button" class="layui-btn" lay-filter="edit" lay-submit="" id="hideBtn">确认新增</button>
                         </div>
                     </form>
 
@@ -102,18 +139,22 @@
                             </div>
                         </div>
                     </div>
-
-
-
+                    <script>
+                        function goTrigger(){
+                            $("#hideBtn").trigger("click");
+                        }
+                    </script>
+                    <div class="layui-form-item" style="position: fixed;left:85%;top:85%;">
+                        <button type="button" class="layui-btn" onclick="goTrigger()">确认新增</button>
+                    </div>
 
                 </div>
-
-
             </div>
         </div>
     </div>
 </div>
 <script>
+
     layui.use(['form', 'layer','jquery','upload','carousel'], function() {
         var $ = layui.jquery;
         var form = layui.form;
@@ -121,6 +162,7 @@
         var  upload = layui.upload;
         var carousel = layui.carousel;
         var path =$("#path").val();
+
 
 
         //监听提交
@@ -204,11 +246,6 @@
                     uploadInst.upload();
                 });
             }
-            // ,allDone: function(obj){ //当文件全部被提交后，才触发
-            //     console.log(obj.total); //得到总文件数
-            //     console.log(obj.successful); //请求成功的文件数
-            //     console.log(obj.aborted); //请求失败的文件数
-            // }
 
         });
 
@@ -276,33 +313,34 @@
                     return "请输入正确的价格，正整数或者保留两位小数";
                 }
             }
-            ,nameRepeat: function(value){
-                var flag = 1;//1表示不重复
-                $.ajax({
-                    url:path+"/menuControl/isMenuRepeat",
-                    async:false,
-                    data:{"name":value},
-                    dataType:"text",
-                    success:function(res){
-                        if(res!=0){
-                            flag=2;
-                        }
-                    },
-                    error:function (xhr,textStatus) {
-                        layer.alert("错误:"+textStatus, {icon: 2});
-                        flag=3;
-                    },
-                });
-                if(flag != 1){
-                    return '该菜单已存在';
-                }
-            }
+            // ,nameRepeat: function(value){
+            //     var flag = 1;//1表示不重复
+            //     $.ajax({
+            //         url:path+"/menuControl/isMenuRepeat",
+            //         async:false,
+            //         data:{"name":value},
+            //         dataType:"text",
+            //         success:function(res){
+            //             if(res!=0){
+            //                 flag=2;
+            //             }
+            //         },
+            //         error:function (xhr,textStatus) {
+            //             layer.alert("错误:"+textStatus, {icon: 2});
+            //             flag=3;
+            //         },
+            //     });
+            //     if(flag != 1){
+            //         return '该菜单已存在';
+            //     }
+            // }
         });
 
 
         //监听提交
         form.on('submit(edit)', function(data) {
             console.log("表单提交的数据"+data.field);
+            console.log(data.field);
             $.ajax({
                 url:path+"/goodsControl/addGoods",
                 async:false,
@@ -313,9 +351,9 @@
                     if(res==1){
                         layer.alert("新增成功", {icon: 6}, function() {
                             //关闭当前frame
-                            // xadmin.close();
+                            xadmin.close();
                             // 可以对父窗口进行刷新
-                            // xadmin.father_reload();
+                            xadmin.father_reload();
                         });
                     }
                 },
@@ -338,7 +376,7 @@
                 dataType:"json",
                 success:function(res){
                     $(res).get().forEach(function (item) {
-                        $("select[name=parentTypeId]").append("<option value='"+item.id+"'>"+item.name+"</option>");
+                        $("select[name=parentTypeId]").append("<option value='"+item.id+"'>"+item.name+"</option>")
                     });
                     form.render();
                 },
@@ -348,9 +386,6 @@
             });
             //使用layui的selecct回调实现二级联动
             form.on('select(selectDemo)', function(data){
-                // console.log(data.elem); //得到select原始DOM对象
-                // console.log(data.value); //得到被选中的值
-                // console.log(data.othis); //得到美化后的DOM对象
                 var value = data.value;
                 if(value!=""){
                     $.ajax({
@@ -361,9 +396,9 @@
                         success:function(res){
                             console.log(res);
                             $("select[name=typeId]").find($("option")).remove();
-                            $("select[name=typeId]").append("<option value=''>二级分类</option>");
+                            $("select[name=typeId]").append("<option value=''>二级分类</option>")
                             $(res).get().forEach(function (item) {
-                                $("select[name=typeId]").append("<option value='"+item.id+"'>"+item.name+"</option>");
+                                $("select[name=typeId]").append("<option value='"+item.id+"'>"+item.name+"</option>")
                             });
                             form.render();
                         },
@@ -374,6 +409,7 @@
                 }else{
                     $("select[name=typeId]").find($("option")).remove();
                     $("select[name=typeId]").append("<option value=''>请先选择一级分类</option>");
+                    form.render();
                 }
             });
 

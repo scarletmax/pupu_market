@@ -83,11 +83,16 @@
                             <cite>商品订单管理</cite>
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
-                                    <li>
-                                        <a onclick="xadmin.add_tab('商品管理','')">
-                                            <i class="iconfont">&#xe6a7;</i>
-                                            <cite>商品管理</cite></a>
-                                    </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('商品管理','../jsp/goodsManage.jsp')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>商品管理</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('秒杀管理','../jsp/flashSaleManage.jsp')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>商品管理</cite></a>
+                            </li>
                             <li>
                                 <a onclick="xadmin.add_tab('订单管理','../jsp/orderManage.jsp')">
                                     <i class="iconfont">&#xe6a7;</i>

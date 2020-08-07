@@ -37,9 +37,11 @@
                             <label for="name" class="layui-form-label">商品名称</label>
                             <div class="layui-input-inline"><input type="text" id="name" name="name" lay-verify="required" autocomplete="off" class="layui-input"></div>
                         </div>
-                        <div class="layui-form-item">
-                            <label for="intro" class="layui-form-label">商品简介</label>
-                            <div class="layui-input-inline"><input type="text" id="intro" name="intro"  lay-verify="required" autocomplete="off" class="layui-input"></div>
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">商品简介</label>
+                            <div class="layui-input-block">
+                                <textarea id="intro" name="intro" placeholder="请输入商品简介（100字以内）" class="layui-textarea" maxlength="100"> </textarea>
+                            </div>
                         </div>
                         <div class="layui-form-item">
                             <label for="price" class="layui-form-label">市场价</label>
@@ -70,6 +72,20 @@
                             <div class="layui-input-inline"><input type="text" id="totalCount" name="totalCount" lay-verify="noPositive" autocomplete="off" class="layui-input"></div>
                         </div>
 
+                        <label class="layui-form-label" style="color:#bfdff6;">可选属性遵循“title:option1,option2···”的形式，如“尺码:大,中,小”</label>
+                        <div class="layui-form-item">
+                            <label for="choiceProp1" class="layui-form-label">可选属性1</label>
+                            <div class="layui-input-inline"><input type="text" id="choiceProp1" name="choiceProp1" lay-verify="choiceProp" autocomplete="off" class="layui-input"></div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="choiceProp2" class="layui-form-label">可选属性2</label>
+                            <div class="layui-input-inline"><input type="text" id="choiceProp2" name="choiceProp2" lay-verify="choiceProp" autocomplete="off" class="layui-input"></div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="choiceProp3" class="layui-form-label">可选属性3</label>
+                            <div class="layui-input-inline"><input type="text" id="choiceProp3" name="choiceProp3" lay-verify="choiceProp" autocomplete="off" class="layui-input"></div>
+                        </div>
+
                         <div class="layui-form-item layui-upload">
                             <label for="test1" class="layui-form-label" >大图</label>
                             <button type="button" class="layui-btn" id="test1">选择图片</button>
@@ -86,10 +102,6 @@
                         <input type="hidden" name="pic2">
                         <input type="hidden" name="pic3">
                         <input type="hidden" name="pic4">
-
-                        <div class="layui-form-item">
-                            <button type="button" class="layui-btn" lay-filter="edit" lay-submit="">确认修改</button>
-                        </div>
 
                         <table class="layui-table">
                             <thead><tr><th>图片1</th><th>图片2</th><th>图片3</th><th>图片4</th></tr></thead>
@@ -124,7 +136,9 @@
                             </tr>
                             </tbody>
                         </table>
-
+                        <div class="layui-form-item">
+                            <button type="button" class="layui-btn" lay-filter="edit" lay-submit="" style="position: fixed;left:85%;top:85%;">确认修改</button>
+                        </div>
                     </form>
 
 
@@ -141,99 +155,9 @@
         var form = layui.form;
         var  layer = layui.layer;
         var  upload = layui.upload;
-        var carousel = layui.carousel;
         var path =$("#path").val();
 
 
-
-        //监听提交
-        form.on('submit(edit)', function(data) {
-            console.log(JSON.stringify(data.field));
-            $.ajax({
-                url:path+"/goodsControl/editGoods",
-                async:false,
-                type:"POST",
-                data:data.field,
-                dataType:"json",
-                success:function(res){
-                    console.log(res);
-                    if(res==1){
-                        layer.alert("修改成功", {icon: 6}, function() {
-                            //关闭当前frame
-                            xadmin.close();
-                            // 可以对父窗口进行刷新
-                            xadmin.father_reload();
-                        });
-                    }
-                },
-                error:function (xhr,textStatus) {
-                    layer.alert("错误:"+textStatus, {icon: 2});
-                },
-            });
-            return false;
-        });
-
-        //多张图片
-        var uploadInst = upload.render({
-            elem: '#album'
-            ,url: path+'/goodsControl/detailPicUpload' //改成您自己的上传接口
-            ,accept: 'images'
-            ,acceptMime: 'image/*'
-            ,multiple: true
-            ,number:4
-            ,auto: false
-            ,bindAction:'#albumAction'
-            ,choose: function(obj){
-                //预读本地文件示例，不支持ie8
-                $("#carousel").find("img").attr("src","");
-                var a = 0;
-                obj.preview(function(index, file, result){
-                    a++;
-                    var b="#pic"+a;
-                    $(b).attr('src', result); //图片链接（base64）
-                });
-                carousel.render({
-                    elem: '#carousel'
-                    ,width: '80%' //设置容器宽度
-                    ,height: '350px' //设置容器宽度
-                    ,arrow: 'always' //始终显示箭头
-                });
-            }
-            ,before:function (obj) {
-                window.returnCount=0;//确定上传时清空上传索引值
-                $("#returnUrlDiv").children().remove();
-            }
-            ,done: function(res, index, upload){
-                console.log(res);
-                console.log(res.data[0]);
-                //如果上传成功,由于分次上传多图片因此不能保存在session中
-                if(res.code == 0){
-                    returnCount++;
-                    $("#returnUrlDiv").append("<input name='pic"+returnCount+"' value=''>");
-                    $("#returnUrlDiv").children("input:last-child").attr("value",res.data[0]);
-
-                    var albumText = $('#albumText');
-                    albumText.html('<span style="color: #5bff39;">上传成功</span>');
-                }else{
-                    //上传失败
-                    this.error();
-                }
-            }
-            ,error: function(index,upload){
-                //演示失败状态，并实现重传
-                var albumText = $('#albumText');
-                albumText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-                albumText.find('.demo-reload').on('click', function(){
-                    uploadInst.upload();
-                });
-            }
-            // ,allDone: function(obj){ //当文件全部被提交后，才触发
-            //     console.log(obj.total); //得到总文件数
-            //     console.log(obj.successful); //请求成功的文件数
-            //     console.log(obj.aborted); //请求失败的文件数
-            // }
-
-        });
 
         //指定图片上传替换
         var uploadInst = upload.render({
@@ -249,9 +173,6 @@
                 obj.preview(function(index, file, result){
                     $("#pic1").attr('src', result); //图片链接（base64）
                 });
-            }
-           ,before(){
-                $("input[name=pic1]").attr("value","");//非必要
             }
             ,done: function(res){
                 console.log(res);
@@ -288,15 +209,12 @@
                     $("#pic2").attr('src', result); //图片链接（base64）
                 });
             }
-            ,before(){
-                $("input[name=pic2]").attr("value","");
-            }
             ,done: function(res){
                 console.log(res);
                 console.log(res.data[0]);
                 //如果上传成功
                 if(res.code == 0){
-                    $("#demoText1").html('<span style="color: #5bff39;">上传成功</span>');
+                    $("#demoText2").html('<span style="color: #5bff39;">上传成功</span>');
                     $("input[name=pic2]").attr("value",res.data[0]);
                 }else{
                     //上传失败
@@ -305,9 +223,9 @@
             }
             ,error: function(){
                 //演示失败状态，并实现重传
-                $('#demoText1').html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-                $('#demoText1').find('.demo-reload').on('click', function(){
-                    uploadInst.upload();
+                $('#demoText2').html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                $('#demoText2').find('.demo-reload').on('click', function(){
+                    uploadInst2.upload();
                 });
             }
         });
@@ -326,9 +244,6 @@
                     $("#pic3").attr('src', result); //图片链接（base64）
                 });
             }
-            ,before(){
-                $("input[name=pic3]").attr("value","");
-            }
             ,done: function(res){
                 console.log(res);
                 console.log(res.data[0]);
@@ -345,7 +260,7 @@
                 //演示失败状态，并实现重传
                 $('#demoText1').html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
                 $('#demoText1').find('.demo-reload').on('click', function(){
-                    uploadInst.upload();
+                    uploadInst3.upload();
                 });
             }
         });
@@ -376,39 +291,18 @@
                     this.error();
                 }
             }
-            ,before(){
-                $("input[name=pic4]").attr("value","");
-            }
             ,error: function(){
                 //演示失败状态，并实现重传
                 $('#demoText1').html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
                 $('#demoText1').find('.demo-reload').on('click', function(){
-                    uploadInst.upload();
+                    uploadInst4.upload();
                 });
             }
         });
 
-        // function toUpload() {
-        //     window.myIndex = this.val();
-        //     if(this.val()=="1"){
-        //         uploadInst.reload({
-        //             elem: '#picTest1'
-        //             ,bindAction:'#picTestAction1'
-        //         })
-        //
-        //     }else if(this.val()=="2"){
-        //         uploadInst.reload({
-        //             elem: '#picTest2'
-        //             ,bindAction:'#picTestAction2'
-        //         })
-        //     }
-        //
-        //
-        // }
-
 
         //一张大图上传
-        var uploadInst = upload.render({
+        var uploadInstN = upload.render({
             elem: '#test1'
             ,url: path+'/goodsControl/detailPicUpload' //改成您自己的上传接口
             ,accept: 'images'
@@ -440,7 +334,7 @@
                 var demoText = $('#demoText');
                 demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
                 demoText.find('.demo-reload').on('click', function(){
-                    uploadInst.upload();
+                    uploadInstN.upload();
                 });
             }
         });
@@ -462,27 +356,27 @@
                     return "请输入正确的价格，正整数或者保留两位小数";
                 }
             }
-            ,nameRepeat: function(value){
-                var flag = 1;//1表示不重复
-                $.ajax({
-                    url:path+"/menuControl/isMenuRepeat",
-                    async:false,
-                    data:{"name":value},
-                    dataType:"text",
-                    success:function(res){
-                        if(res!=0){
-                            flag=2;
-                        }
-                    },
-                    error:function (xhr,textStatus) {
-                        layer.alert("错误:"+textStatus, {icon: 2});
-                        flag=3;
-                    },
-                });
-                if(flag != 1){
-                    return '该菜单已存在';
-                }
-            }
+            // ,nameRepeat: function(value){
+            //     var flag = 1;//1表示不重复
+            //     $.ajax({
+            //         url:path+"/menuControl/isMenuRepeat",
+            //         async:false,
+            //         data:{"name":value},
+            //         dataType:"text",
+            //         success:function(res){
+            //             if(res!=0){
+            //                 flag=2;
+            //             }
+            //         },
+            //         error:function (xhr,textStatus) {
+            //             layer.alert("错误:"+textStatus, {icon: 2});
+            //             flag=3;
+            //         },
+            //     });
+            //     if(flag != 1){
+            //         return '该菜单已存在';
+            //     }
+            // }
         });
 
 
@@ -519,22 +413,22 @@
             var data = window.parent.tempData;
             $("input[name=id]").val(data.id);
             $("input[name=name]").val(data.name);
-            $("input[name=intro]").val(data.intro);
+            $("textarea[name=intro]").text(data.intro);
             $("input[name=price]").val(data.price);
             $("input[name=specialPrice]").val(data.specialPrice);
             $("input[name=totalCount]").val(data.totalCount);
-            $("input[name=name]").val(data.name);
+            $("input[name=choiceProp1]").val(data.choiceProp1);
+            $("input[name=choiceProp2]").val(data.choiceProp2);
+            $("input[name=choiceProp3]").val(data.choiceProp3);
             $("#demo1").attr("src","../upload/goods_pic"+data.infoPic);
             $("#pic1").attr("src","../upload/goods_pic"+data.pic1);
             $("#pic2").attr("src","../upload/goods_pic"+data.pic2);
             $("#pic3").attr("src","../upload/goods_pic"+data.pic3);
             $("#pic4").attr("src","../upload/goods_pic"+data.pic4);
-
-
+            //这里没有顺便给input框url地址，因此xml中修改时需要判断地址不空才插入
 
 
             //分类这里需要回显
-            //分类这里不用回显
             $.ajax({
                 url:path+"/typeControl/parentTypeList",
                 async:false,
@@ -578,6 +472,7 @@
                 }else{
                     $("select[name=typeId]").find($("option")).remove();
                     $("select[name=typeId]").append("<option value=''>请先选择一级分类</option>");
+                    form.render();
                 }
             });
             //二级回显
