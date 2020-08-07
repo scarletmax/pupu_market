@@ -43,7 +43,7 @@
                         </div>
                         <div class="layui-inline layui-show-xs-block">
                             <select class="layui-form-select" name="parentTypeId" lay-filter="selectDemo">
-                                <option value="">一级分类</option>
+                                <option value="0">一级分类</option>
                             </select>
                         </div>
                         <div class="layui-inline layui-show-xs-block">
@@ -400,11 +400,7 @@
                         $("select[name=parentTypeId]").append("<option value='"+item.id+"'>"+item.name+"</option>")
                     });
                     //
-                    $("select[name=parentTypeId]").change(function () {
-                        // alert("gaibian")
 
-
-                    });
                     form.render();
                 },
                 error:function (xhr,textStatus) {
@@ -417,7 +413,8 @@
                 // console.log(data.value); //得到被选中的值
                 // console.log(data.othis); //得到美化后的DOM对象
                 var value = data.value;
-                if(value!=""){
+                console.log("value==="+value);
+                if(value!='0'){
                     $.ajax({
                         url:path+"/typeControl/typeList?parentTypeId="+value,
                         async:false,
@@ -437,8 +434,10 @@
                         },
                     });
                 }else{
+                    console.log("dddddddddd")
                     $("select[name=typeId]").find($("option")).remove();
-                    $("select[name=typeId]").append("<option value=''>请先选择一级分类</option>")
+                    $("select[name=typeId]").append("<option value=''>请先选择一级分类</option>");
+                    form.render();
                 }
             });
 
