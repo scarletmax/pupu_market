@@ -34,9 +34,18 @@ public class Goods {
     private int saleCount;
     private int commentCount;
     private GoodsComment goodsComment;
+    private  String createTimeStr;
 
 
     public Goods() {
+    }
+
+    public String getCreateTimeStr() {
+        return createTimeStr;
+    }
+
+    public void setCreateTimeStr(String createTimeStr) {
+        this.createTimeStr = createTimeStr;
     }
 
     public int getId() {
