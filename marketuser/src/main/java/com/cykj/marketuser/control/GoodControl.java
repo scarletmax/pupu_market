@@ -27,6 +27,13 @@ public class GoodControl {
         return JSON.toJSONString(goodsList);
     }
 
+    @RequestMapping(value = "/getMoreSpecialGood")
+    @ResponseBody
+    public String getMoreSpecialGood(Integer shopId, HttpServletRequest request){
+        List<Goods> goodsList = goodService.getMoreSpecialGood(shopId);
+        return JSON.toJSONString(goodsList);
+    }
+
     @RequestMapping(value = "/getHighSaleGood")
     @ResponseBody
     public String getHighSaleGood(Integer shopId,HttpServletRequest request){
