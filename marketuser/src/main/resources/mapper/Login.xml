@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketuser.mapper.LoginMapper">
+
+    <!--    检查是否存在该openid-->
+    <select id="checkOpenid"  parameterType="com.cykj.marketpojo.User"  resultType="com.cykj.marketpojo.User">
+        select id from t_user where open_id = #{openId}
+    </select>
+    <!--    插入新微信用户数据-->
+    <insert id="insertWeixinUser" parameterType="com.cykj.marketpojo.User" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user (name,icon_url,open_id)
+        values (#{name},#{iconUrl},#{openId})
+    </insert>
+    <!--    微信登陆-->
+    <select id="loginByWeixin"   parameterType="com.cykj.marketpojo.User" resultType="com.cykj.marketpojo.User">
+        select id
+        from t_user where open_id= #{openId}
+    </select>
+    <!--    手机登录-->
+    <select id="loginByTel" parameterType="com.cykj.marketpojo.User" resultType="com.cykj.marketpojo.User">
+        select id
+        from t_user where tel=#{tel} and pwd=#{pwd}
+    </select>
+</mapper>

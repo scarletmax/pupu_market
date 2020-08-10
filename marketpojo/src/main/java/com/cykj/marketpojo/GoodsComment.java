@@ -12,6 +12,7 @@ public class GoodsComment {
     private int userId;
     private int orderDetailId;
     private String goodsName;
+    private String userName;
 
     public GoodsComment(int id, int goodsId, int point, String comment, Date createTime, int userId, int orderDetailId, String goodsName) {
         this.id = id;
@@ -90,5 +91,13 @@ public class GoodsComment {
 
     public void setOrderDetailId(int orderDetailId) {
         this.orderDetailId = orderDetailId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

@@ -1,5 +1,7 @@
 package com.cykj.marketpojo;
 
+import java.util.List;
+
 public class Goods {
 
     private int id;
@@ -28,6 +30,11 @@ public class Goods {
     private String choiceProp2;
     private String choiceProp3;
     private Album album;
+    private List<String>  imgList;
+    private int saleCount;
+    private int commentCount;
+    private GoodsComment goodsComment;
+
 
     public Goods() {
     }
@@ -238,5 +245,37 @@ public class Goods {
 
     public void setAlbum(Album album) {
         this.album = album;
+    }
+
+    public List<String> getImgList() {
+        return imgList;
+    }
+
+    public void setImgList(List<String> imgList) {
+        this.imgList = imgList;
+    }
+
+    public int getSaleCount() {
+        return saleCount;
+    }
+
+    public void setSaleCount(int saleCount) {
+        this.saleCount = saleCount;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public GoodsComment getGoodsComment() {
+        return goodsComment;
+    }
+
+    public void setGoodsComment(GoodsComment goodsComment) {
+        this.goodsComment = goodsComment;
     }
 }

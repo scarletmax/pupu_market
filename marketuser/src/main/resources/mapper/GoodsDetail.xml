@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketuser.mapper.GoodsMapper">
+    <!--	根据商品id查询商品详情-->
+    <select id="queryGoodsDetail" parameterType="java.lang.Integer">
+        select id, name, intro, pic1, pic2, pic3, pic4, recommended, special, total_count, price, special_price,
+        parent_type_id, type_id, flash_sale, state, info_pic, shop_id, choice_prop3, choice_prop2, choice_prop1,
+        (select sum(goods_count) as saleCount,
+        (select count(*) from t_goods_comment where goods_id=#{id}) as commentCount
+from t_order_goods where goods_id= #{id})
+        from t_goods
+        where id= #{id}
+    </select>
+<!--    查询评价-->
+    <select id="queryOneComment" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.GoodsComment">
+        select c.id, c.goods_id, c.point, c.comment, c.create_time, c.user_id, c.order_detail_id,u.name as userName
+from t_goods_comment c,t_user u where goods_id=#{id} and u.id=c.user_id limit 1
+    </select>
+<!--    根据类别获取商品列表-->
+    <select id="getGoodsListByType" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.Goods">
+        select id,name,price,pic1,price,total_count from t_goods
+        where type_id= #{typeId} and state = 1 and shop_id= #{shopId}
+    </select>
+
+</mapper>
