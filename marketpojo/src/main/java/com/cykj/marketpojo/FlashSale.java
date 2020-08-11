@@ -6,12 +6,16 @@ public class FlashSale {
 
     private int id;
     private int goodsId;
+    private int goodsName;
     private Date startTime;
     private Date endTime;
-    private int saleLimit;
-    private int saleCount;
-    private double salePrice;
+    private int restCount;
+    private int limitBuy;
+    private double flashPrice;
     private int version;
+    private Date createTime;
+    private int state;
+    private String stateStr;
 
     public FlashSale() {
     }
@@ -32,16 +36,16 @@ public class FlashSale {
         return endTime;
     }
 
-    public int getSaleLimit() {
-        return saleLimit;
+    public int getRestCount() {
+        return restCount;
     }
 
-    public int getSaleCount() {
-        return saleCount;
+    public int getLimitBuy() {
+        return limitBuy;
     }
 
-    public double getSalePrice() {
-        return salePrice;
+    public double getFlashPrice() {
+        return flashPrice;
     }
 
     public int getVersion() {
@@ -64,19 +68,51 @@ public class FlashSale {
         this.endTime = endTime;
     }
 
-    public void setSaleLimit(int saleLimit) {
-        this.saleLimit = saleLimit;
+    public void setRestCount(int restCount) {
+        this.restCount = restCount;
     }
 
-    public void setSaleCount(int saleCount) {
-        this.saleCount = saleCount;
+    public void setLimitBuy(int limitBuy) {
+        this.limitBuy = limitBuy;
     }
 
-    public void setSalePrice(double salePrice) {
-        this.salePrice = salePrice;
+    public void setFlashPrice(double flashPrice) {
+        this.flashPrice = flashPrice;
     }
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public String getStateStr() {
+        return stateStr;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public void setStateStr(String stateStr) {
+        this.stateStr = stateStr;
+    }
+
+    public int getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(int goodsName) {
+        this.goodsName = goodsName;
     }
 }

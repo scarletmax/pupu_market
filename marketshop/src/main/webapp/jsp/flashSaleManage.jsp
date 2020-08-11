@@ -34,37 +34,23 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    分店商品管理
+                    秒杀管理
                 </div>
                 <div class="layui-card-body">
                     <form class="layui-form layui-col-space5" lay-filter="formTest" id="formTest" >
                         <div class="layui-inline layui-show-xs-block">
-                            <input type="text" name="name"  placeholder="请输入商品名称" autocomplete="off" class="layui-input" id="name" >
+                            <input type="text" name="goodsName"  placeholder="请输入商品名称" autocomplete="off" class="layui-input">
                         </div>
                         <div class="layui-inline layui-show-xs-block">
-                            <select class="layui-form-select" name="parentTypeId" lay-filter="selectDemo">
-                                <option value="">一级分类</option>
-                            </select>
-                        </div>
-                        <div class="layui-inline layui-show-xs-block">
-                            <select class="layui-form-select" name="typeId">
-                                <option value="">请先选择一级分类</option>
-                            </select>
-                        </div>
-                        <div class="layui-inline layui-show-xs-block">
-                            <input type="text" name="price_min" placeholder="起始价格" lay-verify="money|bigger" autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="layui-inline layui-show-xs-block">
-                            <input type="text" name="price_max" placeholder="终止价格" lay-verify="money|bigger" autocomplete="off" class="layui-input">
+                            <input type="text" id="containTime" name="containTime" placeholder="秒杀时间范围包含节点" autocomplete="off" class="layui-input">
                         </div>
                         <div class="layui-inline layui-show-xs-block">
                             <select class="layui-form-select" name="state" >
-                                <option value="">请选择商品状态</option>
+                                <option value="">请选择秒杀记录状态</option>
                             </select>
                         </div>
                         <div class="layui-inline layui-show-xs-block">
                             <button type="button" class="layui-btn"  title="搜索" lay-submit=""  lay-filter="go"><i class="layui-icon">&#xe615;</i></button>
-                            <button type="button" class="layui-btn"  title="清空" lay-submit="" id="clean">条件清空</button>
                         </div>
                     </form>
                     <table id="test" lay-filter="test"></table>
@@ -85,20 +71,11 @@
 
         var path = $("#path").val();
 
-        $("#clean").click(function () {
-            $("#formTest").find("input").val("");
-
-            $("#formTest").find("select").children(":first").attr("select",true);
-
-            // debugger;
-
-             var str2 = "option[value='"+1+"']";
-            var a=$("select[name=state]").siblings("layui-form-select").find("dl").children().removeClass("layui-this");
-            $("select[name=state]").siblings("layui-form-select").find("dl").children("dd:first").addClass("layui-this");
-            // find(str2).attr("select",true);
-            form.render();
-
+        laydate.render({
+            elem: '#containTime' //指定元素
+            , type: 'datetime'
         });
+
 
 
         var tableIns = table.render({
@@ -106,7 +83,7 @@
             ,id:'idTest'//结合checkStatus使用
             ,toolbar: '#toolbarDemo'
             ,height: 480
-            ,url: '${pageContext.request.contextPath}/goodsControl/searchGoodsList' //数据接口
+            ,url: '${pageContext.request.contextPath}/flashSaleControl/selectFlashSale' //数据接口
             ,method:'get'
             ,where: {}//查询条件
             ,request: {
@@ -125,7 +102,6 @@
             }
             ,parseData: function(res){ //res 即为原始返回的数据
                 console.log(res);
-                console.log("商品列表信息中的第一个相册"+res.data[0].album);
                 return {
                     "code": res.code, //解析数据接口返回状态
                     "msg": "", //解析提示文本
@@ -133,57 +109,27 @@
                     "data": res.data //解析数据列表[]
                 };
             }
-            ,cols: [[ //表头
-                {type:'checkbox'}
-                ,{field: 'id', title: '商品id', width: '180px',align:'center', sort: true}
-                ,{field: 'name', title: '商品名称', width: '180px',align:'center', sort: true}
-                ,{field: 'price', title: '价格',width: '100px', align:'center', sort: true}
-                ,{ title: '特价状态',width: '100px', align:'center', sort: true,templet:function (d) {
-                        return d.special==1?'<span style="color: #cc1c2f;">是</span>':'<span style="color: #3734cc;">否</span>';
-                    }}
-                ,{ title: '推荐状态', width: '100px',align:'center', sort: true ,templet:function (d) {
-                    return d.recommended==1?'<span style="color: #cc1c2f;">是</span>':'<span style="color: #3734cc;">否</span>';
-                    }}
-                ,{field: 'specialPrice',width: '100px', title: '特价', align:'center', sort: true}
-                ,{ title: '秒杀状态', width: '100px',align:'center', sort: true ,templet:function (d) {
-                        return d.flashSale==1?'<span style="color: #cc1c2f;">是</span>':'<span style="color: #3734cc;">否</span>';
-                    }}
-                ,{field: 'parentTypeString',width: '100px', title: '一级分类', align:'center', sort: true}
-                ,{field: 'typeString', title: '二级分类',width: '150px', align:'center', sort: true}
-                ,{field: 'totalCount', title: '剩余总数',width: '150px', align:'center', sort: true}
-                ,{field: 'stateStr', title: '商品状态', width: '150px',align:'center', sort: true}
+            ,cols: [[ //表头，按照商品id升序，秒杀创建时间降序
+                // {type:'checkbox'}
+                {field: 'id', title: '秒杀id', hide: true}
+                ,{field: 'goodsId', title: '商品id', align:'center', sort: true}
+                ,{field: 'goodsName', title: '商品名称',align:'center', sort: true}
+                ,{field: 'startTime', title: '开始时间', align:'center', sort: true}
+                ,{field: 'endTime', title: '结束时间',align:'center', sort: true}
+                ,{field: 'restCount', title: '剩余总数', align:'center', sort: true}
+                ,{field: 'limitBuy', title: '限购数量', align:'center', sort: true}
+                ,{field: 'stateStr', title: '秒杀状态', align:'center', sort: true}
                 ,{field: 'operation', title: '操作', width: '250px', align:'center',toolbar: '#barDemo'}
             ]]
         });
 
-        form.verify({
-           money : function(value){
-               if(value==""){
-                   //放过
-               }else{
-                   if(!/(^[1-9]\d*(\.\d{1,2})?$)|(^0(\.\d{1,2})?$)/.test(value)){
-                       return "请输入正确的价格，正整数或者保留两位小数";
-                   }
-               }
-            }
-            ,bigger: function(value){
-               var a = $("input[name=price_min]").val();
-               var b = $("input[name=price_max]").val();
-                if(a!=""&&b!=""&&a>=b){
-                    return "最大价格应大于最小价格";
-                }
-            }
-        });
 
         form.on('submit(go)',function (data) {
             tableIns.reload({
                 where: {
-                    name: data.field.name
-                    ,parentTypeId: $("select[name=parentTypeId]").children("option:selected").val()
-                    ,typeId: $("select[name=typeId]").children("option:selected").val()
-                    ,state: $("select[name=state]").children("option:selected").val()
-                    ,price_min:data.field.price_min
-                    ,price_max:data.field.price_max
+                    goodsName: data.field.goodsName
+                    ,containTime:data.field.containTime
+                    ,state: data.field.state//以前多余了，表单可以得到select的选中项
                 }
                 ,page: {
                     curr: 1 //重新从第 1 页开始
@@ -193,106 +139,18 @@
         });
 
         //头部工具栏
-        table.on('toolbar(test)', function(obj){
-            var checkStatus = table.checkStatus(obj.config.id);
-            var idArr = [];
-            if(obj.event=="上架"){
-                checkStatus.data.forEach(function (item) {
-                    if(item.stateStr="待上架"){
-                        idArr.push(item.id);
-                    }
-                });
-                debugger;
-                $.ajax({
-                    url:path+"/goodsControl/putaway?idArr="+idArr,
-                    async:false,
-                    type:"GET",
-                    dataType:"text",
-                    before:function(){
-                        debugger;
-                        if(idArr.length==0){
-                            layer.msg("请选择状态为待上架中的商品上架！");
-                            return false;
-                        }
-                    }
-                    ,success:function(res){
-                        console.log(res);
-                        if(res!=0){
-                            layer.msg("选中项中状态为待上架的商品已成功上架",{time:1000});
-                            tableIns.reload();
-                        }else{
-                            layer.msg("操作失败",{time:1000});
-                        }
-                    },
-                    error:function (xhr,textStatus) {
-                        layer.alert("错误:"+textStatus, {icon: 2});
-                    },
-                });
-            }else if(obj.event=="下架") {
-                checkStatus.data.forEach(function (item) {
-                    if (item.stateStr == "销售中"||item.stateStr == "补货中") {
-                        idArr.push(item.id);
-                    }
-                });
-                $.ajax({
-                    url: path + "/goodsControl/unshelve?idArr="+idArr,
-                    async: false,
-                    type: "GET",
-                    dataType: "text",
-                    before:function(){
-                        if(idArr.length==0){
-                            layer.msg("请选择状态为销售中/补货中的商品下架！");
-                            return false;
-                        }
-                    }
-                    ,success: function (res) {
-                        console.log(res);
-                        if (res != 0) {
-                            layer.msg("选中项中状态为销售中/补货中的商品已成功下架", {time: 1000});
-                            tableIns.reload();
-                        } else {
-                            layer.msg("操作失败", {time: 1000});
-                        }
-                    },
-                    error: function (xhr, textStatus) {
-                        layer.alert("错误:" + textStatus, {icon: 2});
-                    },
-                });
-            }else if(obj.event=="删除") {
-                checkStatus.data.forEach(function (item) {
-                    if (item.stateStr = "待上架") {
-                        idArr.push(item.id);
-                    }
-                });
-                $.ajax({
-                    url:path+"/goodsControl/deleteGoods?idArr="+idArr,
-                    async:false,
-                    type:"GET",
-                    dataType:"text",
-                    before:function(){
-                        if(idArr.length==0){
-                            layer.msg("请选择待上架的商品删除！");
-                            return false;
-                        }
-                    }
-                    ,success:function(res){
-                        console.log(res);
-                        if(res!=0){
-                            layer.msg("选中项中状态为待上架的商品已成功删除",{time:1000});
-                            tableIns.reload();
-                        }else{
-                            layer.msg("操作失败",{time:1000});
-                        }
-                    },
-                    error:function (xhr,textStatus) {
-                        layer.alert("错误:"+textStatus, {icon: 2});
-                    },
-                });
-            }else if(obj.event=="新增商品"){
-                xadmin.open('新增商品','${pageContext.request.contextPath}/jsp/goods-add.jsp',900,600);
-            }
+        // table.on('toolbar(test)', function(obj) {
+            // var checkStatus = table.checkStatus(obj.config.id);
+            // var idArr = [];
+            // if(obj.event=="上架"){
+            //     checkStatus.data.forEach(function (item) {
+            //         if(item.stateStr="待上架"){
+            //             idArr.push(item.id);
+            //         }
+            //     });
 
-        });
+
+        // }
 
 
         //行工具栏监听事件
@@ -307,127 +165,10 @@
             }else if(layEvent=='修改'){
                 window.tempData = data;
                 xadmin.open('修改商品','${pageContext.request.contextPath}/jsp/goods-edit.jsp',900,600);
-            }else if(layEvent=='开启特价'){
-                $.ajax({
-                    url:path+"/goodsControl/startSpecial",
-                    async:false,
-                    type:"POST",
-                    data:"id="+data.id,
-                    dataType:"text",
-                    success:function(res){
-                        console.log(res);
-                        if(res!=0){
-                            layer.msg("操作成功",{time:1000});
-                            tableIns.reload();
-                        }else{
-                            layer.msg("操作失败",{time:1000});
-                        }
-                    },
-                    error:function (xhr,textStatus) {
-                        layer.alert("错误:"+textStatus, {icon: 2});
-                    },
-                });
-            }else if(layEvent=='终止特价'){
-                $.ajax({
-                    url:path+"/goodsControl/endSpecial",
-                    async:false,
-                    type:"POST",
-                    data:"id="+data.id,
-                    dataType:"text",
-                    success:function(res){
-                        console.log(res);
-                        if(res!=0){
-                            layer.msg("操作成功",{time:1000});
-                            tableIns.reload();
-                        }else{
-                            layer.msg("操作失败",{time:1000});
-                        }
-                    },
-                    error:function (xhr,textStatus) {
-                        layer.alert("错误:"+textStatus, {icon: 2});
-                    },
-                });
-            }else if(layEvent=='开启推荐'){
-                $.ajax({
-                    url:path+"/goodsControl/startRecommended",
-                    async:false,
-                    type:"POST",
-                    data:"id="+data.id,
-                    dataType:"text",
-                    success:function(res){
-                        console.log(res);
-                        if(res!=0){
-                            layer.msg("操作成功",{time:1000});
-                            tableIns.reload();
-                        }else{
-                            layer.msg("操作失败",{time:1000});
-                        }
-                    },
-                    error:function (xhr,textStatus) {
-                        layer.alert("错误:"+textStatus, {icon: 2});
-                    },
-                });
-            }else if(layEvent=='终止推荐'){
-                $.ajax({
-                    url:path+"/goodsControl/endRecommended",
-                    async:false,
-                    type:"POST",
-                    data:"id="+data.id,
-                    dataType:"text",
-                    success:function(res){
-                        console.log(res);
-                        if(res!=0){
-                            layer.msg("操作成功",{time:1000});
-                            tableIns.reload();
-                        }else{
-                            layer.msg("操作失败",{time:1000});
-                        }
-                    },
-                    error:function (xhr,textStatus) {
-                        layer.alert("错误:"+textStatus, {icon: 2});
-                    },
-                });
-            }else if(layEvent=='开启秒杀'){
-                $.ajax({
-                    url:path+"/goodsControl/startFlashSale",
-                    async:false,
-                    type:"POST",
-                    data:"id="+data.id,
-                    dataType:"text",
-                    success:function(res){
-                        console.log(res);
-                        if(res!=0){
-                            layer.msg("操作成功",{time:1000});
-                            tableIns.reload();
-                        }else{
-                            layer.msg("操作失败",{time:1000});
-                        }
-                    },
-                    error:function (xhr,textStatus) {
-                        layer.alert("错误:"+textStatus, {icon: 2});
-                    },
-                });
-            }else if(layEvent=='终止秒杀'){
-                $.ajax({
-                    url:path+"/goodsControl/endFlashSale",
-                    async:false,
-                    type:"POST",
-                    data:"id="+data.id,
-                    dataType:"text",
-                    success:function(res){
-                        console.log(res);
-                        if(res!=0){
-                            layer.msg("操作成功",{time:1000});
-                            tableIns.reload();
-                        }else{
-                            layer.msg("操作失败",{time:1000});
-                        }
-                    },
-                    error:function (xhr,textStatus) {
-                        layer.alert("错误:"+textStatus, {icon: 2});
-                    },
-                });
             }
+
+
+
 
         });
 
@@ -435,7 +176,7 @@
 
         $(function () {
             $.ajax({
-                url:path+"/propertyControl/enumGoodsState",
+                url:path+"/propertyControl/enumFlashSaleState",
                 async:false,
                 type:"POST",
                 dataType:"json",
@@ -450,49 +191,6 @@
                 },
             });
 
-            $.ajax({
-                url:path+"/typeControl/parentTypeList",
-                async:false,
-                type:"POST",
-                dataType:"json",
-                success:function(res){
-                    $(res).get().forEach(function (item) {
-                        $("select[name=parentTypeId]").append("<option value='"+item.id+"'>"+item.name+"</option>")
-                    });
-                    form.render();
-                },
-                error:function (xhr,textStatus) {
-                    layer.alert("错误:"+textStatus, {icon: 2});
-                },
-            });
-            //使用layui的selecct回调实现二级联动
-            form.on('select(selectDemo)', function(data){
-                var value = data.value;
-                if(value!=""){
-                    $.ajax({
-                        url:path+"/typeControl/typeList?parentTypeId="+value,
-                        async:false,
-                        type:"GET",
-                        dataType:"json",
-                        success:function(res){
-                            console.log(res);
-                            $("select[name=typeId]").find($("option")).remove();
-                            $("select[name=typeId]").append("<option value=''>二级分类</option>")
-                            $(res).get().forEach(function (item) {
-                                $("select[name=typeId]").append("<option value='"+item.id+"'>"+item.name+"</option>")
-                            });
-                            form.render();
-                        },
-                        error:function (xhr,textStatus) {
-                            layer.alert("错误:"+textStatus, {icon: 2});
-                        },
-                    });
-                }else{
-                    $("select[name=typeId]").find($("option")).remove();
-                    $("select[name=typeId]").append("<option value=''>请先选择一级分类</option>");
-                    form.render();
-                }
-            });
 
         })
 
@@ -511,9 +209,6 @@
 </script>
 
 <script type="text/html" id="barDemo">
-<%--    {{#  if(d.stateStr=='待上架'){ }}--%>
-<%--    <a class="layui-btn layui-btn-xs" lay-event="查看详情">查看详情</a>--%>
-<%--    <a class="layui-btn layui-btn-xs" lay-event="修改">修改</a>--%>
     {{#  if(d.stateStr=='销售中'||d.stateStr=='补货中'||d.stateStr=='待上架'){ }}
     <a class="layui-btn layui-btn-xs" lay-event="查看详情">查看详情</a>
     <a class="layui-btn layui-btn-xs" lay-event="修改">修改</a>

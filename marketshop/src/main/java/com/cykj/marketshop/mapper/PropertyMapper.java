@@ -10,4 +10,6 @@ public interface PropertyMapper {
 
      //枚举商品状态
      List<Property> enumGoodsState();
+     //枚举商品状态
+     List<Property> enumFlashSaleState();
 }

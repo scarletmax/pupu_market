@@ -91,5 +91,16 @@ public class GoodsServiceImpl implements GoodsService {
         return goodsMapper.editGoods(goods);
     }
 
+    @Override
+    public int reduceGoodsNum(int num, int id) {
+        int a = goodsMapper.reduceNum(num,id);
+        int b = goodsMapper.reduceNumTest(id);
+        if(b>=0){
+            return a;
+        }else{
+            return -1;
+        }
+    }
+
 
 }

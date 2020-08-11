@@ -10,6 +10,11 @@
         select * from t_property where type = 'goods_state'
     </select>
 
+    <!--查询秒杀记录状态-->
+    <select id="enumFlashSaleState" resultType="com.cykj.marketpojo.Property">
+        select * from t_property where type = 'flash_state'
+    </select>
+
 
 
 </mapper>

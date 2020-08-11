@@ -9,7 +9,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://rm-wz98e15n644mq3089ko.mysql.rds.aliyuncs.com:3306/online_market?serverTimezone=GMT&useUnicode=true&characterEncoding=utf8&useSSL=false
   application:
-    name: user-client
+    name: deliver-client
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   config-location: classpath:SqlMapConfig.xml

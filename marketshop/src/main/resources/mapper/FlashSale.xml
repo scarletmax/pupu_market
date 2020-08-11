@@ -3,9 +3,42 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cykj.marketshop.mapper.FlashSaleMapper">
-    <!--查询商品秒杀信息-->
-    <select id="showFlashByGoodsId"  resultType="com.cykj.marketpojo.FlashSale">
-	    select * from t_flash_sale where goods_id = #{id}
+    <!--查询某个商店的商品秒杀信息数量-->
+	<select id="selectFlashSaleNum"  resultType="java.lang.Integer">
+		select count(*) from t_flash_sale as f,t_goods as g where f.goods_id = g.id and g.shop_id = #{shopId}
+		<if test="goodsName!=null and goodsName!=''">
+			and g.name like concat ('%',#{goodsName},'%')
+		</if>
+		<if test="containTime!=null and containTime!=''">
+			and convert (f.start_time,char )&gt;#{containTime} and convert (f.end_time,char )&lt;#{containTime}
+		</if>
+		<if test="state!=null and state!=''">
+			and f.state=#{state}
+		</if>
 	</select>
+
+	<!--查询某个商店的商品秒杀信息-->
+	<select id="selectFlashSaleList"  resultType="com.cykj.marketpojo.FlashSale">
+		select g.name as goodsName,p.name as state_str,f.* from t_flash_sale as f,t_goods as g,t_property as p where f.goods_id = g.id and g.shop_id = #{shopId}
+		and p.type='flash_state' and p.value=f.state
+		<if test="goodsName!=null and goodsName!=''">
+			and g.name like concat ('%',#{goodsName},'%')
+		</if>
+		<if test="containTime!=null and containTime!=''">
+			and convert (f.start_time,char )&gt;#{containTime} and convert (f.end_time,char )&lt;#{containTime}
+		</if>
+		<if test="state!=null and state!=''">
+			and f.state=#{state}
+		</if>
+		order by f.goods_id,f.create_time desc
+		limit #{pageSize} offset #{offset}
+	</select>
+
+
+	<!--插入秒杀记录-->
+    <insert id="insertFlashSale"  parameterType="com.cykj.marketpojo.FlashSale">
+	    insert into t_flash_sale (goods_id,start_time,end_time,rest_count,flash_price,limit_buy)  values
+	    (#{goodsId},convert(#{startTime},datetime),convert(#{endTime},datetime),#{restCount},#{flashPrice},#{limitBuy})
+	</insert>
 
 </mapper>

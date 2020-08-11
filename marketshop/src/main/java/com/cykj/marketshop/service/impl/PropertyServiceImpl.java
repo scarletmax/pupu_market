@@ -19,4 +19,9 @@ public class PropertyServiceImpl implements PropertyService {
     public List<Property> enumGoodsState() {
         return propertyMapper.enumGoodsState();
     }
+
+    @Override
+    public List<Property> enumFlashSaleState() {
+        return propertyMapper.enumFlashSaleState();
+    }
 }
