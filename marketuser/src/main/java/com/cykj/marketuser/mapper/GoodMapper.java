@@ -10,4 +10,6 @@ public interface GoodMapper {
     List<Goods> getMoreSpecialGood(int shopId);
     List<Goods> getHighSaleGood(int shopId);
     List<Goods> getRecommendedGood(int shopId);
+    List<Goods> findNewGoods(int shopId);
+    List<Goods> findMoreNewGoods(int shopId);
 }

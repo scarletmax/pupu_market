@@ -53,4 +53,14 @@ public class GoodControl {
         return JSON.toJSONString(specialGoodsService.findSpecialGoods());
     }
 
+    @RequestMapping(value = "/findNewGoods")
+    @ResponseBody
+    public Object findNewGoods(int shopId){
+        return JSON.toJSONString(goodService.findNewGoods(shopId));
+    }
+    @RequestMapping(value = "/findMoreNewGoods")
+    @ResponseBody
+    public Object findMoreNewGoods(int shopId){
+        return JSON.toJSONString(goodService.findMoreNewGoods(shopId));
+    }
 }
