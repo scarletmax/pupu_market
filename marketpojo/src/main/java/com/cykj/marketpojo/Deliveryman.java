@@ -14,8 +14,29 @@ public class Deliveryman {
     private Double money;
     private Double latitude;
     private Double longitude;
+    private String pwd;
 
     public Deliveryman() {
+    }
+
+    public Deliveryman(int id, String account, String name, String tel, String idCard, String sex, int state, String stateStr, int autoOrderTaking, Double money, Double latitude, Double longitude, String pwd) {
+        this.id = id;
+        this.account = account;
+        this.name = name;
+        this.tel = tel;
+        this.idCard = idCard;
+        this.sex = sex;
+        this.state = state;
+        this.stateStr = stateStr;
+        this.autoOrderTaking = autoOrderTaking;
+        this.money = money;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.pwd = pwd;
+    }
+
+    public String getPwd() {
+        return pwd;
     }
 
     public String getAccount() {
