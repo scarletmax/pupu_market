@@ -2,6 +2,7 @@ package com.cykj.marketuser.control;
 
 import com.alibaba.fastjson.JSON;
 import com.cykj.marketuser.service.GoodService;
+import com.cykj.marketuser.service.SpecialGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +17,20 @@ import java.util.List;
 public class GoodControl {
     @Autowired
     private GoodService goodService;
+    @Autowired
+    private SpecialGoodsService specialGoodsService;
 
     @RequestMapping(value = "/getSpecialGood")
     @ResponseBody
     public String getSpecialGood(Integer shopId, HttpServletRequest request){
         List<Goods> goodsList = goodService.getSpecialGood(shopId);
+        return JSON.toJSONString(goodsList);
+    }
+
+    @RequestMapping(value = "/getMoreSpecialGood")
+    @ResponseBody
+    public String getMoreSpecialGood(Integer shopId, HttpServletRequest request){
+        List<Goods> goodsList = goodService.getMoreSpecialGood(shopId);
         return JSON.toJSONString(goodsList);
     }
 
@@ -37,5 +47,20 @@ public class GoodControl {
         List<Goods> goodsList = goodService.getRecommendedGood(shopId);
         return JSON.toJSONString(goodsList);
     }
+    @RequestMapping(value = "/findSpecialGoods")
+    @ResponseBody
+    public Object findSpecialGoods(){
+        return JSON.toJSONString(specialGoodsService.findSpecialGoods());
+    }
 
+    @RequestMapping(value = "/findNewGoods")
+    @ResponseBody
+    public Object findNewGoods(int shopId){
+        return JSON.toJSONString(goodService.findNewGoods(shopId));
+    }
+    @RequestMapping(value = "/findMoreNewGoods")
+    @ResponseBody
+    public Object findMoreNewGoods(int shopId){
+        return JSON.toJSONString(goodService.findMoreNewGoods(shopId));
+    }
 }

@@ -19,6 +19,12 @@ public class GoodServiceImpl implements GoodService {
     }
 
     @Override
+    public List<Goods> getMoreSpecialGood(int shopId) {
+        return goodMapper.getMoreSpecialGood(shopId);
+    }
+
+
+    @Override
     public List<Goods> getHighSaleGood(int shopId) {
         return goodMapper.getHighSaleGood(shopId);
     }
@@ -26,6 +32,16 @@ public class GoodServiceImpl implements GoodService {
     @Override
     public List<Goods> getRecommendedGood(int shopId) {
         return goodMapper.getRecommendedGood(shopId);
+    }
+
+    @Override
+    public List<Goods> findNewGoods(int shopId) {
+        return goodMapper.findNewGoods(shopId);
+    }
+
+    @Override
+    public List<Goods> findMoreNewGoods(int shopId) {
+        return goodMapper.findMoreNewGoods(shopId);
     }
 
 

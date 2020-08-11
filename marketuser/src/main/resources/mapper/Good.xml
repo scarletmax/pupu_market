@@ -6,17 +6,45 @@
     <!--	根据商店id获取特价商品信息-->
     <select id="getSpecialGood" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.Goods">
         select id,name,pic1,pic2,pic3,pic4,special_price from t_goods
+        where shop_id=#{shopId} and special='1' limit 1,6
+	</select>
+
+    <select id="getMoreSpecialGood" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.Goods">
+        select id,name,pic1,pic2,pic3,pic4,special_price from t_goods
         where shop_id=#{shopId} and special='1'
 	</select>
 
     <select id="getHighSaleGood" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.Goods">
         select id,name,pic1,pic2,pic3,pic4,special_price from t_goods
-        where id in (select t.id from (select goods_id as 'id' from t_order_goods group by goods_id limit 1,5 )t) and shop_id=#{shopId} and special='1'
+        where id in (select t.id from (select goods_id as 'id' from t_order_goods group by goods_id limit 1,6 )t) and shop_id=#{shopId} and special='1'
 	</select>
 
     <select id="getRecommendedGood" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.Goods">
        select id,name,pic1,pic2,pic3,pic4,special_price from t_goods
-       where  recommended='1' and shop_id=#{shopId}
+       where  recommended='1' and shop_id=#{shopId} limit 1,6
 	</select>
+
+    <select id="findNewGoods" resultType="com.cykj.marketpojo.Goods">
+        select id,
+       name,
+       pic1,
+       shop_id,
+       price
+       from t_goods
+        where shop_id = #{shopId}
+        order by id desc
+       limit 6
+    </select>
+    <select id="findMoreNewGoods" resultType="com.cykj.marketpojo.Goods">
+        select id,
+       name,
+       pic1,
+       shop_id,
+       price
+       from t_goods
+        where shop_id = #{shopId}
+        order by id desc
+       limit 12
+    </select>
 
 </mapper>

@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/eurekaserver/pom.xml" />
         <option value="$PROJECT_DIR$/marketshop/pom.xml" />
         <option value="$PROJECT_DIR$/marketuser/pom.xml" />
+        <option value="$PROJECT_DIR$/marketdelivery/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

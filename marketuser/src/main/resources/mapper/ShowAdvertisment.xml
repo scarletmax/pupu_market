@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketuser.mapper.ShowAdvertismentMapper">
+    <!--	根据商店id获取特价商品信息-->
+<!--显示轮播图广告-->
+    <select id="findCarouselAD" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.Advertisement">
+     select id, title, type, pic_url, goods_id, shop_id, state from t_advertisement where state=1 and type=1;
+	</select>
+
+  <!--显示静态广告-->
+  <select id="findStaticAD" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.Advertisement">
+     select id, title, type, pic_url, goods_id, shop_id, state from t_advertisement where state=1 and type=2;
+	</select>
+
+</mapper>
