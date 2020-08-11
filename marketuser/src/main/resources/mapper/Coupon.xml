@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketuser.mapper.CouponMapper">
+    <!--	根据优惠券-用户关系表获取优惠券信息,优惠券的禁用启用状态不影响已经分发的优惠券，只影响优惠券的领取-->
+    <!--	只显示可用和失效的优惠券，已用的只保留数据库的记录，或者删除它在优惠券-用户关系表中的记录-->
+    <select id="selectCouponList"  resultType="com.cykj.marketpojo.Coupon">
+        select c.* from t_coupon_user as cu,t_coupon as c where cu.coupon_id = c.id
+        and cu.user_id = #{userId}
+	</select>
+<!--    <select id="selectInvalidCouponList"  resultType="com.cykj.marketpojo.Coupon">-->
+<!--        select c.* from t_coupon_user as cu,t_coupon as c where cu_coupon_id = c.id-->
+<!--        and cu.state = 2 and cu.user_id = #{userId}-->
+<!--	</select>-->
+
+
+
+</mapper>

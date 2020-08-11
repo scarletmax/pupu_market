@@ -22,4 +22,10 @@ public class PropertyControl {
         return JSON.toJSONString(propertyService.enumGoodsState());
     }
 
+    @RequestMapping(value = "/enumFlashSaleState")
+    @ResponseBody
+    public String enumFlashSaleState(){
+        return JSON.toJSONString(propertyService.enumFlashSaleState());
+    }
+
 }

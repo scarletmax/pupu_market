@@ -89,7 +89,7 @@
                                 <input type="radio" name="flashSale" value="0" title="否" checked>
                             </div>
                         </div>
-                        <label class="layui-form-label" style="color:#bfdff6;">可选属性遵循“title:option1,option2···”的形式，如“尺码:大,中,小”</label>
+                        <p style="margin-left: 22px;margin-bottom: 20px">可选属性遵循“title:option1,option2···”的形式，如“尺码:大,中,小”</p>
                         <div class="layui-form-item">
                             <label for="choiceProp1" class="layui-form-label">可选属性1</label>
                             <div class="layui-input-inline"><input type="text" id="choiceProp1" name="choiceProp1" lay-verify="choiceProp" autocomplete="off" class="layui-input"></div>

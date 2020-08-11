@@ -145,9 +145,17 @@
                     return d.recommended==1?'<span style="color: #cc1c2f;">是</span>':'<span style="color: #3734cc;">否</span>';
                     }}
                 ,{field: 'specialPrice',width: '100px', title: '特价', align:'center', sort: true}
-                ,{ title: '秒杀状态', width: '100px',align:'center', sort: true ,templet:function (d) {
+                ,{ title: '秒杀开启状态', width: '100px',align:'center', sort: true ,templet:function (d) {
                         return d.flashSale==1?'<span style="color: #cc1c2f;">是</span>':'<span style="color: #3734cc;">否</span>';
                     }}
+
+                    /*秒杀状态开关，不影响秒杀的设置。秒杀为关则到时间不会自动开启秒杀，即对每条秒杀记录要先检查这个开关，是某个商品多条秒杀记录的，
+                   一键开关， 如flashSale=开 and flashstate=预热中，则
+                   关：flashState=预热中，不会出现在预告中。到时候不会自动开启秒杀
+                   flashstate=秒杀中，不会出现在秒杀中
+                   flashsate=已结束，不会
+               */
+                /*同个产品在不同店铺卖可能有不同描述和配图，因此看作不同商品，因此商店和商品是一对多而不是多对多*/
                 ,{field: 'parentTypeString',width: '100px', title: '一级分类', align:'center', sort: true}
                 ,{field: 'typeString', title: '二级分类',width: '150px', align:'center', sort: true}
                 ,{field: 'totalCount', title: '剩余总数',width: '150px', align:'center', sort: true}
@@ -427,6 +435,9 @@
                         layer.alert("错误:"+textStatus, {icon: 2});
                     },
                 });
+            }else if(layEvent=='新增秒杀'){
+                window.tempData = data;
+                xadmin.open('新增秒杀','${pageContext.request.contextPath}/jsp/flashSale-add.jsp',700,450);
             }
 
         });
@@ -511,12 +522,10 @@
 </script>
 
 <script type="text/html" id="barDemo">
-<%--    {{#  if(d.stateStr=='待上架'){ }}--%>
-<%--    <a class="layui-btn layui-btn-xs" lay-event="查看详情">查看详情</a>--%>
-<%--    <a class="layui-btn layui-btn-xs" lay-event="修改">修改</a>--%>
-    {{#  if(d.stateStr=='销售中'||d.stateStr=='补货中'||d.stateStr=='待上架'){ }}
     <a class="layui-btn layui-btn-xs" lay-event="查看详情">查看详情</a>
+    {{#  if(d.stateStr=='销售中'||d.stateStr=='补货中'||d.stateStr=='待上架'){ }}
     <a class="layui-btn layui-btn-xs" lay-event="修改">修改</a>
+    <a class="layui-btn layui-btn-xs" lay-event="新增秒杀">新增秒杀</a>
         {{#  if(d.special==0){ }}
         <a class="layui-btn layui-btn-xs" lay-event="开启特价">开启特价</a>
         {{#  }else{ }}
@@ -534,8 +543,6 @@
         {{#  }else{ }}
         <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="终止秒杀">终止秒杀</a>
         {{#  } }}
-    {{#  }else if(d.stateStr=='已下架'){ }}
-    <a class="layui-btn layui-btn-xs" lay-event="查看详情">查看详情</a>
     {{#  } }}
 </script>
 

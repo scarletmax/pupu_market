@@ -5,7 +5,7 @@
 <mapper namespace="com.cykj.marketshop.mapper.GoodsMapper">
 	<!--    商品数量 -->
 	<select id="selectGoodsNum" parameterType="java.util.HashMap" resultType="java.lang.Integer">
-		select count(*) from t_goods where shop_id=1
+		select count(*) from t_goods where shop_id=#{shopId}
 		<if test="name!=null and name!=''">
 			and name like concat ('%',#{name},'%')
 		</if>
@@ -28,7 +28,7 @@
 	<!--    商品列表 -->
 	<select id="selectGoodsList" parameterType="java.util.HashMap" resultType="com.cykj.marketpojo.Goods">
 		select g.*,t_parent.name as parentTypeString,t_child.name as typeString,p.name as state_str from t_goods as g,t_property as p,t_type as t_parent, t_type as t_child
-		where g.shop_id=1 and g.state = p.value and p.type = 'goods_state' and g.parent_type_id = t_parent.id and g.type_id = t_child.id
+		where g.shop_id=#{shopId} and g.state = p.value and p.type = 'goods_state' and g.parent_type_id = t_parent.id and g.type_id = t_child.id
 		<if test="name!=null and name!=''">
 			and g.name like concat ('%',#{name},'%')
 		</if>
@@ -126,6 +126,16 @@
 		</set>
 		where id = #{id}
 	</update>
+
+	<select id="reduceNumTest" resultType="java.lang.Integer">
+		select (total_count) as leftNum from t_goods  where id = #{id}
+	</select>
+
+	<update id="reduceNum">
+		update t_goods set total_count=total_count-#{num} where id = #{id}
+	</update>
+
+
 
 
 
