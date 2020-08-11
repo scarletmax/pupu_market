@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/eurekaserver/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/marketadmin/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/marketdelivery/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/marketpojo/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/marketshop/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/marketuser/src/main/java" charset="UTF-8" />

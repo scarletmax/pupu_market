@@ -1,0 +1,22 @@
+server:
+  port: 8083
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: jx191201
+    password: JX191201
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://rm-wz98e15n644mq3089ko.mysql.rds.aliyuncs.com:3306/online_market?serverTimezone=GMT&useUnicode=true&characterEncoding=utf8&useSSL=false
+  application:
+    name: user-client
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  config-location: classpath:SqlMapConfig.xml
+
+eureka:
+  client:
+    fetch-registry: true #是否从eureka 服务器获取各个微服务地址
+    register-with-eureka: true #是否注册到eureka服务器
+    service-url:
+      defaultZone: http://localhost:2020/eureka/

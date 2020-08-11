@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/eurekaserver/eurekaserver.iml" filepath="$PROJECT_DIR$/eurekaserver/eurekaserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/marketadmin/marketadmin.iml" filepath="$PROJECT_DIR$/marketadmin/marketadmin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/marketdelivery/marketdelivery.iml" filepath="$PROJECT_DIR$/marketdelivery/marketdelivery.iml" />
       <module fileurl="file://$PROJECT_DIR$/marketpojo/marketpojo.iml" filepath="$PROJECT_DIR$/marketpojo/marketpojo.iml" />
       <module fileurl="file://$PROJECT_DIR$/marketshop/marketshop.iml" filepath="$PROJECT_DIR$/marketshop/marketshop.iml" />
       <module fileurl="file://$PROJECT_DIR$/marketuser/marketuser.iml" filepath="$PROJECT_DIR$/marketuser/marketuser.iml" />

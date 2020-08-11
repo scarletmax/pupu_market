@@ -14,8 +14,15 @@ public class User {
     private int state;
     private  String stateStr;
     private Date regTime;
+    private String openId;
 
     public User() {
+    }
+
+    public User(String name, String iconUrl, String openId) {
+        this.name = name;
+        this.iconUrl = iconUrl;
+        this.openId = openId;
     }
 
     public User(int id, String account, String name, String pwd, String iconUrl, int levelId, String levelName, int point, int state, String stateStr, Date regTime) {
@@ -118,5 +125,13 @@ public class User {
 
     public void setRegTime(Date regTime) {
         this.regTime = regTime;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 }
