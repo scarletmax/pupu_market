@@ -24,4 +24,27 @@
        where  recommended='1' and shop_id=#{shopId} limit 1,6
 	</select>
 
+    <select id="findNewGoods" resultType="com.cykj.marketpojo.Goods">
+        select id,
+       name,
+       pic1,
+       shop_id,
+       price
+       from t_goods
+        where shop_id = #{shopId}
+        order by id desc
+       limit 6
+    </select>
+    <select id="findMoreNewGoods" resultType="com.cykj.marketpojo.Goods">
+        select id,
+       name,
+       pic1,
+       shop_id,
+       price
+       from t_goods
+        where shop_id = #{shopId}
+        order by id desc
+       limit 12
+    </select>
+
 </mapper>

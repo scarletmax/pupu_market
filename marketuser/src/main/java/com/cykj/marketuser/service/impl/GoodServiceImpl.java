@@ -34,5 +34,15 @@ public class GoodServiceImpl implements GoodService {
         return goodMapper.getRecommendedGood(shopId);
     }
 
+    @Override
+    public List<Goods> findNewGoods(int shopId) {
+        return goodMapper.findNewGoods(shopId);
+    }
+
+    @Override
+    public List<Goods> findMoreNewGoods(int shopId) {
+        return goodMapper.findMoreNewGoods(shopId);
+    }
+
 
 }
