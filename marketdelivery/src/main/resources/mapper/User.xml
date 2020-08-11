@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cykj.marketuser.mapper.UserMapper">
+<mapper namespace="com.cykj.marketdelivery.mapper.UserMapper">
     <!--	根据用户id查找用户信息-->
     <select id="login" parameterType="com.cykj.marketpojo.Deliveryman" resultType="com.cykj.marketpojo.Deliveryman">
         select id,account,name,tel,state

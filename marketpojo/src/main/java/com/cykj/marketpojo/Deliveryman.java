@@ -134,4 +134,8 @@ public class Deliveryman {
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
 }

@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cykj.marketpojo.Deliveryman;
+import org.springframework.web.bind.annotation.RestController;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@Controller("userControl")
-@RequestMapping
+@Controller
+@RequestMapping("userControl")
 public class UserControl {
     @Autowired
     private UserService userService;
