@@ -13,7 +13,7 @@ public class Goods {
     private  String pic4;
     private int recommended;
     private int special;
-    private int totalCount;
+    private int totalCount;//剩余总数 库存
     private Double price;
     private Double specialPrice;
     private  int parentTypeId;
@@ -31,13 +31,59 @@ public class Goods {
     private String choiceProp3;
     private Album album;
     private List<String>  imgList;
-    private int saleCount;
+    private int saleCount;//销量
     private int commentCount;
     private GoodsComment goodsComment;
     private  String createTimeStr;
+    //为了配合前端 订单部分
+    private int goodsId;
+    private String goodsName;
+    private int goodsCount;//购买个数
+    //新增订单时插入商品
+    private int orderDetailId;
+    private String choiceProp;
 
+    public String getChoiceProp() {
+        return choiceProp;
+    }
+
+    public void setChoiceProp(String choiceProp) {
+        this.choiceProp = choiceProp;
+    }
 
     public Goods() {
+    }
+
+    public int getOrderDetailId() {
+        return orderDetailId;
+    }
+
+    public void setOrderDetailId(int orderDetailId) {
+        this.orderDetailId = orderDetailId;
+    }
+
+    public int getGoodsCount() {
+        return goodsCount;
+    }
+
+    public void setGoodsCount(int goodsCount) {
+        this.goodsCount = goodsCount;
+    }
+
+    public int getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
     }
 
     public String getCreateTimeStr() {

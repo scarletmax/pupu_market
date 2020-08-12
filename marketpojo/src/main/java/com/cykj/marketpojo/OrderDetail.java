@@ -27,9 +27,41 @@ public class OrderDetail {
     private String payTypeStr;
     private int couponId;
     private String couponName;
+    private  ReceiverInfo receiverInfo;
+    private List<Coupon> couponList;
+
     private String benefit;
 
     public OrderDetail() {
+    }
+
+    public OrderDetail(Double totalPrice, String orderNum, String name, String address, String roomNum, Double longitude, Double latitude, String tel, int userId, int shopId) {
+        this.totalPrice = totalPrice;
+        this.orderNum = orderNum;
+        this.name = name;
+        this.address = address;
+        this.roomNum = roomNum;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.tel = tel;
+        this.userId = userId;
+        this.shopId = shopId;
+    }
+
+    public List<Coupon> getCouponList() {
+        return couponList;
+    }
+
+    public void setCouponList(List<Coupon> couponList) {
+        this.couponList = couponList;
+    }
+
+    public ReceiverInfo getReceiverInfo() {
+        return receiverInfo;
+    }
+
+    public void setReceiverInfo(ReceiverInfo receiverInfo) {
+        this.receiverInfo = receiverInfo;
     }
 
     public String getBenefit() {
