@@ -1,6 +1,7 @@
 package com.cykj.marketpojo;
 
 import java.util.Date;
+import java.util.List;
 
 public class OrderDetail {
     private int id;
@@ -29,6 +30,7 @@ public class OrderDetail {
     private String couponName;
     private  ReceiverInfo receiverInfo;
     private List<Coupon> couponList;
+    private double income;
 
     private String benefit;
 
@@ -46,6 +48,14 @@ public class OrderDetail {
         this.tel = tel;
         this.userId = userId;
         this.shopId = shopId;
+    }
+
+    public double getIncome() {
+        return income;
+    }
+
+    public void setIncome(double income) {
+        this.income = income;
     }
 
     public List<Coupon> getCouponList() {

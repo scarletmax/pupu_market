@@ -7,23 +7,5 @@
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://rm-wz98e15n644mq3089ko.mysql.rds.aliyuncs.com:3306/online_market</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="@localhost" uuid="bff46b38-0379-477a-8d5e-1c0b85a875ae">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="online_market@rm-wz98e15n644mq3089ko.mysql.rds.aliyuncs.com" uuid="db10b964-b87d-47bb-8aa8-53af02e9978d">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://rm-wz98e15n644mq3089ko.mysql.rds.aliyuncs.com:3306/online_market</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="@localhost [2]" uuid="21403776-d803-4e5d-a138-555cf5c27e59">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
-    </data-source>
   </component>
 </project>

@@ -25,11 +25,12 @@ public class OrderControl {
 
     @RequestMapping(value = "/orderlist")
     @ResponseBody
-    public String orderlist(Integer id,String deliverymanId,String userName,String userId,String deliverymanName,String shopName,String startTime,String receiptName ,String endTime,Integer limit,Integer page){
+    public String orderlist(Integer state,Integer id,String deliverymanId,String userName,String userId,String deliverymanName,String shopName,String startTime,String receiptName ,String endTime,Integer limit,Integer page){
 
         System.out.println("orderlist="+" userName="+userName+" userId="+userId+"  deliverymanName="+deliverymanName+" shopName="+shopName+" startTime="+startTime+" endTime="+endTime+" limit="+limit+" page="+page);
         HashMap<String ,Object> hashMap=new HashMap<>();
         System.out.println("limit="+limit);
+        System.out.println("state="+state);
         if (limit==null||limit== 0) {
             limit=10;
         }
@@ -51,6 +52,7 @@ public class OrderControl {
         hashMap.put("shopName",shopName);
         hashMap.put("receiptName",receiptName);
         hashMap.put("id",id);
+        hashMap.put("state",state);
         return JSON.toJSONString(orderService.findOrderList(hashMap));
     }
     @RequestMapping(value = "/deliverOrder")

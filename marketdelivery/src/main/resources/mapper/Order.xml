@@ -8,6 +8,7 @@
     <select id="findOrderList" resultType="com.cykj.marketpojo.OrderDetail">
         select
         tod.id,
+        tdf.income,
         tod.total_price,
         tod.create_time,
         tod.receive_time,
@@ -29,6 +30,7 @@
         left join t_user tu on tod.user_id = tu.id
         left join t_shop ts on tod.shop_id = ts.id
         left join t_coupon tc on tod.coupon_id = tc.id
+        left join t_deliveryman_fund tdf  on tdf.order_detail_id=tod.id
         left join t_property tp on tod.state = tp.value and tp.type='order_state'
         <where>
             <if test="userName!=null and userName!=''">
@@ -41,6 +43,10 @@
             </if>
             <if test="id!=null and id!=''">
                 and tod.id =#{id}
+
+            </if>
+            <if test="state!=null and state!=''">
+                and tod.state =#{state}
 
             </if>
             <if test="deliverymanName!=null and deliverymanName!=''">
@@ -95,6 +101,10 @@
             </if>
             <if test="user_id!=null and user_id!=''">
                 and tu.user_id =#{user_id}
+
+            </if>
+            <if test="state!=null and state!=''">
+                and tod.state =#{state}
 
             </if>
             <if test="deliverymanName!=null and deliverymanName!=''">
