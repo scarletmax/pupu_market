@@ -16,4 +16,9 @@ public class UserServiceImpl implements UserService {
     public Deliveryman login(Deliveryman deliveryman) {
         return userMapper.login(deliveryman);
     }
+
+    @Override
+    public Deliveryman getUserInfo(Integer id) {
+        return userMapper.getUserInfo(id);
+    }
 }
