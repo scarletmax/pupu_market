@@ -2,10 +2,11 @@ package com.cykj.marketdelivery.service.impl;
 
 
 
-import com.cykj.marketdelivery.mapper.OrderMapper;
+import com.cykj.marketdelivery.mapper.Order1Mapper;
 import com.cykj.marketdelivery.service.OrderService;
 import com.cykj.marketpojo.LayData;
 import com.cykj.marketpojo.OrderDetail;
+import com.cykj.marketpojo.Property;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Autowired
-    private OrderMapper orderMapper;
+    private Order1Mapper orderMapper;
 
     @Override
     public LayData<OrderDetail> findOrderList(HashMap<String, Object> hashMap) {
@@ -30,5 +31,15 @@ public class OrderServiceImpl implements OrderService {
         layData.setMsg("");
 
         return layData;
+    }
+
+    @Override
+    public List<OrderDetail> deliverOrder(HashMap<String, Object> hashMap) {
+        return orderMapper.deliverOrder(hashMap);
+    }
+
+    @Override
+    public Property findDelivermoney() {
+        return orderMapper.findDelivermoney();
     }
 }

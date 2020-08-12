@@ -5,6 +5,6 @@ import com.cykj.marketpojo.User;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface UserMapper {
+public interface User1Mapper {
     Deliveryman login(Deliveryman deliveryma);
 }

@@ -27,8 +27,17 @@ public class OrderDetail {
     private String payTypeStr;
     private int couponId;
     private String couponName;
+    private String benefit;
 
     public OrderDetail() {
+    }
+
+    public String getBenefit() {
+        return benefit;
+    }
+
+    public void setBenefit(String benefit) {
+        this.benefit = benefit;
     }
 
     public int getId() {

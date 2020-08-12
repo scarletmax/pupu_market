@@ -3,12 +3,16 @@ package com.cykj.marketdelivery.control;
 import com.alibaba.fastjson.JSON;
 
 import com.cykj.marketdelivery.service.OrderService;
+import com.cykj.marketpojo.OrderDetail;
+import com.cykj.marketpojo.Property;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/order")
@@ -21,11 +25,12 @@ public class OrderControl {
 
     @RequestMapping(value = "/orderlist")
     @ResponseBody
-    public String orderlist(String deliverymanId,String userName,String userId,String deliverymanName,String shopName,String startTime,String receiptName ,String endTime,int limit,int page){
+    public String orderlist(Integer id,String deliverymanId,String userName,String userId,String deliverymanName,String shopName,String startTime,String receiptName ,String endTime,Integer limit,Integer page){
 
         System.out.println("orderlist="+" userName="+userName+" userId="+userId+"  deliverymanName="+deliverymanName+" shopName="+shopName+" startTime="+startTime+" endTime="+endTime+" limit="+limit+" page="+page);
         HashMap<String ,Object> hashMap=new HashMap<>();
-        if (limit== 0) {
+        System.out.println("limit="+limit);
+        if (limit==null||limit== 0) {
             limit=10;
         }
         if (page != 0) {
@@ -45,7 +50,32 @@ public class OrderControl {
         hashMap.put("endTime",endTime);
         hashMap.put("shopName",shopName);
         hashMap.put("receiptName",receiptName);
+        hashMap.put("id",id);
         return JSON.toJSONString(orderService.findOrderList(hashMap));
     }
+    @RequestMapping(value = "/deliverOrder")
+    @ResponseBody
+    public Object deliverOrder(String deliverymanId){
 
+        HashMap<String,Object> hashMap=new HashMap<>();
+        hashMap.put("deliverymanId",deliverymanId);
+        List<OrderDetail>  list=new ArrayList<OrderDetail>();
+       list= orderService.deliverOrder(hashMap);
+        if(list!=null){
+            Property property=orderService.findDelivermoney();
+            for (OrderDetail orderDetail : list) {
+                orderDetail.setBenefit(property.getValue());
+            }
+        }
+
+        return JSON.toJSONString(list);
+    }
+    @RequestMapping(value = "/confirmReceipt")
+    @ResponseBody
+    public Object confirmReceipt(String id) {
+
+
+
+        return null;
+    }
 }
