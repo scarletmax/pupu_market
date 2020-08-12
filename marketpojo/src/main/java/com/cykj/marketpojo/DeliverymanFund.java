@@ -1,27 +1,25 @@
 package com.cykj.marketpojo;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class DeliverymanFund {
     private int id;
     private int deliverymanId;
-    private BigDecimal income;
+    private double income;
     private Date createTime;
     private int orderDetailId;
     private int type;
 
-    public DeliverymanFund(int id, int deliverymanId, BigDecimal income, Date createTime, int orderDetailId, int type) {
+    public DeliverymanFund() {
+    }
+
+    public DeliverymanFund(int id, int deliverymanId, double income, Date createTime, int orderDetailId, int type) {
         this.id = id;
         this.deliverymanId = deliverymanId;
         this.income = income;
         this.createTime = createTime;
         this.orderDetailId = orderDetailId;
         this.type = type;
-    }
-
-    public DeliverymanFund() {
-        super();
     }
 
     public int getId() {
@@ -40,11 +38,11 @@ public class DeliverymanFund {
         this.deliverymanId = deliverymanId;
     }
 
-    public BigDecimal getIncome() {
+    public double getIncome() {
         return income;
     }
 
-    public void setIncome(BigDecimal income) {
+    public void setIncome(double income) {
         this.income = income;
     }
 

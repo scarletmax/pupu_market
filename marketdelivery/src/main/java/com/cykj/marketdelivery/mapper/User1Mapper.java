@@ -7,4 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface User1Mapper {
     Deliveryman login(Deliveryman deliveryma);
+    Deliveryman getUserInfo(Integer id);
 }
