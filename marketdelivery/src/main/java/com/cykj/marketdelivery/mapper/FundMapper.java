@@ -12,4 +12,5 @@ public interface FundMapper {
     List<DeliverymanFund> getWithdrawal(Integer id);
     List<DeliverymanFund> getDayCapital(Integer id);
     List<DeliverymanFund> getLastDayCapital(Integer id);
+    int addWithdraw(DeliverymanFund deliverymanFund);
 }

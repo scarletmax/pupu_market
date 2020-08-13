@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketadmin.mapper.FundMapper">
+    <!--	管理员列表-->
+    <select id="findFundList"  resultType="com.cykj.marketpojo.DeliverymanFund">
+        select a.* ,b.name as'stateStr'
+        from t_deliveryman_fund a,t_property b
+        where b.type='deliveryman_fund_state'and a.state=b.value
+        and a.type='2'
+    </select>
+
+    <update id="unExamine">
+        update t_deliveryman_fund set state=(select value from t_property where type='deliveryman_fund_state' and name=#{state} )
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectIncome"  resultType="java.lang.Double">
+        select income
+        from t_deliveryman_fund
+        where id = #{id}
+    </select>
+
+    <select id="selectMoney"  resultType="java.lang.Double">
+        select a.money as money
+        from t_deliveryman a,t_deliveryman_fund b
+        where b.id = #{id} and b.deliveryman_id=a.id
+    </select>
+
+    <select id="selectId" resultType="java.lang.Integer" >
+        select a.id as id
+        from t_deliveryman a,t_deliveryman_fund b
+        where b.id = #{id} and b.deliveryman_id=a.id
+    </select>
+
+    <update id="updateMoney">
+        update t_deliveryman set money=#{nowMoney}
+        WHERE id = #{deliverymanId}
+    </update>
+
+    <select id="examine" resultType="com.cykj.marketpojo.DeliverymanFund">
+        select *
+        from t_deliveryman_fund
+        where id = #{id}
+    </select>
+
+    <update id="updateState">
+        update  t_deliveryman_fund set state='1'
+        WHERE serial = #{serial}
+    </update>
+
+</mapper>

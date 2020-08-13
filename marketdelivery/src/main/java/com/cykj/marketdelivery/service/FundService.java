@@ -11,4 +11,5 @@ public interface FundService {
     public List<DeliverymanFund> getWithdrawal(Integer id);
     public List<DeliverymanFund> getDayCapital(Integer id);
     public List<DeliverymanFund> getLastDayCapital(Integer id);
+    public int addWithdraw(Integer id,Double money);
 }

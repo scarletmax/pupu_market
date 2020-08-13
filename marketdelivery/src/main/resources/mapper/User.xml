@@ -13,4 +13,9 @@
         from t_deliveryman where id= #{id}
 	</select>
 
+    <update id="updateMoney" parameterType="com.cykj.marketpojo.Deliveryman">
+        update t_deliveryman set money= #{money}
+        WHERE id = #{id}
+    </update>
+
 </mapper>

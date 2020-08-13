@@ -9,17 +9,23 @@ public class DeliverymanFund {
     private Date createTime;
     private int orderDetailId;
     private int type;
+    private int state;
+    private String serial;
+    private String stateStr;
 
     public DeliverymanFund() {
     }
 
-    public DeliverymanFund(int id, int deliverymanId, double income, Date createTime, int orderDetailId, int type) {
+    public DeliverymanFund(int id, int deliverymanId, double income, Date createTime, int orderDetailId, int type, int state, String serial, String stateStr) {
         this.id = id;
         this.deliverymanId = deliverymanId;
         this.income = income;
         this.createTime = createTime;
         this.orderDetailId = orderDetailId;
         this.type = type;
+        this.state = state;
+        this.serial = serial;
+        this.stateStr = stateStr;
     }
 
     public int getId() {
@@ -68,5 +74,29 @@ public class DeliverymanFund {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
+    }
+
+    public String getStateStr() {
+        return stateStr;
+    }
+
+    public void setStateStr(String stateStr) {
+        this.stateStr = stateStr;
     }
 }

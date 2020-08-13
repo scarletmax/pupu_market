@@ -54,4 +54,13 @@ public class FundControl {
         List<DeliverymanFund> lastDayCapital = fundService.getLastDayCapital(Integer.valueOf(id).intValue());
         return JSON.toJSONString(lastDayCapital);
     }
+
+    @RequestMapping(value = "/addWithdraw")
+    @ResponseBody
+    public String addWithdraw(String id,String money, HttpServletRequest request){
+        int result = fundService.addWithdraw(Integer.valueOf(id).intValue(),Double.valueOf(money));
+        return result+"";
+    }
+
+
 }
