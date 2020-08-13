@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketdelivery.mapper.User1Mapper">
+    <!--	根据用户id查找用户信息-->
+    <insert id="insertDeliverymanFund" parameterType="com.cykj.marketpojo.Deliveryman" >
+     insert into t_deliveryman_fund (deliveryman_id, income, order_detail_id, type)values
+      (#{deliverymanId},#{income},#{orderDetailId},#{type});
+	</insert>
+
+</mapper>

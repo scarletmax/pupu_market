@@ -1,7 +1,7 @@
 package com.cykj.marketdelivery.service.impl;
 
 import com.cykj.marketdelivery.mapper.FundMapper;
-import com.cykj.marketdelivery.mapper.UserMapper;
+import com.cykj.marketdelivery.mapper.User1Mapper;
 import com.cykj.marketdelivery.service.FundService;
 import com.cykj.marketpojo.Deliveryman;
 import com.cykj.marketpojo.DeliverymanFund;

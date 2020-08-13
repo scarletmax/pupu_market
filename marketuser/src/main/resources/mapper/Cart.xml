@@ -3,10 +3,18 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cykj.marketuser.mapper.CartMapper">
-    <!--	根据用户id查找用户信息-->
-    <select id="getUserInfo" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.User">
-        select id,account,name,pwd,icon_url,level_id,point,state,reg_time
-        from t_user where id= #{id}
-	</select>
+   <insert id="addGoods" parameterType="com.cykj.marketpojo.Cart" useGeneratedKeys="true" keyProperty="id">
+       insert into  t_cart  (user_id,goods_id,goods_count,choice_prop,shop_id)
+       values (#{userId},#{goodsId},#{goodsCount},#{choiceProp},#{shopId})
+   </insert>
+    <select id="showCart" resultType="com.cykj.marketpojo.Cart">
+      select c.id, c.user_id, c.goods_id, c.goods_count, c.choice_prop, c.shop_id,g.intro,g.name as goodsName,g.pic1,g.total_count,c.goods_count,g.price
+from t_cart c,t_goods g
+where user_id=#{userId} and c.shop_id=#{shopId} and  c.goods_id=g.id
+    </select>
+    <delete id="clearCart" >
+        delete from t_cart
+        where user_id= #{userId} and shop_id= #{shopId}
+    </delete>
 
 </mapper>
