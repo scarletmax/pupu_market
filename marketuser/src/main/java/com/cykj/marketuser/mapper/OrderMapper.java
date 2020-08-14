@@ -11,10 +11,12 @@ import java.util.List;
 public interface OrderMapper {
 
     public List<OrderDetail> selectOrderAndGoods(int userId);
+    public int cancelOrder(int orderId);
 
     ReceiverInfo getAddress(int userId);
     Integer createOrder(OrderDetail detail);
     Integer insertGoods(Goods goods);
+
 
 
 }

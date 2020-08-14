@@ -30,15 +30,21 @@ public class OrderControl {
     @Resource
     private OrderService orderService;
 
+
     @RequestMapping(value = "/selectOrderAndGoods")
     @ResponseBody
     public String selectOrderAndGoods(int userId){
         return JSON.toJSONString(orderService.selectOrderAndGoods(userId));
     }
 
+    @RequestMapping(value = "/cancelOrder")
+    @ResponseBody
+    public String cancelOrder(int orderId){
+        return JSON.toJSONString(orderService.cancelOrder(orderId)+"");
+    }
 
-    @Autowired
-    private OrderService orderService;
+
+
     @RequestMapping("getRelativeInfo")
     @ResponseBody
     public String getRelativeInfo(int userId){

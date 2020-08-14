@@ -1,9 +1,15 @@
 package com.cykj.marketuser.service.impl;
 
+import com.cykj.marketpojo.Goods;
 import com.cykj.marketpojo.OrderDetail;
+import com.cykj.marketpojo.ReceiverInfo;
+import com.cykj.marketuser.mapper.CartMapper;
 import com.cykj.marketuser.mapper.OrderMapper;
 import com.cykj.marketuser.service.OrderService;
+import com.cykj.marketuser.util.OrderNumUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -14,13 +20,16 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private OrderMapper orderMapper;
 
-    @Autowired
-    private OrderMapper orderMapper;
-    @Autowired
+    @Resource
     private CartMapper cartMapper;
 
     @Override
     public List<OrderDetail> selectOrderAndGoods(int userId) { return orderMapper.selectOrderAndGoods(userId);}
+
+    @Override
+    public int cancelOrder(int orderId) {
+        return orderMapper.cancelOrder(orderId);
+    }
 
     @Override
     public OrderDetail getRelativeInfo(int userId) {
@@ -31,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public String createOrder(int userId, int shopId, ReceiverInfo receiverInfo, List<Goods> goodsList,double totalPrice) {
+    public String createOrder(int userId, int shopId, ReceiverInfo receiverInfo, List<Goods> goodsList, double totalPrice) {
        //获取订单号
         String orderNum= OrderNumUtil.getOrderNum();
         //订单详情设置
