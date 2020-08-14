@@ -1,6 +1,7 @@
 package com.cykj.marketpojo;
 
 import java.util.Date;
+import java.util.List;
 
 public class OrderDetail {
     private int id;

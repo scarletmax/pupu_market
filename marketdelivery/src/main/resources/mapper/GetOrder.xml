@@ -13,7 +13,7 @@ where o.state='1' and s.id=o.shop_id
 
     </select>
 <!--    骑手接单-->
-    <update id="getOrder" parameterType="com.cykj.marketpojo.OrderDetail">
+    <update id="getOrder" >
         update set t_order_detail state=(select from t_property where type='order_state' and name='已接单'),
         deliveryman_id= #{deliverymanId},get_time=current_timestamp
         where id= #{id}
