@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketdelivery.mapper.CommentMapper">
+
+    <!--查询快递员评价-->
+    <select id="findDeliverymanComment" resultType="com.cykj.marketpojo.DeliverymanComment">
+
+select id, deliveryman_id, point, comment, create_time, user_id, order_detail_id
+from t_deliveryman_comment
+where order_detail_id = #{id}
+
+    </select>
+
+    <!--查询订单总数-->
+    <select id="" resultType="java.lang.Integer">
+
+
+    </select>
+
+</mapper>

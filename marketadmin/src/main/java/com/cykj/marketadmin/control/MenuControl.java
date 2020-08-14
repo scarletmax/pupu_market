@@ -28,6 +28,7 @@ public class MenuControl {
     public String getMenu(HttpServletRequest request, HttpServletResponse response)   {
         System.out.println("菜单方法");
         Admin admin= (Admin)request.getSession().getAttribute("admin");
+        System.out.println("admin"+admin);
         int roleId=admin.getRoleId();
         List<Menu> menuList= menuService.getMenu(roleId);
         request.setAttribute("menuList",menuList);

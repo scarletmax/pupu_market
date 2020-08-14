@@ -2,12 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cykj.marketdelivery.mapper.OrderMapper">
+<mapper namespace="com.cykj.marketdelivery.mapper.Order1Mapper">
 
     <!--查询订单列表-->
     <select id="findOrderList" resultType="com.cykj.marketpojo.OrderDetail">
         select
         tod.id,
+        tdf.income,
         tod.total_price,
         tod.create_time,
         tod.receive_time,
@@ -29,6 +30,7 @@
         left join t_user tu on tod.user_id = tu.id
         left join t_shop ts on tod.shop_id = ts.id
         left join t_coupon tc on tod.coupon_id = tc.id
+        left join t_deliveryman_fund tdf  on tdf.order_detail_id=tod.id
         left join t_property tp on tod.state = tp.value and tp.type='order_state'
         <where>
             <if test="userName!=null and userName!=''">
@@ -36,7 +38,15 @@
 
             </if>
             <if test="userId!=null and userId!=''">
-                and tod.user_id like concat('%',#{userId},'%')
+                and tod.user_id =#{userId}
+
+            </if>
+            <if test="id!=null and id!=''">
+                and tod.id =#{id}
+
+            </if>
+            <if test="state!=null and state!=''">
+                and tod.state =#{state}
 
             </if>
             <if test="deliverymanName!=null and deliverymanName!=''">
@@ -44,7 +54,7 @@
 
             </if>
             <if test="deliverymanId!=null and deliverymanId!=''">
-                and td.id like concat('%',#{deliverymanId},'%')
+                and td.id =#{deliverymanId}
 
             </if>
             <if test="shopName!=null and shopName!=''">
@@ -80,8 +90,21 @@
                 and tu.name like concat('%',#{userName},'%')
 
             </if>
+            <if test="id!=null and id!=''">
+                and tod.id =#{id}
+
+            </if>
+            <if test="deliverymanId!=null and deliverymanId!=''">
+                and td.id =#{deliverymanId}
+
+
+            </if>
             <if test="user_id!=null and user_id!=''">
-                and tu.user_id like concat('%',#{user_id},'%')
+                and tu.user_id =#{user_id}
+
+            </if>
+            <if test="state!=null and state!=''">
+                and tod.state =#{state}
 
             </if>
             <if test="deliverymanName!=null and deliverymanName!=''">
@@ -102,5 +125,49 @@
         </where>
 
     </select>
+    <select id="deliverOrder" resultType="com.cykj.marketpojo.OrderDetail">
+         select
+        tod.id,
+        tod.total_price,
+        tod.create_time,
+        tod.receive_time,
+        tod.finish_time,
+        tod.state, tp.name as stateStr,
+        tod.order_num,
+        tod.name,
+        tod.address,
+        tod.room_num,
+        tod.longitude,
+        tod.latitude,
+        tod.tel,
+        tod.deliveryman_id, td.name as deliverymanName,
+        tod.user_id , tu.name as userName,
+        tod.shop_id , ts.name as shopName,
+        tod.pay_type,
+        tod.coupon_id , tc.name as couponName
+        from t_order_detail tod left join t_deliveryman td on td.id=tod.deliveryman_id
+        left join t_user tu on tod.user_id = tu.id
+        left join t_shop ts on tod.shop_id = ts.id
+        left join t_coupon tc on tod.coupon_id = tc.id
+        left join t_property tp on tod.state = tp.value and tp.type='order_state'
+        <where>
+
+            <if test="deliverymanId!=null and deliverymanId!=''">
+                and td.id =#{deliverymanId}
+            </if>
+        </where>
+        and tod.state=3
+
+    </select>
+    <!--查询当前快递员收益-->
+     <select id="findDelivermoney" resultType="com.cykj.marketpojo.Property">
+       select id, type_text, type, name, value from t_property where type='delivery_benefit'
+     </select>
+    <!--订单送达-->
+    <update id="confirmReceipt">
+        update t_order_detail set state=#{state},receive_time=#{receiveTime} where id=#{id} ;
+    </update>
+
+
 
 </mapper>

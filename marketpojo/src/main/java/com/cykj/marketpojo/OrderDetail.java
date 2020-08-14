@@ -1,7 +1,6 @@
 package com.cykj.marketpojo;
 
 import java.util.Date;
-import java.util.List;
 
 public class OrderDetail {
     private int id;
@@ -30,8 +29,58 @@ public class OrderDetail {
     private String couponName;
     private List<OrderGoodsHis> orderGoodsHis;
 
+    private  ReceiverInfo receiverInfo;
+    private List<Coupon> couponList;
+    private double income;
+
+    private String benefit;
 
     public OrderDetail() {
+    }
+
+    public OrderDetail(Double totalPrice, String orderNum, String name, String address, String roomNum, Double longitude, Double latitude, String tel, int userId, int shopId) {
+        this.totalPrice = totalPrice;
+        this.orderNum = orderNum;
+        this.name = name;
+        this.address = address;
+        this.roomNum = roomNum;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.tel = tel;
+        this.userId = userId;
+        this.shopId = shopId;
+    }
+
+    public double getIncome() {
+        return income;
+    }
+
+    public void setIncome(double income) {
+        this.income = income;
+    }
+
+    public List<Coupon> getCouponList() {
+        return couponList;
+    }
+
+    public void setCouponList(List<Coupon> couponList) {
+        this.couponList = couponList;
+    }
+
+    public ReceiverInfo getReceiverInfo() {
+        return receiverInfo;
+    }
+
+    public void setReceiverInfo(ReceiverInfo receiverInfo) {
+        this.receiverInfo = receiverInfo;
+    }
+
+    public String getBenefit() {
+        return benefit;
+    }
+
+    public void setBenefit(String benefit) {
+        this.benefit = benefit;
     }
 
     public int getId() {
@@ -224,13 +273,5 @@ public class OrderDetail {
 
     public void setCouponName(String couponName) {
         this.couponName = couponName;
-    }
-
-    public List<OrderGoodsHis> getOrderGoodsHis() {
-        return orderGoodsHis;
-    }
-
-    public void setOrderGoodsHis(List<OrderGoodsHis> orderGoodsHis) {
-        this.orderGoodsHis = orderGoodsHis;
     }
 }

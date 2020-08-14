@@ -32,4 +32,11 @@ public class UserControl {
         deliveryman = userService.login(deliveryman);
         return JSON.toJSONString(deliveryman);
     }
+
+    @RequestMapping(value = "/getUserInfo")
+    @ResponseBody
+    public String getUserInfo(String id, HttpServletRequest request){
+        Deliveryman deliveryman = userService.getUserInfo(Integer.valueOf(id).intValue());
+        return JSON.toJSONString(deliveryman);
+    }
 }
