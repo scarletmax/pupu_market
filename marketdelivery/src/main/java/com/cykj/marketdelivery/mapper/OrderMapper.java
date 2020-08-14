@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Mapper
-public interface Order1Mapper {
+public interface OrderMapper {
 
 
     List<OrderDetail> findOrderList(HashMap<String, Object> hashMap);

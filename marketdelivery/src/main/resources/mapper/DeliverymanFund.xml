@@ -2,11 +2,41 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cykj.marketdelivery.mapper.User1Mapper">
-    <!--	根据用户id查找用户信息-->
-    <insert id="insertDeliverymanFund" parameterType="com.cykj.marketpojo.Deliveryman" >
-     insert into t_deliveryman_fund (deliveryman_id, income, order_detail_id, type)values
-      (#{deliverymanId},#{income},#{orderDetailId},#{type});
-	</insert>
+<mapper namespace="com.cykj.marketdelivery.mapper.DeliverymanFundMapper">
+
+    <select id="getCapital" resultType="java.lang.Integer">
+        select IFNULL(sum(income),0)
+        from t_deliveryman_fund where deliveryman_id= #{id} and type=#{type}
+	</select>
+
+    <select id="getMonthCapital" resultType="com.cykj.marketpojo.DeliverymanFund">
+        SELECT id,deliveryman_id,income,create_time,order_detail_id,type FROM t_deliveryman_fund
+        where DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= date(create_time)
+        and deliveryman_id=#{id} and type='1'
+	</select>
+
+    <select id="getWithdrawal" resultType="com.cykj.marketpojo.DeliverymanFund">
+        SELECT id,deliveryman_id,income,create_time,order_detail_id,type,serial FROM t_deliveryman_fund
+        where type='2'
+        and deliveryman_id=#{id}
+	</select>
+
+    <select id="getDayCapital" resultType="com.cykj.marketpojo.DeliverymanFund">
+        SELECT id,deliveryman_id,income,create_time,order_detail_id,type FROM t_deliveryman_fund
+        where to_days(create_time) = to_days(now())
+        and deliveryman_id=#{id} and type='1'
+	</select>
+
+    <select id="getLastDayCapital" resultType="com.cykj.marketpojo.DeliverymanFund">
+        SELECT id,deliveryman_id,income,create_time,order_detail_id,type FROM t_deliveryman_fund
+        where TO_DAYS( NOW( ) ) - TO_DAYS( create_time) &lt;=  1
+        and deliveryman_id=#{id} and type='1'
+	</select>
+
+    <insert id="addWithdraw" parameterType="com.cykj.marketpojo.DeliverymanFund">
+       INSERT INTO t_deliveryman_fund(deliveryman_id,income,serial,type,state)
+       value(#{deliverymanId},#{income},#{serial},'2','3')
+    </insert>
+
 
 </mapper>

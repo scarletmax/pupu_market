@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface FundMapper {
+public interface DeliverFundMapper {
     int getCapital(Integer id,Integer type);
     List<DeliverymanFund> getMonthCapital(Integer id);
     List<DeliverymanFund> getWithdrawal(Integer id);
