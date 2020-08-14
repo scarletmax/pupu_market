@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketuser.mapper.OrderMapper">
+
+    <!--    根据userId获取订单和订单商品-->
+    <select id="selectOrderAndGoods" resultMap="orderDetail">
+        select tod.id as todId,tod.order_num,tod.total_price,tod.create_time,tod.state,
+        tog.id as togId,tog.goods_id,tog.goods_name,tog.price,tog.goods_count,tog.choice_prop,tog.pic1
+        from t_order_goods as tog,t_order_detail as tod
+        where tod.id = tog.order_detail_id and tod.user_id = #{userId}
+    </select>
+
+    <resultMap id="orderDetail" type="com.cykj.marketpojo.OrderDetail">
+        <id property="id" column="todId"></id>
+        <result property="orderNum" column="order_num"></result>
+        <result property="totalPrice" column="total_price"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="state" column="state"></result>
+        <collection property="orderGoodsHis" ofType="com.cykj.marketpojo.OrderGoodsHis">
+            <id property="id" column="id"></id>
+            <result property="goodsId" column="goods_id"></result>
+            <result property="goodsName" column="goods_name"></result>
+            <result property="price" column="price"></result>
+            <result property="goodsCount" column="goods_count"></result>
+            <result property="choiceProp" column="choice_prop"></result>
+            <result property="pic1" column="pic1"></result>
+        </collection>
+    </resultMap>
+
+</mapper>

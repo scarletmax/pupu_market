@@ -10,7 +10,7 @@
 			and g.name like concat ('%',#{goodsName},'%')
 		</if>
 		<if test="containTime!=null and containTime!=''">
-			and convert (f.start_time,char )&gt;#{containTime} and convert (f.end_time,char )&lt;#{containTime}
+			and convert (f.start_time,char )&lt;#{containTime} and convert (f.end_time,char )&gt;#{containTime}
 		</if>
 		<if test="state!=null and state!=''">
 			and f.state=#{state}
@@ -25,7 +25,7 @@
 			and g.name like concat ('%',#{goodsName},'%')
 		</if>
 		<if test="containTime!=null and containTime!=''">
-			and convert (f.start_time,char )&gt;#{containTime} and convert (f.end_time,char )&lt;#{containTime}
+			and convert (f.start_time,char )&lt;#{containTime} and convert (f.end_time,char )&gt;#{containTime}
 		</if>
 		<if test="state!=null and state!=''">
 			and f.state=#{state}

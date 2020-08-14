@@ -8,6 +8,7 @@ public class Deliveryman {
     private String tel;
     private String idCard;
     private String sex;
+    private int age;
     private int state;
     private String stateStr;
     private int autoOrderTaking;
@@ -15,6 +16,10 @@ public class Deliveryman {
     private Double latitude;
     private Double longitude;
     private String pwd;
+    private String picCardFront;
+    private String picCardBack;
+    private String picPerson;
+
 
     public Deliveryman() {
     }
@@ -33,6 +38,26 @@ public class Deliveryman {
         this.latitude = latitude;
         this.longitude = longitude;
         this.pwd = pwd;
+    }
+
+    public Deliveryman(int id, String account, String name, String tel, String idCard, String sex, int age, int state, String stateStr, int autoOrderTaking, Double money, Double latitude, Double longitude, String pwd, String picCardFront, String picCardBack, String picPerson) {
+        this.id = id;
+        this.account = account;
+        this.name = name;
+        this.tel = tel;
+        this.idCard = idCard;
+        this.sex = sex;
+        this.age = age;
+        this.state = state;
+        this.stateStr = stateStr;
+        this.autoOrderTaking = autoOrderTaking;
+        this.money = money;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.pwd = pwd;
+        this.picCardFront = picCardFront;
+        this.picCardBack = picCardBack;
+        this.picPerson = picPerson;
     }
 
     public String getPwd() {
@@ -137,5 +162,37 @@ public class Deliveryman {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getPicCardFront() {
+        return picCardFront;
+    }
+
+    public String getPicCardBack() {
+        return picCardBack;
+    }
+
+    public String getPicPerson() {
+        return picPerson;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setPicCardFront(String picCardFront) {
+        this.picCardFront = picCardFront;
+    }
+
+    public void setPicCardBack(String picCardBack) {
+        this.picCardBack = picCardBack;
+    }
+
+    public void setPicPerson(String picPerson) {
+        this.picPerson = picPerson;
     }
 }

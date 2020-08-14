@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 @RestController
 @RequestMapping("flashSaleControl")
@@ -45,7 +49,18 @@ public class FlashSaleControl {
     }
 
     @RequestMapping("/insertFlashSale")
-    public String insertFlashSale(FlashSale flashSale, HttpServletRequest request, HttpServletResponse response){
+    public String insertFlashSale(HttpServletRequest request, HttpServletResponse response) throws ParseException {
+        int goodsId = Integer.parseInt(request.getParameter("goodsId"));
+        int restCount = Integer.parseInt(request.getParameter("restCount"));
+        int limitBuy = Integer.parseInt(request.getParameter("limitBuy"));
+        double flashPrice = Double.parseDouble(request.getParameter("flashPrice"));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        System.out.println(TimeZone.getDefault());
+//        System.out.println(TimeZone.getTimeZone("GMT+8:00"));
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+        Date startTime = simpleDateFormat.parse(request.getParameter("startTime"));
+        Date endTime = simpleDateFormat.parse(request.getParameter("endTime"));
+        FlashSale flashSale = new FlashSale(0,goodsId,null,startTime,endTime,restCount,limitBuy,flashPrice,0,null,0,null);
         return JSON.toJSONString(flashSaleService.insertFlashSale(flashSale)+"");
     }
 

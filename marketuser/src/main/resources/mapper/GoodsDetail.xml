@@ -24,4 +24,5 @@ from t_goods_comment c,t_user u where goods_id=#{id} and u.id=c.user_id limit 1
         where type_id= #{typeId} and state = 1 and shop_id= #{shopId}
     </select>
 
+
 </mapper>

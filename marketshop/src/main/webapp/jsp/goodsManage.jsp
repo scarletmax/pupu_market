@@ -125,7 +125,6 @@
             }
             ,parseData: function(res){ //res 即为原始返回的数据
                 console.log(res);
-                console.log("商品列表信息中的第一个相册"+res.data[0].album);
                 return {
                     "code": res.code, //解析数据接口返回状态
                     "msg": "", //解析提示文本
