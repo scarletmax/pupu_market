@@ -16,5 +16,18 @@ where user_id=#{userId} and c.shop_id=#{shopId} and  c.goods_id=g.id
         delete from t_cart
         where user_id= #{userId} and shop_id= #{shopId}
     </delete>
-
+<!--    查找这个用户购物车中第n-1个商品的商品id-->
+    <select id="getGoodsIdByIndex" resultType="java.lang.Integer">
+        select id from t_cart where user_id=#{userId} and shop_id=#{shopId} limit #{index},1
+    </select>
+<!--    更新购物车商品数量-->
+    <update id="updateGoodsCount" >
+        update t_cart set goods_count=#{goodsCount}
+        where id = #{goodsId}
+    </update>
+<!--    删除购物车物品-->
+    <delete id="deleteGoods" parameterType="java.lang.Integer">
+        delete from t_cart
+        where id =#{id}
+    </delete>
 </mapper>

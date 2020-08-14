@@ -22,4 +22,20 @@ public class CartServiceImpl implements CartService {
     public List<Cart> showCart(int userId, int shopId) {
         return cartMapper.showCart(userId,shopId);
     }
+
+    @Override
+    public String clearCart(int userId, int shopId) {
+        return cartMapper.clearCart(userId,shopId)>0?"success":"fail";
+    }
+
+    @Override
+    public String updateGoodsCount(int userId, int shopId, int index, int goodsCount) {
+        int goodsId=cartMapper.getGoodsIdByIndex(userId,shopId,index);
+        return cartMapper.updateGoodsCount(goodsCount,goodsId)>0 ?"success":"fail";
+    }
+
+    @Override
+    public String deleteGoods(int id) {
+        return cartMapper.deleteGoods(id)>0? "success":"fail";
+    }
 }
