@@ -11,4 +11,7 @@ public interface CartMapper {
     Integer addGoods(Cart cart);
     List<Cart> showCart(int userId, int shopId);
     Integer clearCart(@Param("userId") int userId, @Param("shopId") int shopId);
+    Integer getGoodsIdByIndex (@Param("userId") int userId, @Param("shopId") int shopId,@Param("index") int index);
+    Integer updateGoodsCount(@Param("goodsCount")int goodsCount,@Param("goodsId")int goodsId);
+    Integer deleteGoods(int id);
 }
