@@ -109,11 +109,15 @@ public class NoticeControl {
             Date date = new Date();
             //使用UUID+后缀名保存文件名，防止中文乱码问题
             String uuid = UUID.randomUUID() + "";
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String dateStr = simpleDateFormat.format(date);
+//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//            String dateStr = simpleDateFormat.format(date);
+            String  str="/uploadNoticePic/";
             String savePath = request.getSession().getServletContext().getRealPath("/uploadNoticePic/");
             //要保存的问题件路径和名称
-            String projectPath = savePath + dateStr + File.separator + uuid + "." + prefix;
+            String projectPath = savePath + File.separator + uuid + "." + prefix;
+
+            //数据库保存名称
+            String datePath=File.separator + uuid + "." + prefix;
 
             System.out.println("projectPath==" + projectPath);
             File files = new File(projectPath);
@@ -131,7 +135,7 @@ public class NoticeControl {
 
             HttpSession httpSession = request.getSession();
             Notice notice = (Notice) httpSession.getAttribute("notice");
-            notice.setPicUrl(projectPath);
+            notice.setPicUrl(datePath);
 
             return JSON.toJSONString(layuiData);
         } catch (Exception e) {

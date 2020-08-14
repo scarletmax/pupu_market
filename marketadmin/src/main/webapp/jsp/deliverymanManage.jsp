@@ -16,7 +16,7 @@
     <script src="${pageContext.request.contextPath}/static/js/jquery-3.5.1.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/static/X-admin/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/X-admin/js/xadmin.js"></script>
-    <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/js/adManage.js"></script>
+    <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/js/deliverymanManage.js"></script>
 
 </head>
 <body>

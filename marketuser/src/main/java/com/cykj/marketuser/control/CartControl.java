@@ -27,5 +27,21 @@ public class CartControl {
     public String showCart(int userId,int shopId){
         return JSON.toJSONString(cartService.showCart(userId,shopId));
     }
+    @RequestMapping("clearCart")
+    @ResponseBody
+    public String clearCart(int userId,int shopId){
+        return cartService.clearCart(userId,shopId);
+    }
+    @RequestMapping("updateGoodsCount")
+    @ResponseBody
+    public String updateGoodsCount(int userId,int shopId,int index,int goodsCount){
+        return cartService.updateGoodsCount(userId,shopId,index,goodsCount);
+    }
+
+    @RequestMapping("deleteGoods")
+    @ResponseBody
+    public String deleteGoods(int id){
+        return  cartService.deleteGoods(id);
+    }
 
 }

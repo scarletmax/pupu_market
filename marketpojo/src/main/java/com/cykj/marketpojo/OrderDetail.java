@@ -1,7 +1,6 @@
 package com.cykj.marketpojo;
 
 import java.util.Date;
-import java.util.List;
 
 public class OrderDetail {
     private int id;
@@ -35,8 +34,37 @@ public class OrderDetail {
     private double income;
 
     private String benefit;
+    //店家信息
+    private String shopAddress;
+    private double shopLatitude;
+    private double shopLongitude;
+
 
     public OrderDetail() {
+    }
+
+    public String getShopAddress() {
+        return shopAddress;
+    }
+
+    public void setShopAddress(String shopAddress) {
+        this.shopAddress = shopAddress;
+    }
+
+    public double getShopLatitude() {
+        return shopLatitude;
+    }
+
+    public void setShopLatitude(double shopLatitude) {
+        this.shopLatitude = shopLatitude;
+    }
+
+    public double getShopLongitude() {
+        return shopLongitude;
+    }
+
+    public void setShopLongitude(double shopLongitude) {
+        this.shopLongitude = shopLongitude;
     }
 
     public OrderDetail(Double totalPrice, String orderNum, String name, String address, String roomNum, Double longitude, Double latitude, String tel, int userId, int shopId) {
