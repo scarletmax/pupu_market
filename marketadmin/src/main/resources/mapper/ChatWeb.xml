@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketadmin.mapper.ChatWebMapper">
+    <!--    查找聊天记录 -->
+<!--    <select id="findChatMsg" parameterType="java.util.HashMap" resultType="com.cykj.marketadmin.webSocket.Msg">-->
+<!--   select id, chatAcc, charUser, chatOther, chatOtherAcc, msg, chatTime from t_chat where chatAcc=#{acc} or chatOtherAcc=#{acc};-->
+
+
+<!--    </select>-->
+    <insert id="insertChatMsg" parameterType="com.cykj.marketadmin.webSocket.Msg" >
+          insert into t_chat (chatAcc, charUser, chatOther, chatOtherAcc, msg)
+          values
+          (#{chatAcc},#{charUser},#{chatOther},#{chatOtherAcc},#{msg});
+    </insert>
+
+
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketadmin.mapper.ChatMapper">
+    <!--    查找聊天记录 -->
+    <select id="findChatMsg" parameterType="java.util.HashMap" resultType="com.cykj.marketadmin.webSocket.Msg">
+
+
+     select *from (select id, chatAcc, charUser, chatOther, chatOtherAcc, msg, chatTime
+     from t_chat
+     where chatAcc = #{acc}
+    or chatOtherAcc = #{acc})t order by id limit 10;
+
+    </select>
+
+<!--    <insert id="insertChatMsg" parameterType="com.cykj.marketadmin.webSocket.Msg">-->
+<!--          insert into t_chat (id, chatAcc, charUser, chatOther, chatOtherAcc, msg)-->
+<!--          values-->
+<!--          (#{id},#{chatAcc},#{charUser},#{chatOther},#{chatOtherAcc},#{msg});-->
+<!--    </insert>-->
+<!--客服查询今天是否有该用户聊天记录-->
+    <select id="verifySaveAcc" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+    select count(*)
+    from t_chat_save_acc
+    where chatAcc = #{chatAcc}
+     and date_format(createTime,'%Y-%m-%d')like #{createTime} ;
+    </select>
+    <!--插入聊天人员记录-->
+    <insert id="insertSaveAcc" parameterType="java.util.HashMap">
+     insert into t_chat_save_acc (chatAcc, chatUser)values (#{chatAcc},#{chatUser});
+
+    </insert>
+    <!--查询最近五个人的聊天记录-->
+    <select id="findSaveAcc" resultType="com.cykj.marketadmin.webSocket.ChatSaveAcc">
+        select * from (select id, chatAcc, createTime, chatUser
+                 from t_chat_save_acc group by chatAcc)t order by id
+              limit 5;
+    </select>
+
+</mapper>
