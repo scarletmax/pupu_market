@@ -2,6 +2,7 @@ package com.cykj.marketdelivery.control;
 
 import com.alibaba.fastjson.JSON;
 import com.cykj.marketdelivery.service.GetOrderService;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,11 @@ public class GetOrderControl {
     @RequestMapping("getOrder")
     public String getOrder(int deliverymanId,int id){
         return JSON.toJSONString(getOrderService.getOrder(deliverymanId,id));
+    }
+    @ResponseBody
+    @RequestMapping("showCurOrders")
+    public String  showCurOrders(int deliverymanId){
+        return JSON.toJSONString(getOrderService.showCurOrders(deliverymanId));
     }
 
 }

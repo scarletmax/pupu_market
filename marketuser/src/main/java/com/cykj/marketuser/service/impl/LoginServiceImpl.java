@@ -20,4 +20,14 @@ public class LoginServiceImpl implements LoginService {
         }
         return user ;
     }
+
+    @Override
+    public User loginByTel(String  tel,String pwd) {
+        User user=loginMapper.loginByTel(new User(tel,pwd));
+        if(user==null) {
+            user=new User();
+            user.setId(0);
+        }
+        return  user;
+    }
 }

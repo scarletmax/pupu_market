@@ -15,8 +15,22 @@ public class User {
     private  String stateStr;
     private Date regTime;
     private String openId;
+    private String tel;
 
     public User() {
+    }
+
+    public User(String tel,String pwd) {
+        this.pwd = pwd;
+        this.tel = tel;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
     public User(String name, String iconUrl, String openId) {

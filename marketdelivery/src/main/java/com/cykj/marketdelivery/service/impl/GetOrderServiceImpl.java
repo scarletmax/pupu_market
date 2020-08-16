@@ -28,4 +28,9 @@ public class GetOrderServiceImpl implements GetOrderService {
     public String getOrder(int deliverymanId, int id) {
         return getOrderMapper.getOrder(deliverymanId,id)>0?"success":"fail";
     }
+
+    @Override
+    public List<OrderDetail> showCurOrders(int deliverymanId) {
+        return getOrderMapper.showCurOrders(deliverymanId);
+    }
 }

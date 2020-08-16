@@ -11,6 +11,7 @@ public interface GetOrderService {
 
     List<Marker> getAllShopMarkers();
     String  getOrder(int deliverymanId, int id );
+    List<OrderDetail> showCurOrders(int deliverymanId);
 
 
 }

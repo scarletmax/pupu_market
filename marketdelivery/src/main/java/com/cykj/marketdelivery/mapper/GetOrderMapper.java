@@ -14,4 +14,5 @@ public interface GetOrderMapper {
     Integer arriveShop(int id);
     Integer arriveCustomer(int id);
     List<Marker> getAllShopMarkers();
+    List<OrderDetail> showCurOrders(int deliverymanId);
 }
