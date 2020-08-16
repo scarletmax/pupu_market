@@ -2,7 +2,7 @@ package com.cykj.marketdelivery.service.impl;
 
 
 
-import com.cykj.marketdelivery.mapper.Order1Mapper;
+import com.cykj.marketdelivery.mapper.OrderMapper;
 import com.cykj.marketdelivery.service.OrderService;
 import com.cykj.marketpojo.LayData;
 import com.cykj.marketpojo.OrderDetail;
@@ -18,7 +18,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Autowired
-    private Order1Mapper orderMapper;
+    private OrderMapper orderMapper;
 
     @Override
     public LayData<OrderDetail> findOrderList(HashMap<String, Object> hashMap) {

@@ -1,6 +1,6 @@
 package com.cykj.marketdelivery.service.impl;
 
-import com.cykj.marketdelivery.mapper.FundMapper;
+import com.cykj.marketdelivery.mapper.DeliverFundMapper;
 import com.cykj.marketdelivery.mapper.UserMapper;
 import com.cykj.marketdelivery.service.FundService;
 import com.cykj.marketpojo.Deliveryman;
@@ -16,7 +16,7 @@ import java.util.List;
 public class FundServiceImpl implements FundService {
 
     @Autowired
-    private FundMapper fundMapper;
+    private DeliverFundMapper fundMapper;
 
     @Autowired
     private UserMapper userMapper;

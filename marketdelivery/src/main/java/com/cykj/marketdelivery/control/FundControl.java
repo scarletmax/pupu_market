@@ -20,6 +20,7 @@ public class FundControl {
     @Autowired
     private FundService fundService;
 
+
     @RequestMapping(value = "/getCapital")
     @ResponseBody
     public String getCapital(String id,String type, HttpServletRequest request){
