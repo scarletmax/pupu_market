@@ -28,6 +28,8 @@ public class OrderDetail {
     private String payTypeStr;
     private int couponId;
     private String couponName;
+    private List<OrderGoodsHis> orderGoodsHis;
+
     private  ReceiverInfo receiverInfo;
     private List<Coupon> couponList;
     private double income;
@@ -301,5 +303,13 @@ public class OrderDetail {
 
     public void setCouponName(String couponName) {
         this.couponName = couponName;
+    }
+
+    public List<OrderGoodsHis> getOrderGoodsHis() {
+        return orderGoodsHis;
+    }
+
+    public void setOrderGoodsHis(List<OrderGoodsHis> orderGoodsHis) {
+        this.orderGoodsHis = orderGoodsHis;
     }
 }

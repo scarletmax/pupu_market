@@ -61,12 +61,13 @@
 </div>
 </body>
 <script>
-    layui.use(['form','table','jquery','layer','laytpl','laydate'], function(){
+    layui.use(['form','table','jquery','layer','laytpl','laydate','util'], function(){
         var $ = layui.jquery;
         var form = layui.form;
         var table = layui.table;
         var layer = layui.layer;
         var laydate = layui.laydate;
+        var util = layui.util;
         var laytpl = layui.laytpl;
 
         var path = $("#path").val();
@@ -111,11 +112,13 @@
             }
             ,cols: [[ //表头，按照商品id升序，秒杀创建时间降序
                 // {type:'checkbox'}
-                {field: 'id', title: '秒杀id', hide: true}
+                {field: 'id', title: '秒杀记录的id', hide: true}
                 ,{field: 'goodsId', title: '商品id', align:'center', sort: true}
                 ,{field: 'goodsName', title: '商品名称',align:'center', sort: true}
-                ,{field: 'startTime', title: '开始时间', align:'center', sort: true}
-                ,{field: 'endTime', title: '结束时间',align:'center', sort: true}
+                ,{field: 'startTime', title: '开始时间', align:'center', sort: true,
+                    templet : "<div>{{layui.util.toDateString(d.startTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
+                ,{field: 'endTime', title: '结束时间',align:'center', sort: true,
+                    templet : "<div>{{layui.util.toDateString(d.endTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
                 ,{field: 'restCount', title: '剩余总数', align:'center', sort: true}
                 ,{field: 'limitBuy', title: '限购数量', align:'center', sort: true}
                 ,{field: 'stateStr', title: '秒杀状态', align:'center', sort: true}

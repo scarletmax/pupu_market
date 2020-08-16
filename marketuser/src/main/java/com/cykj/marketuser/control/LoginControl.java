@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cykj.marketpojo.User;
 import com.cykj.marketuser.service.LoginService;
+import com.cykj.marketuser.util.MD5Util;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -66,6 +67,11 @@ public class LoginControl {
 
         return JSON.toJSONString(user);
 
+    }
+    @ResponseBody
+    @RequestMapping("telLogin")
+    public String telLogin(String tel,String pwd){
+        return JSON.toJSONString(loginService.loginByTel(tel, MD5Util.md5(pwd)));
     }
 
 }

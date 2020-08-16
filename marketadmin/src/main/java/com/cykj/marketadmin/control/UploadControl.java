@@ -24,9 +24,6 @@ import java.util.*;
 @RequestMapping("/uploadControl")
 public class UploadControl {
 
-//    @Resource
-//    private TypeService typeService;
-
 
     @RequestMapping(value = "/typeIconUpload")
     @ResponseBody
@@ -38,9 +35,6 @@ public class UploadControl {
             String suffix = originalName.substring(originalName.lastIndexOf(".") + 1);
             //使用UUID+后缀名保存文件名，防止中文乱码问题
             String uuid = UUID.randomUUID() + "";
-//            Date date = new Date();
-//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//            String dateStr = simpleDateFormat.format(date);
             String savePath = request.getSession().getServletContext().getRealPath("/upload/typeIcon");
             //最终实际保存路径
             String filePath = savePath + File.separator + uuid + "." + suffix;

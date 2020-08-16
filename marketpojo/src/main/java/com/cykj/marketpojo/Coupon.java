@@ -1,21 +1,27 @@
 package com.cykj.marketpojo;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Coupon {
     private int id;
     private String name;
-
     private Date startTime;
     private Date endTime;
     private int shopId;
+    private String shopName;
     private BigDecimal favorPrice;
     private int limitCount;
     private BigDecimal requirePrice;
     private String rule;
-    private String stateStr;
+    private String stateStr;//优惠券本身的可领取状态
     private int state;
+    private String ucStateStr;//属于用户的优惠券状态
+    private int ucState;
+
+//    private DateFormat formatTrans= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public Coupon() {
     }
@@ -134,4 +140,30 @@ public class Coupon {
     public void setState(int state) {
         this.state = state;
     }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public String getUcStateStr() {
+        return ucStateStr;
+    }
+
+    public void setUcStateStr(String ucStateStr) {
+        this.ucStateStr = ucStateStr;
+    }
+
+    public int getUcState() {
+        return ucState;
+    }
+
+    public void setUcState(int ucState) {
+        this.ucState = ucState;
+    }
+
+
 }

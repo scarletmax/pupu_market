@@ -19,4 +19,5 @@ public class UserControl {
     public String getUserInfo(Integer id){
         return JSON.toJSONString(userService.getUserInfo(id));
     }
+
 }

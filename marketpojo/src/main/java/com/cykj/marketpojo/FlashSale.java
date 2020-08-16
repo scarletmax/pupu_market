@@ -6,7 +6,7 @@ public class FlashSale {
 
     private int id;
     private int goodsId;
-    private int goodsName;
+    private String goodsName;
     private Date startTime;
     private Date endTime;
     private int restCount;
@@ -18,6 +18,21 @@ public class FlashSale {
     private String stateStr;
 
     public FlashSale() {
+    }
+
+    public FlashSale(int id, int goodsId, String goodsName, Date startTime, Date endTime, int restCount, int limitBuy, double flashPrice, int version, Date createTime, int state, String stateStr) {
+        this.id = id;
+        this.goodsId = goodsId;
+        this.goodsName = goodsName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.restCount = restCount;
+        this.limitBuy = limitBuy;
+        this.flashPrice = flashPrice;
+        this.version = version;
+        this.createTime = createTime;
+        this.state = state;
+        this.stateStr = stateStr;
     }
 
     public int getId() {
@@ -108,11 +123,11 @@ public class FlashSale {
         this.stateStr = stateStr;
     }
 
-    public int getGoodsName() {
+    public String getGoodsName() {
         return goodsName;
     }
 
-    public void setGoodsName(int goodsName) {
+    public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
     }
 }

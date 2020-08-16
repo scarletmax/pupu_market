@@ -297,10 +297,10 @@
             }
             ,picRequest:function(value){
                 if($("#returnUrlDiv").children("input").get().length<1){
-                    return "请至少上传成功一张图片至图册中";
+                    return "请点击上传按钮至少成功一张图片至图册中";
                 }
                 if(value==""){
-                    return "请上传成功大图";
+                    return "请点击上传按钮上传大图";
                 }
             }
             ,noPositive:function(value){
