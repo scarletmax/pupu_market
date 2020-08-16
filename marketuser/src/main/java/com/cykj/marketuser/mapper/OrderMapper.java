@@ -12,6 +12,7 @@ public interface OrderMapper {
 
     public List<OrderDetail> selectOrderAndGoods(int userId);
     public int cancelOrder(int orderId);
+    public int deleteOrder(int orderId);
 
     ReceiverInfo getAddress(int userId);
     Integer createOrder(OrderDetail detail);

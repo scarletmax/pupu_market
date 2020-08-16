@@ -1,6 +1,7 @@
 package com.cykj.marketpojo;
 
 import java.util.Date;
+import java.util.List;
 
 public class OrderDetail {
     private int id;
@@ -302,5 +303,13 @@ public class OrderDetail {
 
     public void setCouponName(String couponName) {
         this.couponName = couponName;
+    }
+
+    public List<OrderGoodsHis> getOrderGoodsHis() {
+        return orderGoodsHis;
+    }
+
+    public void setOrderGoodsHis(List<OrderGoodsHis> orderGoodsHis) {
+        this.orderGoodsHis = orderGoodsHis;
     }
 }

@@ -4,12 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cykj.marketuser.mapper.OrderMapper">
 
-    <!--    根据userId获取订单和订单商品-->
+    <!--    根据userId获取订单和订单商品,pic1本来应该是历史，换成我这边联表-->
     <select id="selectOrderAndGoods" resultMap="orderDetail">
         select tod.id as todId,tod.order_num,tod.total_price,tod.create_time,tod.state,
-        tog.id as togId,tog.goods_id,tog.goods_name,tog.price,tog.goods_count,tog.choice_prop,tog.pic1
-        from t_order_goods as tog,t_order_detail as tod
-        where tod.id = tog.order_detail_id and tod.user_id = #{userId}
+        tog.id as togId,tog.goods_id,tog.goods_name,tog.price,tog.goods_count,tog.choice_prop,
+        g.pic1
+        from t_order_goods as tog,t_order_detail as tod,t_goods as g
+        where tod.id = tog.order_detail_id and tod.user_id = #{userId} and tog.goods_id = g.id
     </select>
 
     <resultMap id="orderDetail" type="com.cykj.marketpojo.OrderDetail">
@@ -31,6 +32,10 @@
 
     <update id="cancelOrder">
         update t_order_detail set state = 5 where id = #{orderId}
+    </update>
+
+    <update id="deleteOrder">
+        update t_order_detail set state = 9 where id = #{orderId}
     </update>
 
     <select id="getAddress" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.ReceiverInfo">

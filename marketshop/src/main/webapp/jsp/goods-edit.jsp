@@ -96,7 +96,7 @@
                             </div>
                         </div>
 
-                        <%--隐藏返回的url，标识--%>
+                        <%--隐藏返回的url，标识，不知道原本有几张图片，因此挖好每个坑，原本肯定有大图和一张小图--%>
                         <input type="text" name="infoPic" style="display: none" lay-verify="picRequest" value="">
                         <input type="hidden" name="pic1">
                         <input type="hidden" name="pic2">
@@ -339,7 +339,7 @@
             }
         });
 
-        //表单验证
+        //表单验证,有图片的可以改为没有图片。
         form.verify({
             selection:function(value){
                 if(value==""){
@@ -382,7 +382,8 @@
 
         //监听提交
         form.on('submit(edit)', function(data) {
-            console.log("商品修改表单提交的数据"+data.field);
+            console.log("商品修改表单提交的数据");
+            console.log(data.field);
             $.ajax({
                 url:path+"/goodsControl/editGoods",
                 async:false,

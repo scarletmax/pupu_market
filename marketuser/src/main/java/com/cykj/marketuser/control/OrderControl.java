@@ -43,6 +43,12 @@ public class OrderControl {
         return JSON.toJSONString(orderService.cancelOrder(orderId)+"");
     }
 
+    @RequestMapping(value = "/deleteOrder")
+    @ResponseBody
+    public String deleteOrder(int orderId){
+        return JSON.toJSONString(orderService.deleteOrder(orderId)+"");
+    }
+
 
 
     @RequestMapping("getRelativeInfo")

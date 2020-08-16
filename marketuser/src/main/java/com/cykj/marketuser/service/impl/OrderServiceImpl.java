@@ -32,6 +32,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public int deleteOrder(int orderId) {
+        return orderMapper.deleteOrder(orderId);
+    }
+
+    @Override
     public OrderDetail getRelativeInfo(int userId) {
         OrderDetail detail= new OrderDetail();
         detail.setReceiverInfo(orderMapper.getAddress(userId));

@@ -4,12 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cykj.marketdelivery.mapper.Login1Mapper">
 
-    <!--派送员注册-->
-    <insert id="register" parameterType="com.cykj.marketpojo.Deliveryman">
-        insert into t_deliveryman (name,account,pwd,tel,id_card,sex,age,pic_card_front,pic_card_back,pic_person) values
-        (#{name},#{account},#{pwd},#{tel},#{idCard},#{sex},#{age},#{picCardFront},#{picCardBack},#{picPerson})
-    </insert>
-
 
 
 </mapper>

@@ -14,8 +14,4 @@ public class LoginServiceImpl implements LoginService {
     LoginMapper loginMapper;
 
 
-    @Override
-    public int register(Deliveryman deliveryman) throws Exception {
-        return loginMapper.register(deliveryman);
-    }
 }

@@ -3,6 +3,7 @@ package com.cykj.marketdelivery.control;
 
 import com.alibaba.fastjson.JSON;
 import com.cykj.marketdelivery.service.LoginService;
+import com.cykj.marketdelivery.service.RegisterService;
 import com.cykj.marketdelivery.service.UserService;
 import com.cykj.marketdelivery.util.MD5Util;
 import com.cykj.marketpojo.Deliveryman;
@@ -30,8 +31,7 @@ import java.util.UUID;
 public class RegisterControl {
 
     @Resource
-    private LoginService loginService;
-
+    private RegisterService registerService;
 
 
     @RequestMapping(value = "/uploadImage")
@@ -86,7 +86,7 @@ public class RegisterControl {
 
         Deliveryman deliveryman = new Deliveryman(0,account,name,tel,idCard,sex,age,0,null,0,0.0,0.0,0.0,pwd,picCardFront,picCardBack,picPerson);
         try {
-            loginService.register(deliveryman);
+            registerService.register(deliveryman);
         } catch (Exception e) {
             response.setStatus(201);
             String deletePath1 = request.getSession().getServletContext().getRealPath("/upload/delivery_pic")+deliveryman.getPicCardFront();
