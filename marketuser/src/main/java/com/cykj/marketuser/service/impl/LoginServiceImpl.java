@@ -15,6 +15,7 @@ public class LoginServiceImpl implements LoginService {
         //先判断是否是第一次在本平台使用微信登录
         if(loginMapper.checkOpenid(user) == null) {
             loginMapper.insertWeixinUser(user);
+            user=loginMapper.loginByWeixin(user);
         }else {
            user= loginMapper.loginByWeixin(user);
         }

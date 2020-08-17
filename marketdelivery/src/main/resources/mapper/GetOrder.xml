@@ -21,12 +21,12 @@ where o.state='1' and s.id=o.shop_id
     </update>
 <!--    骑手到达店家-->
     <update id="arriveShop" parameterType="java.lang.Integer">
-        update set t_order_detail state=(select value from t_property where type='order_state' and name='已取货'),
+        update  t_order_detail set state=(select value from t_property where type='order_state' and name='已取货')
         where id=#{id}
     </update>
 <!--    骑手点击送达-->
     <update id="arriveCustomer"  parameterType="java.lang.Integer">
-         update set t_order_detail state=(select value from t_property where type='order_state' and name='已送达'),
+         update  t_order_detail set state=(select value from t_property where type='order_state' and name='已送达'),
          receive_time=current_timestamp
         where id=#{id}
     </update>
@@ -44,4 +44,36 @@ where o.state='1' and s.id=o.shop_id
 from t_order_detail o,t_shop s
 where (o.state='2' or o.state='3' or o.state='7') and s.id=o.shop_id and o.deliveryman_id=#{deliverymanId}
     </select>
-</mapper>
+<!--    获取导航信息-->
+    <select id="getRouteMsg" resultType="com.cykj.marketpojo.DeliverMsg">
+        select o.longitude as desLongitude,o.latitude as desLatitude,
+       s.longitude as wayLongitude,s.latitude as wayLatitude
+from t_order_detail o,t_shop s
+where o.id= #{id} and o.shop_id=s.id
+    </select>
+<!--    获取每单收益-->
+    <select id="getBenefit" resultType="java.lang.String">
+        select value
+from t_property where type='delivery_benefit' and name='派送员提成比例'
+    </select>
+<!--    获取预计送达时间-->
+    <select id="getArriveTime" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select date_add(create_time, interval 1 hour)  from t_order_detail
+where id=#{id}
+    </select>
+<!--    获取预计送达小时-->
+    <select id="getArriveHour" parameterType="java.lang.Integer" resultType="java.lang.String">
+select DATE_FORMAT(date_add(create_time, interval 1 hour),'%H:%m')  from t_order_detail
+where id=#{id}
+    </select>
+<!--    查询订单号-->
+    <select id="getOrderNum" parameterType="java.lang.Integer" resultType="java.lang.String">
+select order_num
+from t_order_detail where id=#{id}
+    </select>
+<!--    查询手机号-->
+    <select id="getTel" parameterType="java.lang.Integer" resultType="java.lang.String">
+select tel
+from t_order_detail where id=#{id}
+    </select>
+ </mapper>
