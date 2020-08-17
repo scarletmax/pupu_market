@@ -30,6 +30,9 @@ public class UserControl {
         deliveryman.setPwd(pwd);
         deliveryman.setTel(mobile);
         deliveryman = userService.login(deliveryman);
+        if (deliveryman==null){
+            deliveryman.setState(0);
+        }
         return JSON.toJSONString(deliveryman);
     }
 
