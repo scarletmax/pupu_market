@@ -38,6 +38,10 @@
         update t_order_detail set state = 9 where id = #{orderId}
     </update>
 
+    <update id="confirmAccept">
+        update t_order_detail set state = 6 where id = #{orderId}
+    </update>
+
     <select id="getAddress" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.ReceiverInfo">
        select id, name, address, tel, room_num, user_id, is_default, longitude, latitude
 from t_receiver_info

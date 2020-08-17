@@ -35,5 +35,23 @@ public class GetOrderControl {
     public String  showCurOrders(int deliverymanId){
         return JSON.toJSONString(getOrderService.showCurOrders(deliverymanId));
     }
+    @ResponseBody
+    @RequestMapping("getRouteMsg")
+    public String getRouteMsg(int id,double longitude,double latitude ){
+        String res=JSON.toJSONString(getOrderService.getRouteMsg(id,longitude,latitude));
+        System.out.println(res);
+//        return JSON.toJSONString(getOrderService.getRouteMsg(id,longitude,latitude));
+        return  res;
+    }
+    @ResponseBody
+    @RequestMapping("arriveShop")
+    public String arriveShop(int id){
+        return JSON.toJSONString(getOrderService.arriveShop(id));
+    }
+    @ResponseBody
+    @RequestMapping("arriveCustomer")
+    public String arriveCustomer(int id){
+        return JSON.toJSONString(getOrderService.arriveCustomer(id));
+    }
 
 }

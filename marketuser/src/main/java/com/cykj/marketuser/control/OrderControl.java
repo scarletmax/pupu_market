@@ -49,6 +49,12 @@ public class OrderControl {
         return JSON.toJSONString(orderService.deleteOrder(orderId)+"");
     }
 
+    @RequestMapping(value = "/confirmAccept")
+    @ResponseBody
+    public String confirmAccept(int orderId){
+        return JSON.toJSONString(orderService.confirmAccept(orderId)+"");
+    }
+
 
 
     @RequestMapping("getRelativeInfo")

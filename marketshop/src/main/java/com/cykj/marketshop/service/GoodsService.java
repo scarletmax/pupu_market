@@ -21,5 +21,4 @@ public interface GoodsService {
     public int addGoods(Goods goods);
     public int editGoods(Goods goods);
 
-    public int reduceGoodsNum(int num,int id);
 }

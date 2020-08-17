@@ -37,6 +37,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public int confirmAccept(int orderId) {
+        return orderMapper.confirmAccept(orderId);
+    }
+
+    @Override
     public OrderDetail getRelativeInfo(int userId) {
         OrderDetail detail= new OrderDetail();
         detail.setReceiverInfo(orderMapper.getAddress(userId));

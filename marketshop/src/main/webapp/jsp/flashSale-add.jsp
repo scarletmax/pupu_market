@@ -147,6 +147,7 @@
                 data:data.field,
                 dataType:"json",
                 success:function(res){
+                    console.log("插入秒杀记录的返回结果"+res);
                     if(res==1){
                         layer.alert("新增成功", {icon: 6}, function() {
                             //关闭当前frame
@@ -154,6 +155,8 @@
                             // 可以对父窗口进行刷新
                             xadmin.father_reload();
                         });
+                    }else if(res==-1){
+                        layer.msg("数量不足，请刷新",{time:1000});
                     }
                 },
                 error:function (xhr,textStatus) {

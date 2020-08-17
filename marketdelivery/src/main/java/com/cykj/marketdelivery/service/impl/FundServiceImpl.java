@@ -16,34 +16,34 @@ import java.util.List;
 public class FundServiceImpl implements FundService {
 
     @Autowired
-    private DeliverFundMapper fundMapper;
+    private DeliverFundMapper deliverFundMapper;
 
     @Autowired
     private UserMapper userMapper;
 
     @Override
     public int getCapital(Integer id,Integer type) {
-        return fundMapper.getCapital(id,type);
+        return deliverFundMapper.getCapital(id,type);
     }
 
     @Override
     public List<DeliverymanFund> getMonthCapital(Integer id) {
-        return fundMapper.getMonthCapital(id);
+        return deliverFundMapper.getMonthCapital(id);
     }
 
     @Override
     public List<DeliverymanFund> getWithdrawal(Integer id) {
-        return fundMapper.getWithdrawal(id);
+        return deliverFundMapper.getWithdrawal(id);
     }
 
     @Override
     public List<DeliverymanFund> getDayCapital(Integer id) {
-        return fundMapper.getDayCapital(id);
+        return deliverFundMapper.getDayCapital(id);
     }
 
     @Override
     public List<DeliverymanFund> getLastDayCapital(Integer id) {
-        return fundMapper.getLastDayCapital(id);
+        return deliverFundMapper.getLastDayCapital(id);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class FundServiceImpl implements FundService {
                 deliverymanFund.setDeliverymanId(id);
                 deliverymanFund.setIncome(money);
                 deliverymanFund.setSerial(serial);
-                return fundMapper.addWithdraw(deliverymanFund);
+                return deliverFundMapper.addWithdraw(deliverymanFund);
             }else{
                 return 0;
             }

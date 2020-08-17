@@ -25,8 +25,10 @@ public interface GoodsMapper {
     public int addGoods(Goods goods);
     public int editGoods(Goods goods);
 
-    public int reduceNum(int num,int id);
-    public int reduceNumTest(int id);
+    public int reduceCount(int goodsId, int restCount);
+    public int searchCount(int goodsId);
+    public int returnCount(int id,int restCount);
+
 
 
 }

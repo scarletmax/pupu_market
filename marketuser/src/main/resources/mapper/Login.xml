@@ -15,7 +15,7 @@
     </insert>
     <!--    微信登陆-->
     <select id="loginByWeixin"   parameterType="com.cykj.marketpojo.User" resultType="com.cykj.marketpojo.User">
-        select id
+        select id, tel, account, name, pwd, icon_url, address_info_id, level_id, point, state, reg_time, open_id
         from t_user where open_id= #{openId}
     </select>
     <!--    手机登录-->
