@@ -14,6 +14,7 @@ public interface OrderMapper {
     public int cancelOrder(int orderId);
     public int deleteOrder(int orderId);
     public int confirmAccept(int orderId);
+    public int orderCommented(int orderId);
 
     ReceiverInfo getAddress(int userId);
     Integer createOrder(OrderDetail detail);
