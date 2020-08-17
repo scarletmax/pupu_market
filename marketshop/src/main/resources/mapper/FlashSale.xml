@@ -10,7 +10,7 @@
 			and g.name like concat ('%',#{goodsName},'%')
 		</if>
 		<if test="containTime!=null and containTime!=''">
-			and convert (f.start_time,char )&gt;#{containTime} and convert (f.end_time,char )&lt;#{containTime}
+			and convert (f.start_time,char )&lt;#{containTime} and convert (f.end_time,char )&gt;#{containTime}
 		</if>
 		<if test="state!=null and state!=''">
 			and f.state=#{state}
@@ -25,7 +25,7 @@
 			and g.name like concat ('%',#{goodsName},'%')
 		</if>
 		<if test="containTime!=null and containTime!=''">
-			and convert (f.start_time,char )&gt;#{containTime} and convert (f.end_time,char )&lt;#{containTime}
+			and convert (f.start_time,char )&lt;#{containTime} and convert (f.end_time,char )&gt;#{containTime}
 		</if>
 		<if test="state!=null and state!=''">
 			and f.state=#{state}
@@ -40,5 +40,10 @@
 	    insert into t_flash_sale (goods_id,start_time,end_time,rest_count,flash_price,limit_buy)  values
 	    (#{goodsId},convert(#{startTime},datetime),convert(#{endTime},datetime),#{restCount},#{flashPrice},#{limitBuy})
 	</insert>
+
+	<!--返还库存-->
+	<update id="returnCount">
+	    update t_flash_sale set rest_count = 0 where id=#{id}
+	</update>
 
 </mapper>

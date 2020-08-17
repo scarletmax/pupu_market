@@ -61,12 +61,13 @@
 </div>
 </body>
 <script>
-    layui.use(['form','table','jquery','layer','laytpl','laydate'], function(){
+    layui.use(['form','table','jquery','layer','laytpl','laydate','util'], function(){
         var $ = layui.jquery;
         var form = layui.form;
         var table = layui.table;
         var layer = layui.layer;
         var laydate = layui.laydate;
+        var util = layui.util;
         var laytpl = layui.laytpl;
 
         var path = $("#path").val();
@@ -111,15 +112,18 @@
             }
             ,cols: [[ //表头，按照商品id升序，秒杀创建时间降序
                 // {type:'checkbox'}
-                {field: 'id', title: '秒杀id', hide: true}
-                ,{field: 'goodsId', title: '商品id', align:'center', sort: true}
-                ,{field: 'goodsName', title: '商品名称',align:'center', sort: true}
-                ,{field: 'startTime', title: '开始时间', align:'center', sort: true}
-                ,{field: 'endTime', title: '结束时间',align:'center', sort: true}
-                ,{field: 'restCount', title: '剩余总数', align:'center', sort: true}
-                ,{field: 'limitBuy', title: '限购数量', align:'center', sort: true}
-                ,{field: 'stateStr', title: '秒杀状态', align:'center', sort: true}
-                ,{field: 'operation', title: '操作', width: '250px', align:'center',toolbar: '#barDemo'}
+                {field: 'id', title: '秒杀记录的id', hide: true, width:'100px'}
+                ,{field: 'goodsId', title: '商品id', align:'center', sort: true, width:'100px'}
+                ,{field: 'goodsName', title: '商品名称',align:'center', sort: true, width:'100px'}
+                ,{field: 'flashPrice', title: '秒杀价格',align:'center', sort: true, width:'100px'}
+                ,{field: 'startTime', title: '开始时间', align:'center', sort: true,width:'100px',
+                    templet : "<div>{{layui.util.toDateString(d.startTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
+                ,{field: 'endTime', title: '结束时间',align:'center', sort: true,width:'100px',
+                    templet : "<div>{{layui.util.toDateString(d.endTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
+                ,{field: 'restCount', title: '剩余总数', align:'center', sort: true,width:'100px'}
+                ,{field: 'limitBuy', title: '限购数量', align:'center', sort: true,width:'100px'}
+                ,{field: 'stateStr', title: '秒杀状态', align:'center', sort: true,width:'100px'}
+                ,{field: 'operation', title: '操作', align:'center',toolbar: '#barDemo',width:'250px'}
             ]]
         });
 
@@ -159,13 +163,29 @@
             var layEvent = obj.event; //获得 lay-event 对应的自定义事件名（也可以是表头的 event 参数对应的事件名）
             var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
 
-            if(layEvent=='查看详情'){
-                window.tempData = data;
-                xadmin.open('商品详情','${pageContext.request.contextPath}/jsp/good-detail.jsp',900,600);
-            }else if(layEvent=='修改'){
-                window.tempData = data;
-                xadmin.open('修改商品','${pageContext.request.contextPath}/jsp/goods-edit.jsp',900,600);
+            if(layEvent=='返还库存'){
+                $.ajax({
+                    url:path+"/flashSaleControl/returnCount",
+                    async:true,
+                    type:"POST",
+                    data:{id: data.id,restCount:data.restCount},
+                    dataType:"text",
+                    success:function(res){
+                        console.log("库存返回的结果"+res);
+                        if(res==1){
+                            layer.msg("返还成功",{time:1000});
+                            tableIns.reload();
+                        }
+                    },
+                    error:function (xhr,textStatus) {
+                        layer.alert("错误:"+textStatus, {icon: 2});
+                    },
+                });
             }
+            <%--else if(layEvent=='修改'){--%>
+            <%--    window.tempData = data;--%>
+            <%--    xadmin.open('修改商品','${pageContext.request.contextPath}/jsp/goods-edit.jsp',900,600);--%>
+            <%--}--%>
 
 
 
@@ -200,38 +220,19 @@
 <input id="path" value="${pageContext.request.contextPath}">
 
 <script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="新增商品">新增商品</button>
-        <button class="layui-btn layui-btn-sm" lay-event="上架">上架</button>
-        <button class="layui-btn layui-btn-sm" lay-event="下架">下架</button>
-        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="删除">删除</button>
-    </div>
+<%--    <div class="layui-btn-container">--%>
+<%--        <button class="layui-btn layui-btn-sm" lay-event="新增商品">新增商品</button>--%>
+<%--        <button class="layui-btn layui-btn-sm" lay-event="上架">上架</button>--%>
+<%--        <button class="layui-btn layui-btn-sm" lay-event="下架">下架</button>--%>
+<%--        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="删除">删除</button>--%>
+<%--    </div>--%>
 </script>
 
 <script type="text/html" id="barDemo">
-    {{#  if(d.stateStr=='销售中'||d.stateStr=='补货中'||d.stateStr=='待上架'){ }}
-    <a class="layui-btn layui-btn-xs" lay-event="查看详情">查看详情</a>
-    <a class="layui-btn layui-btn-xs" lay-event="修改">修改</a>
-        {{#  if(d.special==0){ }}
-        <a class="layui-btn layui-btn-xs" lay-event="开启特价">开启特价</a>
-        {{#  }else{ }}
-        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="终止特价">终止特价</a>
-        {{#  } }}
-
-        {{#  if(d.recommended==0){ }}
-        <a class="layui-btn layui-btn-xs" lay-event="开启推荐">开启推荐</a>
-        {{#  }else{ }}
-        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="终止推荐">终止推荐</a>
-        {{#  } }}
-
-        {{#  if(d.flashSale==0){ }}
-        <a class="layui-btn layui-btn-xs" lay-event="开启秒杀">开启秒杀</a>
-        {{#  }else{ }}
-        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="终止秒杀">终止秒杀</a>
-        {{#  } }}
-    {{#  }else if(d.stateStr=='已下架'){ }}
-    <a class="layui-btn layui-btn-xs" lay-event="查看详情">查看详情</a>
+    {{#  if(d.stateStr=='已结束'&&d.restCount>0){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="返还库存">返还库存</a>
     {{#  } }}
+
 </script>
 
 </html>

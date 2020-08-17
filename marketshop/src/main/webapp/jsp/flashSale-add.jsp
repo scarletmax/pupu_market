@@ -81,15 +81,15 @@
         laydate.render({
             elem: '#timeRange' //指定元素
             ,type: 'datetime'
-            ,range: '~'
+            ,range: '到'
             ,format: 'yyyy-MM-dd HH:mm:ss'
             ,done: function(value, date, endDate){
                 // debugger;
                 // console.log(typeof value);
-                var startTime = value.split(" ~ ")[0];
-                console.log(startTime);
-                var endTime = value.split(" ~ ")[1];
-                console.log(endTime);
+                var startTime = value.split(" 到 ")[0];
+                // console.log(startTime);
+                var endTime = value.split(" 到 ")[1];
+                // console.log(endTime);
 
                 var dateStr = startTime.split(" ")[0];
                 var timeStr = startTime.split(" ")[1];
@@ -147,6 +147,7 @@
                 data:data.field,
                 dataType:"json",
                 success:function(res){
+                    console.log("插入秒杀记录的返回结果"+res);
                     if(res==1){
                         layer.alert("新增成功", {icon: 6}, function() {
                             //关闭当前frame
@@ -154,6 +155,8 @@
                             // 可以对父窗口进行刷新
                             xadmin.father_reload();
                         });
+                    }else if(res==-1){
+                        layer.msg("数量不足，请刷新",{time:1000});
                     }
                 },
                 error:function (xhr,textStatus) {

@@ -107,9 +107,6 @@
             }
         });
 
-        // $(function () {
-        //     table.resize('test');
-        // });
 
     });
 </script>

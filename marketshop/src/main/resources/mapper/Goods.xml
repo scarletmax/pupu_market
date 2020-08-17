@@ -105,9 +105,9 @@
 	<!--修改商品-->
 	<update id="editGoods" parameterType="com.cykj.marketpojo.Goods">
 		update t_goods
-		<set>
-			name = #{name},intro=#{intro},price=#{price},special_price=#{specialPrice},total_count=#{totalCount},
-			parent_type_id=#{parentTypeId},type_id=#{typeId},choice_prop1=#{choiceProp1},choice_prop2=#{choiceProp2},choice_prop3=#{choiceProp3}
+		<trim suffix="" suffixOverrides=",">
+			set name = #{name},intro=#{intro},price=#{price},special_price=#{specialPrice},total_count=#{totalCount},
+			parent_type_id=#{parentTypeId},type_id=#{typeId},choice_prop1=#{choiceProp1},choice_prop2=#{choiceProp2},choice_prop3=#{choiceProp3},
 			<if test="infoPic !=null and infoPic!=''">
 				info_pic = #{infoPic},
 			</if>
@@ -123,16 +123,24 @@
 			<if test="pic4 !=null and pic4!=''">
 				pic4 = #{pic4},
 			</if>
-		</set>
+		</trim>
 		where id = #{id}
 	</update>
 
-	<select id="reduceNumTest" resultType="java.lang.Integer">
-		select (total_count) as leftNum from t_goods  where id = #{id}
+	<!--扣除秒杀库存-->
+	<update id="reduceCount">
+		update t_goods set total_count=total_count-#{restCount} where id = #{goodsId}
+	</update>
+
+	<!--查库存-->
+	<select id="searchCount" resultType="java.lang.Integer">
+		select total_count from t_goods where id = #{goodsId}
 	</select>
 
-	<update id="reduceNum">
-		update t_goods set total_count=total_count-#{num} where id = #{id}
+	<!--返还库存-->
+	<update id="returnCount">
+		update t_goods set total_count=total_count+#{restCount} where id =
+		(select goods_id from t_flash_sale where id=#{id})
 	</update>
 
 
