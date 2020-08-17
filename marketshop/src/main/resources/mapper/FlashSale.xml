@@ -41,4 +41,9 @@
 	    (#{goodsId},convert(#{startTime},datetime),convert(#{endTime},datetime),#{restCount},#{flashPrice},#{limitBuy})
 	</insert>
 
+	<!--返还库存-->
+	<update id="returnCount">
+	    update t_flash_sale set rest_count = 0 where id=#{id}
+	</update>
+
 </mapper>

@@ -16,6 +16,7 @@ public interface FlashSaleMapper {
     public List<FlashSale> selectFlashSaleList(HashMap<String, Object> condition);
 
     public int insertFlashSale(FlashSale flashSale);
+    public int returnCount(int id);
 
 
 }

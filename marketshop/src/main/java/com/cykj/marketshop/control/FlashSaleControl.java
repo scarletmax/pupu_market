@@ -6,11 +6,14 @@ import com.cykj.marketpojo.ShopAdmin;
 import com.cykj.marketshop.service.FlashSaleService;
 import com.cykj.marketshop.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,19 +52,40 @@ public class FlashSaleControl {
     }
 
     @RequestMapping("/insertFlashSale")
-    public String insertFlashSale(HttpServletRequest request, HttpServletResponse response) throws ParseException {
-        int goodsId = Integer.parseInt(request.getParameter("goodsId"));
-        int restCount = Integer.parseInt(request.getParameter("restCount"));
-        int limitBuy = Integer.parseInt(request.getParameter("limitBuy"));
-        double flashPrice = Double.parseDouble(request.getParameter("flashPrice"));
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        System.out.println(TimeZone.getDefault());
-//        System.out.println(TimeZone.getTimeZone("GMT+8:00"));
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-        Date startTime = simpleDateFormat.parse(request.getParameter("startTime"));
-        Date endTime = simpleDateFormat.parse(request.getParameter("endTime"));
-        FlashSale flashSale = new FlashSale(0,goodsId,null,startTime,endTime,restCount,limitBuy,flashPrice,0,null,0,null);
-        return JSON.toJSONString(flashSaleService.insertFlashSale(flashSale)+"");
+    @Transactional(rollbackFor = Exception.class)
+    public String insertFlashSale(HttpServletRequest request, HttpServletResponse response){
+        int res;
+       try{
+           int goodsId = Integer.parseInt(request.getParameter("goodsId"));
+           int restCount = Integer.parseInt(request.getParameter("restCount"));
+           int limitBuy = Integer.parseInt(request.getParameter("limitBuy"));
+           double flashPrice = Double.parseDouble(request.getParameter("flashPrice"));
+           SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+           simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+           Date startTime = simpleDateFormat.parse(request.getParameter("startTime"));
+           Date endTime = simpleDateFormat.parse(request.getParameter("endTime"));
+           FlashSale flashSale = new FlashSale(0,goodsId,null,startTime,endTime,restCount,limitBuy,flashPrice,0,null,0,null);
+           res = flashSaleService.insertFlashSale(flashSale);
+       }catch (Exception e){//传上来的格式不会有parse异常，只有数量为小于0才会有异常
+           e.printStackTrace();
+           TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+           res = -1;
+       }
+        return JSON.toJSONString(res+"");
+    }
+
+    @RequestMapping("/returnCount")
+    @Transactional(rollbackFor = Exception.class)
+    public String returnCount(int id,int restCount,HttpServletRequest request, HttpServletResponse response){
+        int res ;
+        try {
+           res = flashSaleService.returnCount(id,restCount);
+        } catch (Exception e) {
+            e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            res = -1;
+        }
+        return res+"";
     }
 
 }

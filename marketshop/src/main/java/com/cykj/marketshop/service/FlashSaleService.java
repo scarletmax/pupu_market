@@ -11,5 +11,7 @@ public interface FlashSaleService {
 
     public LayData<FlashSale> selectFlashSale(HashMap<String,Object> condition);
 
-    public int insertFlashSale(FlashSale flashSale);
+    public int insertFlashSale(FlashSale flashSale) throws Exception;
+
+    public int returnCount(int goodsId,int restCount) throws Exception;
 }

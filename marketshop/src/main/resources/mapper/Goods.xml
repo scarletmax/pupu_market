@@ -127,12 +127,20 @@
 		where id = #{id}
 	</update>
 
-	<select id="reduceNumTest" resultType="java.lang.Integer">
-		select (total_count) as leftNum from t_goods  where id = #{id}
+	<!--扣除秒杀库存-->
+	<update id="reduceCount">
+		update t_goods set total_count=total_count-#{restCount} where id = #{goodsId}
+	</update>
+
+	<!--查库存-->
+	<select id="searchCount" resultType="java.lang.Integer">
+		select total_count from t_goods where id = #{goodsId}
 	</select>
 
-	<update id="reduceNum">
-		update t_goods set total_count=total_count-#{num} where id = #{id}
+	<!--返还库存-->
+	<update id="returnCount">
+		update t_goods set total_count=total_count+#{restCount} where id =
+		(select goods_id from t_flash_sale where id=#{id})
 	</update>
 
 
