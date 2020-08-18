@@ -2,10 +2,13 @@ package com.cykj.marketdelivery.control;
 
 
 import com.alibaba.fastjson.JSON;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.aliyuncs.exceptions.ClientException;
 import com.cykj.marketdelivery.service.LoginService;
 import com.cykj.marketdelivery.service.RegisterService;
 import com.cykj.marketdelivery.service.UserService;
 import com.cykj.marketdelivery.util.MD5Util;
+import com.cykj.marketdelivery.util.SmsUtils;
 import com.cykj.marketpojo.Deliveryman;
 import com.cykj.marketpojo.LayData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -32,6 +36,30 @@ public class RegisterControl {
 
     @Resource
     private RegisterService registerService;
+
+    @RequestMapping(value = "/telVerify")
+    @ResponseBody
+    public String telVerify(String tel,HttpServletRequest request,HttpServletResponse response){
+        if(registerService.isTelRepeat(tel)!=0){
+            return "telRepeat";
+        }
+        SmsUtils.setNewcode();
+        String code = Integer.toString(SmsUtils.getNewcode());
+        try {
+            SendSmsResponse SSR = SmsUtils.sendSms(tel,code);
+            System.out.println("短信接口返回的数据----------------");
+            System.out.println("Code=" + SSR.getCode());
+            System.out.println("Message=" + SSR.getMessage());
+            System.out.println("RequestId=" + SSR.getRequestId());
+            System.out.println("BizId=" + SSR.getBizId());
+            return code;
+        } catch (ClientException e) {
+            e.printStackTrace();
+            return "fail";
+        }
+
+    }
+
 
 
     @RequestMapping(value = "/uploadImage")
@@ -84,7 +112,7 @@ public class RegisterControl {
         String picCardBack = request.getParameter("picCardBack");
         String picPerson = request.getParameter("picPerson");
 
-        Deliveryman deliveryman = new Deliveryman(0,account,name,tel,idCard,sex,age,0,null,0,0.0,0.0,0.0,pwd,picCardFront,picCardBack,picPerson);
+        Deliveryman deliveryman = new Deliveryman(0,account,name,tel,idCard,sex,age,0,null,0,0.0,0.0,0.0,MD5Util.md5(pwd),picCardFront,picCardBack,picPerson);
         try {
             registerService.register(deliveryman);
         } catch (Exception e) {

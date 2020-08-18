@@ -81,6 +81,19 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!--骑手注册短信验证-->
+        <!--短信sdk-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>3.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
 
     </dependencies>
 

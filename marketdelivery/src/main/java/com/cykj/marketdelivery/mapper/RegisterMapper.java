@@ -7,4 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface RegisterMapper {
 
     public int register(Deliveryman deliveryman);
+    public int isTelRepeat(String tel);
 }

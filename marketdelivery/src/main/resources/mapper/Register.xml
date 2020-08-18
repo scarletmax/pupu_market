@@ -4,6 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cykj.marketdelivery.mapper.RegisterMapper">
 
+    <!--派送员短信验证时查重-->
+    <select id="isTelRepeat" resultType="java.lang.Integer">
+        select count(*) from t_deliveryman where tel = #{tel}
+    </select>
+
     <!--派送员注册-->
     <insert id="register" parameterType="com.cykj.marketpojo.Deliveryman">
         insert into t_deliveryman (name,account,pwd,tel,id_card,sex,age,pic_card_front,pic_card_back,pic_person) values

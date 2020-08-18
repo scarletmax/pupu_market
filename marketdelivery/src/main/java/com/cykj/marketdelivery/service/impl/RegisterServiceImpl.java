@@ -13,8 +13,14 @@ public class RegisterServiceImpl implements RegisterService {
     @Resource
     private RegisterMapper registerMapper;
 
+
     @Override
     public int register(Deliveryman deliveryman) {
         return registerMapper.register(deliveryman);
+    }
+
+    @Override
+    public int isTelRepeat(String tel) {
+        return registerMapper.isTelRepeat(tel);
     }
 }
