@@ -53,28 +53,28 @@
                             <a href="javascript:;" class="x-admin-backlog-body">
                                 <h3>总库存</h3>
                                 <p>
-                                    <cite id="totalInventory">66</cite></p>
+                                    <cite id="totalInventory">0</cite></p>
                             </a>
                         </li>
                         <li class="layui-col-md3 layui-col-xs6">
                             <a href="javascript:;" class="x-admin-backlog-body">
                                 <h3>商品总销量</h3>
                                 <p>
-                                    <cite id="totalSales">12</cite></p>
+                                    <cite id="totalSales">0</cite></p>
                             </a>
                         </li>
                         <li class="layui-col-md3 layui-col-xs6">
                             <a href="javascript:;" class="x-admin-backlog-body">
                                 <h3>订单总数</h3>
                                 <p>
-                                    <cite id="totalOrder">99</cite></p>
+                                    <cite id="totalOrder">0</cite></p>
                             </a>
                         </li>
                         <li class="layui-col-md3 layui-col-xs6">
                             <a href="javascript:;" class="x-admin-backlog-body">
                                 <h3>总营业额</h3>
                                 <p>
-                                    <cite id="totalAmount">67</cite></p>
+                                    <cite id="totalAmount">0</cite></p>
                             </a>
                         </li>
 

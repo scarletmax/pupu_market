@@ -37,6 +37,7 @@ public class LoginControl {
         ShopAdmin userAdmin = JSON.parseObject(adminJson, ShopAdmin.class);
         ShopAdmin admin= loginService.login(userAdmin);
         if (admin != null) {
+            System.out.println("admin.getState()="+admin.getState());
             if(admin.getState()==1){
                 HttpSession session = request.getSession();
                 session.setAttribute("admin", admin);

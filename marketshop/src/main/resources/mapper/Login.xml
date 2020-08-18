@@ -5,7 +5,7 @@
 <mapper namespace="com.cykj.marketshop.mapper.LoginMapper">
     <!--	店铺管理员登陆-->
     <select id="login" parameterType="com.cykj.marketpojo.ShopAdmin" resultType="com.cykj.marketpojo.ShopAdmin">
-	    select id,account,pwd,shop_id from t_shop_admin
+	    select id,account,pwd,shop_id,state from t_shop_admin
 	    where account=#{account} and pwd=#{pwd}
 	</select>
 

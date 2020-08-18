@@ -15,12 +15,12 @@ public class ShopStatisticsServiceImpl implements ShopStatisticsService {
     private ShopStatisticsMapper shopStatisticsMapper;
 
     @Override
-    public int totalInventory(HashMap<String, Object> hashMap) {
+    public String totalInventory(HashMap<String, Object> hashMap) {
         return shopStatisticsMapper.totalInventory(hashMap);
     }
 
     @Override
-    public int totalSales(HashMap<String, Object> hashMap) {
+    public String totalSales(HashMap<String, Object> hashMap) {
         return shopStatisticsMapper.totalSales(hashMap);
     }
 
@@ -30,7 +30,7 @@ public class ShopStatisticsServiceImpl implements ShopStatisticsService {
     }
 
     @Override
-    public BigDecimal totalAmount(HashMap<String, Object> hashMap) {
+    public String totalAmount(HashMap<String, Object> hashMap) {
         return shopStatisticsMapper.totalAmount(hashMap);
     }
 }

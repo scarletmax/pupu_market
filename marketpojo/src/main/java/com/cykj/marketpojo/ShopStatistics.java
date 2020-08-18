@@ -4,31 +4,31 @@ import java.math.BigDecimal;
 
 public class ShopStatistics {
 
-    private int totalInventory;//总库存
-    private int totalSales; //总销量
+    private String totalInventory;//总库存
+    private String totalSales; //总销量
     private int totalOrder; //总订单
-    private BigDecimal totalAmount;//总营业额
+    private String totalAmount;//总营业额
 
-    public ShopStatistics(int totalInventory, int totalSales, int totalOrder, BigDecimal totalAmount) {
+    public ShopStatistics(String totalInventory, String totalSales, int totalOrder, String totalAmount) {
         this.totalInventory = totalInventory;
         this.totalSales = totalSales;
         this.totalOrder = totalOrder;
         this.totalAmount = totalAmount;
     }
 
-    public int getTotalInventory() {
+    public String getTotalInventory() {
         return totalInventory;
     }
 
-    public void setTotalInventory(int totalInventory) {
+    public void setTotalInventory(String totalInventory) {
         this.totalInventory = totalInventory;
     }
 
-    public int getTotalSales() {
+    public String getTotalSales() {
         return totalSales;
     }
 
-    public void setTotalSales(int totalSales) {
+    public void setTotalSales(String totalSales) {
         this.totalSales = totalSales;
     }
 
@@ -40,11 +40,11 @@ public class ShopStatistics {
         this.totalOrder = totalOrder;
     }
 
-    public BigDecimal getTotalAmount() {
+    public String getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(BigDecimal totalAmount) {
+    public void setTotalAmount(String totalAmount) {
         this.totalAmount = totalAmount;
     }
 

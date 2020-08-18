@@ -39,7 +39,7 @@ public class GoodsRankControl {
         }
 
 
-        System.out.println("findgoodsRank===="+list);
+
         return JSON.toJSONString(list);
     }
     @RequestMapping("/findgoodsRank2")
@@ -55,8 +55,7 @@ public class GoodsRankControl {
             list =goodsRankService.findGoodsRank2(hashMap);
         }
 
-        System.out.println("findgoodsRank===="+list);
-        System.out.println("getTatol===="+list.get(0).getTatol());
+
         return JSON.toJSONString(list);
     }
 }
