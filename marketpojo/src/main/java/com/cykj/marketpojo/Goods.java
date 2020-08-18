@@ -42,6 +42,9 @@ public class Goods {
     //新增订单时插入商品
     private int orderDetailId;
     private String choiceProp;
+    private int version;
+    private int userId;
+    private double totalPrice;
 
     public String getChoiceProp() {
         return choiceProp;
@@ -52,6 +55,30 @@ public class Goods {
     }
 
     public Goods() {
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     public int getOrderDetailId() {

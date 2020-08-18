@@ -1,6 +1,7 @@
 package com.cykj.marketadmin.control;
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ public class GoodsControl {
 
     @RequestMapping("/searchGoodsList")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String searchGoodsList(HttpServletRequest request, HttpServletResponse response){
         String curPage = request.getParameter("curPage");
         String pageSize = request.getParameter("pageSize");

@@ -2,6 +2,7 @@ package com.cykj.marketadmin.control;
 
 import com.alibaba.fastjson.JSON;
 
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ public class CouponControl {
 
     @RequestMapping(value = "findCouponUser")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public Object findCouponUser(int id){
         HashMap<String ,Object> hashMap=new HashMap<>();
         hashMap.put("id",id);

@@ -1,5 +1,6 @@
 package com.cykj.marketadmin.control;
 import com.alibaba.fastjson.JSON;
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.DeliverymanService;
 
 import com.cykj.marketpojo.Deliveryman;
@@ -22,6 +23,7 @@ public class DeliverymanControl {
 
     @RequestMapping("showTable")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
 //    @Log(operationType = "查看",operationName = "")
     //获取文件分页数据
     public String showTable(HttpServletRequest request)  {
@@ -54,6 +56,7 @@ public class DeliverymanControl {
 
     @RequestMapping("updateState")
     @ResponseBody
+    @Log(operationType = "操作",operationName = "审核派送员")
 //    @Log(operationType = "操作",operationName = "审核派送员")
     //审核文件 修改状态
     public String updateState(int id,String state) throws IOException, ServletException {
@@ -65,8 +68,24 @@ public class DeliverymanControl {
     }
     @RequestMapping("getAllState")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String getAllState() {
         return JSON.toJSONString(deliverymanService.getAllState());
     }
+
+    @RequestMapping("queryBenefit")
+    @ResponseBody
+    @Log(operationType = "查看",operationName = "")
+    public String queryBenefit(){
+        return deliverymanService.queryBenefit()+"";
+    }
+
+    @RequestMapping("setBenefit")
+    @ResponseBody
+    @Log(operationType = "操作",operationName = "设置派送员提成金额")
+    public String setBenefit(String benefit){
+        return deliverymanService.setBenefit(benefit);
+    }
+
 
 }

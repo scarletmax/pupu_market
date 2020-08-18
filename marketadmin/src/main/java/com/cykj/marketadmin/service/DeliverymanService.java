@@ -13,4 +13,7 @@ public interface DeliverymanService {
     boolean updateState(int id, String state);
     //获取所有派送员状态
     List<String> getAllState();
+    double queryBenefit();
+    String setBenefit(String benefit);
+
 }

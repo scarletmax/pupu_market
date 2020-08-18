@@ -1,6 +1,7 @@
 package com.cykj.marketadmin.control;
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.ShopService;
 import com.cykj.marketadmin.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class ShopControl {
 
     @RequestMapping(value = "/findShopAdmin")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public Object findShopAdmin(String userName,String account,String shopName,String startTime,String endTime,int limit,int page){
 
         System.out.println("userName="+userName+" account="+account+" shopName="+shopName+" startTime="+startTime+" endTime="+endTime);
@@ -44,6 +46,7 @@ public class ShopControl {
     }
     @RequestMapping(value = "/changeState")
     @ResponseBody
+    @Log(operationType = "操作",operationName = "更改店铺管理员状态")
     public  Object changeShopAdminState(int id,String purpose){
 
         String msg=null;
@@ -69,6 +72,7 @@ public class ShopControl {
     }
     @RequestMapping(value = "/findShop")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public Object findShop(String bossName,String shopName,String startTime,String endTime,int limit,int page ,String state){
 
         System.out.println("bossName="+bossName+" shopName="+shopName+" startTime="+startTime+" endTime="+endTime+" state="+state);
@@ -97,6 +101,7 @@ public class ShopControl {
     }
     @RequestMapping(value = "/verifyAccount")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public Object verifyAccount(String account){
 
         HashMap<String ,Object> hashMap=new HashMap<>();
@@ -114,6 +119,7 @@ public class ShopControl {
 
     @RequestMapping(value = "/insertShopAdmin")
     @ResponseBody
+    @Log(operationType = "操作",operationName = "新增新店铺管理员")
     public String insertShopAdmin(String account,String userName,String tel,int shopId,String pwd){
         String msg=null;
         if(verifyAccount(account).equals("success")){
@@ -138,12 +144,15 @@ public class ShopControl {
     }
     @RequestMapping(value = "/shopList")
     @ResponseBody
+
+    @Log(operationType = "查看",operationName = "")
     public Object shopList(){
 
         return JSON.toJSONString(shopService.shopList());
     }
     @RequestMapping(value = "/changeShopState")
     @ResponseBody
+    @Log(operationType = "操作",operationName = "审核店铺")
     public  Object changeShopState(int id,String purpose){
 
         String msg=null;
@@ -170,6 +179,7 @@ public class ShopControl {
     //添加注释
     @RequestMapping(value = "/findProperty")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public Object findProperty(){
         HashMap<String ,Object> hashMap=new HashMap<>();
         hashMap.put("porperty","shop_state");

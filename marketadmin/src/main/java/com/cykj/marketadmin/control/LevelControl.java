@@ -1,6 +1,7 @@
 package com.cykj.marketadmin.control;
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.LevelService;
 import com.cykj.marketpojo.LayData;
 import com.cykj.marketpojo.Level;
@@ -21,6 +22,7 @@ public class LevelControl {
 //    查询等级列表
     @RequestMapping(value = "/findLevelList")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String findLevelList(HttpServletRequest request, HttpServletResponse response) {
         String page = request.getParameter("page");
         String limit = request.getParameter("limit");
@@ -40,6 +42,7 @@ public class LevelControl {
 //    添加新等级
     @RequestMapping(value = "/addLevel")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "添加等级配置")
     public String addLevel(HttpServletRequest request, HttpServletResponse response) {
         String levelInfo = request.getParameter("levelInfo");
         Level level = JSON.parseObject(levelInfo, Level.class);
@@ -55,6 +58,7 @@ public class LevelControl {
 //    修改等级
     @RequestMapping(value = "/editLevel")
     @ResponseBody
+   @Log(operationType = "操作",operationName = "编辑等级")
     public String editLevel(HttpServletRequest request, HttpServletResponse response) {
         String levelInfo = request.getParameter("levelInfo");
         Level level = JSON.parseObject(levelInfo, Level.class);
@@ -70,6 +74,7 @@ public class LevelControl {
 //    删除等级
     @RequestMapping(value = "/deleteLevel")
     @ResponseBody
+    @Log(operationType = "操作",operationName = "删除等级")
     public String deleteLevel(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         int a = 0;

@@ -1,6 +1,7 @@
 package com.cykj.marketadmin.control;
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.PropertyService;
 import com.cykj.marketadmin.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class PropertyControl {
 
     @Autowired
     private PropertyService propertyService;
-
+    @Log(operationType = "查看",operationName = "")
     @RequestMapping(value = "/findProperty")
     public String findProperty(String type,String typeText,String name,int limit,int page){
 
@@ -40,6 +41,7 @@ public class PropertyControl {
         return JSON.toJSONString(propertyService.findProperty(hashMap));
     }
     @RequestMapping(value = "/haveName")
+    @Log(operationType = "查看",operationName = "")
     public String haveName(String name ,String value,String type){
 
         HashMap<String ,Object> hashMap=new HashMap<>();
@@ -58,6 +60,7 @@ public class PropertyControl {
         return msg;
     }
     @RequestMapping(value = "/haveValue")
+    @Log(operationType = "查看",operationName = "")
     public String haveValue(String name ,String value,String type){
 
         HashMap<String ,Object> hashMap=new HashMap<>();
@@ -76,6 +79,7 @@ public class PropertyControl {
         return msg;
     }
     @RequestMapping(value = "/changeProperty")
+    @Log(operationType = "操作",operationName = "更改配置")
      public String changeProperty(String name ,String value,String type,int id){
         String msg=null;
         System.out.println("type="+type+" value="+value+" name="+name);

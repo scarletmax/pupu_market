@@ -91,6 +91,8 @@
         FROM
         t_order_detail
         WHERE
+         (state='6' or state='4' or state='10')
+        AND
         create_time &lt; date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 6 DAY)
         AND create_time &gt; date_sub(curdate(),INTERVAL WEEKDAY(curdate()) + 0 DAY)
         GROUP BY
@@ -103,33 +105,33 @@
     <select id="getOrderNumByMonth" resultType="com.cykj.marketpojo.DataAnalysis">
           select count(0) NUM, '第一周' as name,1 as numorder
                                   from t_order_detail t
-                                  where create_time between DATE_ADD(curdate(),interval -day(curdate())+1 day) and DATE_ADD(curdate(),interval -day(curdate())+1 day) + 7
+                                  where  (state='6' or state='4' or state='10') and create_time between DATE_ADD(curdate(),interval -day(curdate())+1 day) and DATE_ADD(curdate(),interval -day(curdate())+1 day) + 7
                                   union
                                   select count(0) NUM, '第二周' as name,2 as numorder
                                   from t_order_detail t
-                                  where  create_time between DATE_ADD(curdate(),interval -day(curdate())+1 day)+7 and DATE_ADD(curdate(),interval -day(curdate())+1 day) + 14
+                                  where  (state='6' or state='4' or state='10') and create_time between DATE_ADD(curdate(),interval -day(curdate())+1 day)+7 and DATE_ADD(curdate(),interval -day(curdate())+1 day) + 14
                                   union
                                   select count(0) NUM, '第三周' as name,3 as numorder
                                   from t_order_detail t
-                                  where  create_time between DATE_ADD(curdate(),interval -day(curdate())+1 day)+14 and DATE_ADD(curdate(),interval -day(curdate())+1 day) + 21
+                                  where  (state='6' or state='4' or state='10') and create_time between DATE_ADD(curdate(),interval -day(curdate())+1 day)+14 and DATE_ADD(curdate(),interval -day(curdate())+1 day) + 21
                                   union
                                   select count(0) NUM, '第四周' as name,4 as numorder
                                   from t_order_detail t
-                                  where  create_time between DATE_ADD(curdate(),interval -day(curdate())+1 day)+21 and DATE_ADD(curdate(),interval -day(curdate())+1 day) + 28
+                                  where  (state='6' or state='4' or state='10') and create_time between DATE_ADD(curdate(),interval -day(curdate())+1 day)+21 and DATE_ADD(curdate(),interval -day(curdate())+1 day) + 28
                                   union
                                   select count(0) NUM, '第五周' as name,5 as numorder
                                   from t_order_detail t
-                                  where  create_time between DATE_ADD(curdate(),interval -day(curdate())+1 day)+28 and last_day(curdate())
+                                  where  (state='6' or state='4' or state='10') and create_time between DATE_ADD(curdate(),interval -day(curdate())+1 day)+28 and last_day(curdate())
     </select>
     <!--    近半年订单数据-->
     <select id="getOrderNumByYear" resultType="com.cykj.marketpojo.DataAnalysis">
 
-    SELECT DATE_FORMAT((CURDATE() - INTERVAL 5 MONTH), '%Y-%m') AS name,count(*) as num  from t_order_detail where DATE_FORMAT(create_time, '%Y-%m')= DATE_FORMAT((CURDATE() - INTERVAL 5 MONTH), '%Y-%m')
- UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 4 MONTH), '%Y-%m') AS name,count(*) as num  from t_order_detail where DATE_FORMAT(create_time, '%Y-%m')= DATE_FORMAT((CURDATE() - INTERVAL 4 MONTH), '%Y-%m')
- UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 3 MONTH), '%Y-%m') AS name,count(*) as num  from t_order_detail where DATE_FORMAT(create_time, '%Y-%m')= DATE_FORMAT((CURDATE() - INTERVAL 3 MONTH), '%Y-%m')
- UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 2 MONTH), '%Y-%m') AS name,count(*) as num  from t_order_detail where DATE_FORMAT(create_time, '%Y-%m')= DATE_FORMAT((CURDATE() - INTERVAL 2 MONTH), '%Y-%m')
- UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 1 MONTH), '%Y-%m') AS name,count(*) as num from t_order_detail where DATE_FORMAT(create_time, '%Y-%m')= DATE_FORMAT((CURDATE() - INTERVAL 1 MONTH), '%Y-%m')
- UNION SELECT DATE_FORMAT(CURDATE(), '%Y-%m') AS name,count(*) as num  from t_order_detail where DATE_FORMAT(create_time, '%Y-%m')=DATE_FORMAT(CURDATE(), '%Y-%m')
+    SELECT DATE_FORMAT((CURDATE() - INTERVAL 5 MONTH), '%Y-%m') AS name,count(*) as num  from t_order_detail where (state='6' or state='4' or state='10') and DATE_FORMAT(create_time, '%Y-%m')= DATE_FORMAT((CURDATE() - INTERVAL 5 MONTH), '%Y-%m')
+ UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 4 MONTH), '%Y-%m') AS name,count(*) as num  from t_order_detail where (state='6' or state='4' or state='10') and DATE_FORMAT(create_time, '%Y-%m')= DATE_FORMAT((CURDATE() - INTERVAL 4 MONTH), '%Y-%m')
+ UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 3 MONTH), '%Y-%m') AS name,count(*) as num  from t_order_detail where (state='6' or state='4' or state='10') and DATE_FORMAT(create_time, '%Y-%m')= DATE_FORMAT((CURDATE() - INTERVAL 3 MONTH), '%Y-%m')
+ UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 2 MONTH), '%Y-%m') AS name,count(*) as num  from t_order_detail where (state='6' or state='4' or state='10') and DATE_FORMAT(create_time, '%Y-%m')= DATE_FORMAT((CURDATE() - INTERVAL 2 MONTH), '%Y-%m')
+ UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 1 MONTH), '%Y-%m') AS name,count(*) as num from t_order_detail where (state='6' or state='4' or state='10') and DATE_FORMAT(create_time, '%Y-%m')= DATE_FORMAT((CURDATE() - INTERVAL 1 MONTH), '%Y-%m')
+ UNION SELECT DATE_FORMAT(CURDATE(), '%Y-%m') AS name,count(*) as num  from t_order_detail where (state='6' or state='4' or state='10') and DATE_FORMAT(create_time, '%Y-%m')=DATE_FORMAT(CURDATE(), '%Y-%m')
 
     </select>
 </mapper>

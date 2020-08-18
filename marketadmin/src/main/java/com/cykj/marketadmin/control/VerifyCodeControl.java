@@ -1,6 +1,7 @@
 package com.cykj.marketadmin.control;
 
 
+import com.cykj.marketadmin.aop.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +20,7 @@ import java.util.Random;
 public class VerifyCodeControl {
     @RequestMapping("/getVerify")
     @ResponseBody
-//    @Log(operationType = "查看",operationName = "")
+    @Log(operationType = "查看",operationName = "")
     protected void getVerify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //声明验证码
         int width = 60;

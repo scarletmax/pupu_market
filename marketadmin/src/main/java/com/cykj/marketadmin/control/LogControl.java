@@ -2,6 +2,7 @@ package com.cykj.marketadmin.control;
 
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.LogService;
 import com.cykj.marketpojo.LayData;
 import com.cykj.marketpojo.LogInfo;
@@ -22,6 +23,7 @@ public class LogControl {
     LogService logService;
     @RequestMapping("/showTable")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
 //    @Log(operationType = "查看",operationName = "")
     //获取文件分页数据
     public String showTable(HttpServletRequest request) {
