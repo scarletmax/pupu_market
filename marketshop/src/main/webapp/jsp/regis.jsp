@@ -25,6 +25,7 @@
 
     <script src="${pageContext.request.contextPath}/static/X-admin/lib/layui/layui.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/js/regis.js" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/js/moveMap.js" charset="utf-8"></script>
     <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=UUftmgWr60AqpWKxtkXSMY9hFvSnzzUY"></script>
 
     <%--    <!--[if lt IE 9]>--%>
@@ -51,18 +52,44 @@
             /* height: 50px; */
             height: 40px;
         }
-        #l-map{
+
+        #l-map {
             width: 600px;
             height: 600px;
         }
 
         /* 内联 #3 | http://localhost:8081/jsp/regis.jsp */
 
-        #l-map {
+        .map1 {
             /* top: 20px; */
+            /*position: relative;*/
+            /*float: right;*/
+            /*top: -1000px;*/
+            /*right: 50px;*/
+            border: 1px solid #189F92;
+        }
+
+        .map-x {
+            text-align: right;
+            padding-right: 50px;
+            background-color: #189F92;
+        }
+
+        #box {
+            position: relative;
             float: right;
             top: -1000px;
-            right: 50px;
+            width: 600px;
+            height: 650px;
+            background: #fef4eb;
+            padding: 5px;
+            margin: 50px;
+            border: 1px solid #f60;
+        }
+
+        #box .title {
+            height: 25px;
+            background: #f60;
         }
 
 
@@ -87,31 +114,35 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">输入店铺地址</label>
                     <div class="layui-input-inline">
-<%--                        <input id="suggestId" type="text" name="suggestId" required lay-verify="required"--%>
-<%--                               placeholder="请输入店铺地址" autocomplete="off" class="layui-input"  value="" onblur="openMap()">--%>
-                        <button style="display: none" id="setTop" class="layui-btn" data-method="setTop">多窗口模式，层叠置顶</button>
-                        <div id="r-result"><input  onblur="openMap()" type="text" id="suggestId" size="20" value="百度" /></div>
+                        <%--                        <input id="suggestId" type="text" name="suggestId" required lay-verify="required"--%>
+                        <%--                               placeholder="请输入店铺地址" autocomplete="off" class="layui-input"  value="" onblur="openMap()">--%>
+                        <button style="display: none" id="setTop" class="layui-btn" data-method="setTop">多窗口模式，层叠置顶
+                        </button>
+                        <div id="r-result"><input onblur="openMap()" type="text" id="suggestId" size="20" value="百度"/>
+                        </div>
 
                     </div>
-<%--                    <div class="layui-input-inline">--%>
-<%--                        <input name="code" lay-verify="required" placeholder="短信验证码"  type="text" class="layui-input">--%>
-<%--                    </div>--%>
+                    <%--                    <div class="layui-input-inline">--%>
+                    <%--                        <input name="code" lay-verify="required" placeholder="短信验证码"  type="text" class="layui-input">--%>
+                    <%--                    </div>--%>
                     <div class="layui-form-mid layui-word-aux address">请输入你的店铺地址</div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">经度</label>
                     <div class="layui-input-inline">
-                <input id="longitude" type="text" name="longitude" required lay-verify="required" autocomplete="off" class="layui-input">
+                        <input id="longitude" type="text" name="longitude" required lay-verify="required"
+                               autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-form-mid layui-word-aux ">点击地图选择店铺的确切位置</div>
                 </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">纬度</label>
-                        <div class="layui-input-inline">
-                <input id="latitude" type="text" name="latitude" required lay-verify="required" autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="layui-form-mid layui-word-aux ">点击地图选择店铺的确切位置</div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">纬度</label>
+                    <div class="layui-input-inline">
+                        <input id="latitude" type="text" name="latitude" required lay-verify="required"
+                               autocomplete="off" class="layui-input">
                     </div>
+                    <div class="layui-form-mid layui-word-aux ">点击地图选择店铺的确切位置</div>
+                </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">你的名字</label>
@@ -181,7 +212,7 @@
                                placeholder="请输入短信验证码" autocomplete="off" class="layui-input" onblur="verifyTel()">
                     </div>
                     <div class="layui-form-mid layui-word-aux">请输入你的短信验证码</div>
-                    <button id="msg" class="layui-btn" type="button" >获取短信验证</button>
+                    <button id="msg" class="layui-btn" type="button">获取短信验证</button>
                 </div>
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">商店介绍</label>
@@ -207,18 +238,29 @@
     </div>
 
 </div>
-<div id="l-map" style="display: none"></div>
-<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:500px;height:500px; display:none;"></div>
+
+<%--<div id="box" class="map1" style="display: none" >--%>
+<%--   <div class="map-x"><label onclick="mapHide()" style="font-size: 30px">x</label></div>--%>
+<%--    <div id="l-map" ></div>--%>
+<%--    <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:500px;height:500px; display:none;"></div>--%>
+<%--</div>--%>
+
+<div id="box">
+    <h2 class="title"><label id="boxhide" onclick="mapHide()" style="font-size: 30px">x</label></h2>
+<%--    <div class="map-x"><label onclick="mapHide()" style="font-size: 30px">x</label></div>--%>
+        <div id="l-map" ></div>
+        <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:500px;height:500px; display:none;"></div>
+</div>
 
 </body>
 
 <script>
     //Demo
-    layui.use(['form', 'upload','layer'], function () {
+    layui.use(['form', 'upload', 'layer'], function () {
         var form = layui.form;
         var $ = layui.jquery
             , upload = layui.upload,
-        layer = layui.layer;
+            layer = layui.layer;
         var path = $("#path").val();
 
         //监听提交表单信息
@@ -227,12 +269,12 @@
 
             var uv = verifyName();
             var np = npassNull();
-            console.log("uv=" + uv + "  np=" + np+" tel="+$(".tel").text());
+            console.log("uv=" + uv + "  np=" + np + " tel=" + $(".tel").text());
 
             if ($(".upload1:has(span)").length > 0) {
                 if ($(".upload2:has(span)").length > 0) {
 
-                    if ($(".name").text() === "店铺名可以使用" && np&&$(".tel").text()==="手机号可以使用") {
+                    if ($(".name").text() === "店铺名可以使用" && np && $(".tel").text() === "手机号可以使用") {
                         $.ajax({
                             url: path + "/regisControl/insertShop",
                             async: true,
@@ -245,8 +287,8 @@
                                 "pwd": $("#pwd").val(),
                                 "tel": $("#tel").val(),
                                 "info": $("#info").val(),
-                                "code":$("#code").val(),
-                                "longitude":$("#longitude").val(),
+                                "code": $("#code").val(),
+                                "longitude": $("#longitude").val(),
                                 "latitude": $("#latitude").val()
                             },
                             dataType: "text",
@@ -328,20 +370,20 @@
                     async: true,
                     type: "post",
                     dataType: "text",
-                    before:function () {
+                    before: function () {
 
-                        $("#regis").attr("disabled",disabled);
+                        $("#regis").attr("disabled", disabled);
 
                     }
-                    ,success: function (msg) {
+                    , success: function (msg) {
                         if (msg === "success") {
                             layer.msg('注册成功，等待审核');
 
-                            location.href="../jsp/login.jsp"
+                            location.href = "../jsp/login.jsp"
 
-                        } else if(msg==='codeFail'){
+                        } else if (msg === 'codeFail') {
                             layer.msg('短信验证失败');
-                        }else{
+                        } else {
                             layer.msg('注册失败');
                         }
                     }
@@ -359,42 +401,42 @@
         });
         //短信验证
         $("#msg").click(function () {
-            var tel=$("#tel").val();
-            console.log("tel="+tel);
+            var tel = $("#tel").val();
+            console.log("tel=" + tel);
 
 
-            if(tel.length>0){
+            if (tel.length > 0) {
                 $.ajax({
-                    url:path+"/loginControl/telverify",
-                    async:false,
-                    type:"post",
-                    data:"tel="+tel,
-                    dataType:"text",
-                    beforeSend:function () {
+                    url: path + "/loginControl/telverify",
+                    async: false,
+                    type: "post",
+                    data: "tel=" + tel,
+                    dataType: "text",
+                    beforeSend: function () {
                         console.log("beforesend=====")
 
-                        $("#msg").attr("disabled",true);
+                        $("#msg").attr("disabled", true);
                         // $("#msg").setAttribute("disabled", true);
 
                         settime();
                     }
-                    ,success:function (msg) {
+                    , success: function (msg) {
 
-                        if(msg==="success"){
+                        if (msg === "success") {
                             layer.msg("已发送短信")
 
-                        }else {
+                        } else {
                             layer.msg("短信发送错误")
                         }
                     },
-                    error:function () {
+                    error: function () {
 
                         layer.msg("网络错误")
 
                     }
 
                 })
-            }else {
+            } else {
                 layer.msg("请填写手机号")
             }
 
@@ -403,22 +445,22 @@
             //多窗口模式，层叠置顶
             layer.open({
                 type: 2 //此处以iframe举例
-                ,title: '当你选择该窗体时，即会在最顶端'
-                ,area: ['390px', '260px']
-                ,shade: 0
-                ,maxmin: true
-                ,content:"<div id=\"l-map\"></div>\n" +
+                , title: '当你选择该窗体时，即会在最顶端'
+                , area: ['390px', '260px']
+                , shade: 0
+                , maxmin: true
+                , content: "<div id=\"l-map\"></div>\n" +
                     "<div id=\"searchResultPanel\" style=\"border:1px solid #C0C0C0;width:500px;height:500px; display:none;\"></div>"
-                ,btn: ['确定位置', '关闭窗口'] //只是为了演示
-                ,yes: function(){
+                , btn: ['确定位置', '关闭窗口'] //只是为了演示
+                , yes: function () {
                     // $(that).click();
                 }
-                ,btn2: function(){
+                , btn2: function () {
                     layer.closeAll();
                 }
 
-                ,zIndex: layer.zIndex //重点1
-                ,success: function(layero){
+                , zIndex: layer.zIndex //重点1
+                , success: function (layero) {
                     layer.setTop(layero); //重点2
                 }
             });
@@ -426,9 +468,10 @@
 
 
     });
-    var countdown=60;
+    var countdown = 60;
+
     function settime() {
-        var m=$("#msg");
+        var m = $("#msg");
 
         if (countdown == 0) {
             m.attr("disabled", false);
@@ -440,15 +483,23 @@
             m.text("重新发送(" + countdown + ")");
             countdown--;
         }
-        setTimeout(function() {
+        setTimeout(function () {
             settime()
-        },1000)
+        }, 1000)
     }
 
-    function  openMap() {
+    function openMap() {
         // $("#setTop").click();
-        $("#l-map").show()
+        $("#box").show()
     }
+
+    function mapHide() {
+        $("#box").hide()
+    }
+
+    $(function () {
+        $("#boxhide").click();
+    })
 </script>
 
 <script type="text/javascript">
@@ -458,59 +509,63 @@
     }
 
     var map = new BMap.Map("l-map");
-    map.centerAndZoom("北京",12);                   // 初始化地图,设置城市和地图级别。
+    map.centerAndZoom("北京", 12);                   // 初始化地图,设置城市和地图级别。
 
     var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
-        {"input" : "suggestId"
-            ,"location" : map
+        {
+            "input": "suggestId"
+            , "location": map
         });
 
-    ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+    ac.addEventListener("onhighlight", function (e) {  //鼠标放在下拉列表上的事件
         var str = "";
         var _value = e.fromitem.value;
         var value = "";
         if (e.fromitem.index > -1) {
-            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+            value = _value.province + _value.city + _value.district + _value.street + _value.business;
         }
         str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
 
         value = "";
         if (e.toitem.index > -1) {
             _value = e.toitem.value;
-            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+            value = _value.province + _value.city + _value.district + _value.street + _value.business;
         }
         str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
         G("searchResultPanel").innerHTML = str;
     });
 
     var myValue;
-    ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+    ac.addEventListener("onconfirm", function (e) {    //鼠标点击下拉列表后的事件
         var _value = e.item.value;
-        myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-        G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+        myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+        G("searchResultPanel").innerHTML = "onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
 
         setPlace();
     });
 
-    function setPlace(){
+    function setPlace() {
         map.clearOverlays();    //清除地图上所有覆盖物
-        function myFun(){
+        function myFun() {
             var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
             map.centerAndZoom(pp, 18);
             map.addOverlay(new BMap.Marker(pp));    //添加标注
         }
+
         var local = new BMap.LocalSearch(map, { //智能搜索
             onSearchComplete: myFun
         });
         local.search(myValue);
     }
+
     //地图点击事件
-    function showInfo(e){
+    function showInfo(e) {
         layer.msg(e.point.lng + ", " + e.point.lat);
         $("#longitude").val(e.point.lng)
         $("#latitude").val(e.point.lat)
 
     }
+
     map.addEventListener("click", showInfo);
 
     //自动定位

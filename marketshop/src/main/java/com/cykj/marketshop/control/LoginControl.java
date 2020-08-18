@@ -37,11 +37,16 @@ public class LoginControl {
         ShopAdmin userAdmin = JSON.parseObject(adminJson, ShopAdmin.class);
         ShopAdmin admin= loginService.login(userAdmin);
         if (admin != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("admin", admin);
-            session.setAttribute("shopId",admin.getShopId());
-            request.getSession().setAttribute("isLogin", true);
-            return "success";
+            if(admin.getState()==1){
+                HttpSession session = request.getSession();
+                session.setAttribute("admin", admin);
+                session.setAttribute("shopId",admin.getShopId());
+                request.getSession().setAttribute("isLogin", true);
+                return "success";
+            }else {
+                return "state";
+            }
+
         } else {
             return "error";
         }
@@ -91,10 +96,15 @@ public class LoginControl {
             if(code.equals(oldcode)){
                 ShopAdmin admin= loginService.telLogin(tel);
                 if (admin != null) {
+                    if(admin.getState()==1){
+                        session.setAttribute("admin", admin);
+                        request.getSession().setAttribute("isLogin", true);
+                        return "success";
+                    }else {
+                        return "state";
+                    }
 
-                    session.setAttribute("admin", admin);
-                    request.getSession().setAttribute("isLogin", true);
-                    return "success";
+
                 } else {
                     return "error";
                 }
