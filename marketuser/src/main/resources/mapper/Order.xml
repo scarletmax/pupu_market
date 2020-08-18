@@ -6,7 +6,7 @@
 
     <!--    根据userId获取订单和订单商品,pic1本来应该是历史，换成我这边联表-->
     <select id="selectOrderAndGoods" resultMap="orderDetail">
-        select tod.id as todId,tod.order_num,tod.total_price,tod.create_time,tod.state,
+        select tod.id as todId,tod.order_num,tod.total_price,tod.create_time,tod.state,tod.deliveryman_id,tod.user_id,
         tog.id as togId,tog.goods_id,tog.goods_name,tog.price,tog.goods_count,tog.choice_prop,
         g.pic1
         from t_order_goods as tog,t_order_detail as tod,t_goods as g
@@ -19,6 +19,8 @@
         <result property="totalPrice" column="total_price"></result>
         <result property="createTime" column="create_time"></result>
         <result property="state" column="state"></result>
+        <result property="deliverymanId" column="deliveryman_id"></result>
+        <result property="userId" column="user_id"></result>
         <collection property="orderGoodsHis" ofType="com.cykj.marketpojo.OrderGoodsHis">
             <id property="id" column="id"></id>
             <result property="goodsId" column="goods_id"></result>
@@ -40,6 +42,10 @@
 
     <update id="confirmAccept">
         update t_order_detail set state = 6 where id = #{orderId}
+    </update>
+
+    <update id="orderCommented">
+        update t_order_detail set state = 10 where id = #{orderId}
     </update>
 
     <select id="getAddress" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.ReceiverInfo">

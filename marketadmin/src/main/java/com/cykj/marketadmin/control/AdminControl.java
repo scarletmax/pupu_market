@@ -21,7 +21,7 @@ import java.util.List;
 public class AdminControl {
     @Autowired
     private AdminService adminService;
-
+//    查询管理员列表信息
     @RequestMapping(value = "/findAdminList")
     @ResponseBody
     public String findAdminList(HttpServletRequest request, HttpServletResponse response) {
@@ -52,14 +52,14 @@ public class AdminControl {
         layuiData = adminService.findAdminList(condition);
         return JSON.toJSONString(layuiData);
     }
-
+//    查询管理员状态
     @RequestMapping(value = "/findAdminState")
     @ResponseBody
     public String findAdminState(HttpServletRequest request, HttpServletResponse response) {
         List<String> adminList= adminService.findAdminState();
         return JSON.toJSONString(adminList);
     }
-
+//    修改管理员状态
     @RequestMapping("/updateState")
     @ResponseBody
     public String updateState(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -71,14 +71,14 @@ public class AdminControl {
             return "fail";
         }
     }
-
+//    查询管理员角色
     @RequestMapping(value = "/findAdminRole")
     @ResponseBody
     public String findAdminRole(HttpServletRequest request, HttpServletResponse response) {
         List<String> adminList= adminService.findAdminRole();
         return JSON.toJSONString(adminList);
     }
-
+//    查询管理员人数
     @RequestMapping(value = "/findAccount")
     @ResponseBody
     public String findAccount(HttpServletRequest request, HttpServletResponse response) {
@@ -91,7 +91,7 @@ public class AdminControl {
             return "fail";
         }
     }
-
+//    新增管理员
     @RequestMapping(value = "/addAdmin")
     @ResponseBody
     public String addAdmin(HttpServletRequest request, HttpServletResponse response) {
@@ -114,14 +114,14 @@ public class AdminControl {
             return "fail";
         }
     }
-
+//    查询用户状态
     @RequestMapping(value = "/findUserState")
     @ResponseBody
     public String findUserState(HttpServletRequest request, HttpServletResponse response) {
         List<String> userList= adminService.findUserState();
         return JSON.toJSONString(userList);
     }
-
+//    查询用户列表
     @RequestMapping(value = "/findUserList")
     @ResponseBody
     public String findUserList(HttpServletRequest request, HttpServletResponse response) {
@@ -169,7 +169,7 @@ public class AdminControl {
         layuiData = adminService.findUserList(condition);
         return JSON.toJSONString(layuiData);
     }
-
+//    修改用户状态
     @RequestMapping("/updateUserState")
     @ResponseBody
     public String updateUserState(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -181,7 +181,7 @@ public class AdminControl {
             return "fail";
         }
     }
-
+//    重置密码
     @RequestMapping("/resetPwd")
     @ResponseBody
     public String resetPwd(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
