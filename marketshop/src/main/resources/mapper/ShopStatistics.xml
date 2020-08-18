@@ -5,13 +5,13 @@
 <mapper namespace="com.cykj.marketshop.mapper.ShopStatisticsMapper">
 
     <!--商品总库存统计-->
-    <select id="totalInventory" resultType="java.lang.Integer">
+    <select id="totalInventory" resultType="java.lang.String">
        select sum(tg.total_count)
       from t_goods tg
       where tg.shop_id = #{shopId}
     </select>
     <!--商品总销量统计-->
-    <select id="totalSales" resultType="java.lang.Integer">
+    <select id="totalSales" resultType="java.lang.String">
      select sum(tog.goods_count)
      from t_order_goods tog,
      t_order_detail tod
@@ -23,7 +23,7 @@
      select count(shop_id) from t_order_detail where shop_id=#{shopId}
     </select>
     <!--商品总金额统计-->
-    <select id="totalAmount" resultType="java.math.BigDecimal">
+    <select id="totalAmount" resultType="java.lang.String">
 
    select sum(tod.total_price)
    from t_order_detail tod

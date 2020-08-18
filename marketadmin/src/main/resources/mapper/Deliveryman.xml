@@ -46,4 +46,13 @@
         select name
         from t_property where type='deliveryman_state'
     </select>
+<!--    查询派送员每单的收益-->
+    <select id="queryBenefit" resultType="java.lang.Double">
+        select value from t_property where type='delivery_benefit' and name='派送员提成比例'
+    </select>
+<!--    设置派送员收益-->
+    <update id="setBenefit" parameterType="java.lang.String">
+        update t_property set value= #{benefit}
+        where  type='delivery_benefit' and name='派送员提成比例'
+    </update>
 </mapper>

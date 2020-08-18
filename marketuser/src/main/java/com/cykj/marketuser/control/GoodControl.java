@@ -20,27 +20,28 @@ public class GoodControl {
     @Autowired
     private SpecialGoodsService specialGoodsService;
 
+//    根据用户发送的商店ID获取对应的前6条特价商品
     @RequestMapping(value = "/getSpecialGood")
     @ResponseBody
     public String getSpecialGood(Integer shopId, HttpServletRequest request){
         List<Goods> goodsList = goodService.getSpecialGood(shopId);
         return JSON.toJSONString(goodsList);
     }
-
+//    根据商店ID查询全部特价商品
     @RequestMapping(value = "/getMoreSpecialGood")
     @ResponseBody
     public String getMoreSpecialGood(Integer shopId, HttpServletRequest request){
         List<Goods> goodsList = goodService.getMoreSpecialGood(shopId);
         return JSON.toJSONString(goodsList);
     }
-
+//    根据商店ID获取前六条销量最高的商品
     @RequestMapping(value = "/getHighSaleGood")
     @ResponseBody
     public String getHighSaleGood(Integer shopId,HttpServletRequest request){
         List<Goods> goodsList = goodService.getHighSaleGood(shopId);
         return JSON.toJSONString(goodsList);
     }
-
+    //    根据商店ID获取掌柜推荐的商品
     @RequestMapping(value = "/getRecommendedGood")
     @ResponseBody
     public String getRecommendedGood(Integer shopId,HttpServletRequest request){

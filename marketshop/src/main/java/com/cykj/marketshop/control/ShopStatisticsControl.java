@@ -33,10 +33,10 @@ public class ShopStatisticsControl {
         if(shopAdmin.getShopId()!=0) {
             hashMap.put("shopId", shopAdmin.getShopId());
 
-            BigDecimal a=shopStatisticsService.totalAmount(hashMap);
-            int b=shopStatisticsService.totalInventory(hashMap);
+            String a=shopStatisticsService.totalAmount(hashMap);
+            String b=shopStatisticsService.totalInventory(hashMap);
             int c=shopStatisticsService.totalOrder(hashMap);
-            int d=shopStatisticsService.totalSales(hashMap);
+            String d=shopStatisticsService.totalSales(hashMap);
             shopStatistics.setTotalAmount(a);
             shopStatistics.setTotalInventory(b);
             shopStatistics.setTotalOrder(c);

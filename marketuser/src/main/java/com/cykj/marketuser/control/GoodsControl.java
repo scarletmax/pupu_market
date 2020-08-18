@@ -24,5 +24,19 @@ public class GoodsControl {
     public String queryGoodsDetail(int id ) {
         return JSON.toJSONString(goodsService.queryGoodsDetail(id));
     }
-
+    @RequestMapping("getGoodsListByParentType")
+    @ResponseBody
+    public String getGoodsListByParentType(int shopId,int parentId) {
+        return JSON.toJSONString(goodsService.getGoodsListByParentType(shopId,parentId));
+    }
+    @RequestMapping("queryGoods")
+    @ResponseBody
+    public String queryGoods(int shopId,String name){
+        return JSON.toJSONString(goodsService.queryGoods(shopId,name));
+    }
+    @RequestMapping("buy")
+    @ResponseBody
+    public String buy(String orderNum){
+        return goodsService.buy(orderNum);
+    }
  }

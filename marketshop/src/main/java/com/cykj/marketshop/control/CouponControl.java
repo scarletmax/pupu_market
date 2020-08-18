@@ -23,14 +23,14 @@ import java.util.List;
 public class CouponControl {
     @Autowired
     public CouponService couponService;
-
+//    获取优惠券状态
     @RequestMapping(value = "/findCouponState")
     @ResponseBody
     public String findCouponState(HttpServletRequest request) {
         List<String> couponList = couponService.findCouponState();
         return JSON.toJSONString(couponList);
     }
-
+//    获取优惠券列表
     @RequestMapping(value = "/findCouponList")
     @ResponseBody
     public String findCouponList(HttpServletRequest request) {
@@ -75,7 +75,7 @@ public class CouponControl {
             return "fail";
         }
     }
-
+//    新增优惠券
     @RequestMapping(value = "/addCouppon")
     @ResponseBody
     public String addCouppon(HttpServletRequest request, HttpServletResponse response) {

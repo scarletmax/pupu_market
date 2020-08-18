@@ -24,7 +24,7 @@
 	</insert>
 
     <insert id="insertShopAdmin" parameterType="com.cykj.marketpojo.ShopAdmin">
-        insert into t_shop_admin( name, account, pwd, shop_id, tel)values(#{name},#{account},#{pwd},#{shopId},#{tel})
+        insert into t_shop_admin( name, account, pwd, shop_id, tel,state)values(#{name},#{account},#{pwd},#{shopId},#{tel},2)
     </insert>
 
 

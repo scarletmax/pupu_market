@@ -1,6 +1,7 @@
 package com.cykj.marketadmin.control;
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ public class ChatControl {
 
     @RequestMapping(value = "/findChatMsg")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public Object findChatMsg(String acc){
 
         HashMap<String ,Object> hashMap=new HashMap<>();
@@ -31,6 +33,7 @@ public class ChatControl {
     }
     @RequestMapping(value = "/insertSaveAcc")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public Object insertSaveAcc(String chatAcc,String charUser){
 
      String   msg=null;
@@ -53,6 +56,7 @@ public class ChatControl {
     }
     @RequestMapping(value = "/findSaveAcc")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public Object findSaveAcc(){
         HashMap<String ,Object> hashMap =new HashMap<>();
         return JSON.toJSONString(chatService.findSaveAcc(hashMap));

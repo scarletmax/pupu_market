@@ -57,7 +57,7 @@
     <div id="sbmit1">
     <form method="post" class="layui-form" >
 
-        <input name="account" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
+        <input name="account" placeholder="用户名(新注册用户账号默认为手机号)"  type="text" lay-verify="required" class="layui-input" >
         <hr class="hr15">
         <input name="pwd" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
         <hr class="hr15">

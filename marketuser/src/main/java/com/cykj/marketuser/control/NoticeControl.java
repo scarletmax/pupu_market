@@ -30,7 +30,7 @@ public class NoticeControl {
     @Autowired
     public NoticeService noticeService;
 
-
+//    获取推送信息
     @RequestMapping(value = "/getNoticeList")
     @ResponseBody
     public String getNoticeList(HttpServletRequest request) {

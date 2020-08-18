@@ -1,6 +1,7 @@
 package com.cykj.marketadmin.control;
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.TypeService;
 import com.cykj.marketpojo.LayData;
 import org.apache.ibatis.annotations.Param;
@@ -27,6 +28,7 @@ public class UploadControl {
 
     @RequestMapping(value = "/typeIconUpload")
     @ResponseBody
+    @Log(operationType = "操作",operationName = "上传类型图标图片")
     public String upload(HttpServletRequest request, HttpServletResponse response,@RequestParam("file") MultipartFile thisFile) throws ServletException, IOException {
         try {
             //获取文件名

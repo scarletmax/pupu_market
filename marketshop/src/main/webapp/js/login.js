@@ -25,6 +25,9 @@ $(function  () {
                     }else if(msg == "error"){
                         layer.msg("账号或者密码错误")
                         changeImg();
+                    }else if(msg == "state"){
+                        layer.msg("账号未启用")
+                        changeImg();
                     }else if(msg == "null"){
                         layer.msg("账号不存在")
                         changeImg();
@@ -61,6 +64,9 @@ $(function  () {
                         changeImg();
                     }else if(msg == "error"){
                         layer.msg("账号或者密码错误")
+                        changeImg();
+                    }else if(msg == "state"){
+                        layer.msg("账号未启用")
                         changeImg();
                     }else if(msg == "null"){
                         layer.msg("账号不存在")

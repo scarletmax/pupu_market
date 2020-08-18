@@ -1,6 +1,7 @@
 package com.cykj.marketadmin.control;
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.PropertyService;
 import com.cykj.marketadmin.service.TypeService;
 import com.cykj.marketpojo.Type;
@@ -26,6 +27,7 @@ public class TypeControl {
 
     @RequestMapping("/findTypeState")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String findTypeState(HttpServletRequest request, HttpServletResponse response) throws IOException {
         return JSON.toJSONString(propertyService.findTypeState());
     }
@@ -33,6 +35,7 @@ public class TypeControl {
 
     @RequestMapping("/searchTypeList")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String searchTypeList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String curPage = request.getParameter("curPage");
         String pageSize = request.getParameter("pageSize");
@@ -53,12 +56,14 @@ public class TypeControl {
 
     @RequestMapping("/editType")
     @ResponseBody
+    @Log(operationType = "操作",operationName = "编辑商品类型")
     public String editType(Type type, HttpServletRequest request, HttpServletResponse response) throws IOException {
         return JSON.toJSONString(typeService.editType(type)+"");
     }
 
     @RequestMapping("/addType")
     @ResponseBody
+    @Log(operationType = "操作",operationName = "新增商品类型")
     public String addType(Type type,HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(type.getIconUrl().equals("")){
             type.setIconUrl(File.separator+"测试图片.jpg");
@@ -68,6 +73,7 @@ public class TypeControl {
 
     @RequestMapping("/changeTypeState")
     @ResponseBody
+    @Log(operationType = "操作",operationName = "删除商品类型")
     public String deleteType(String id,String state,HttpServletRequest request, HttpServletResponse response) throws IOException {
         return JSON.toJSONString(typeService.changeTypeState(id,state)+"");
     }

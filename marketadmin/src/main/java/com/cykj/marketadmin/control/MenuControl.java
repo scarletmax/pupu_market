@@ -2,6 +2,7 @@ package com.cykj.marketadmin.control;
 
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.MenuService;
 import com.cykj.marketpojo.Admin;
 import com.cykj.marketpojo.AttrMsg;
@@ -23,6 +24,7 @@ public class MenuControl {
     @Autowired
     private MenuService menuService;
     @RequestMapping("/getMenu")
+    @Log(operationType = "查看",operationName = "")
 //    @Log(operationType = "查看",operationName = "")
     //获得菜单
     public String getMenu(HttpServletRequest request, HttpServletResponse response)   {
@@ -36,6 +38,7 @@ public class MenuControl {
     }
     @RequestMapping("queryAttr")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String queryAttr(HttpServletRequest request) {
         int roleId= Integer.parseInt(request.getParameter("roleId"));
         AttrMsg attrMsg= menuService.queryAttr(roleId);
@@ -44,6 +47,7 @@ public class MenuControl {
     }
     @RequestMapping("removeAttr")
     @ResponseBody
+    @Log(operationType = "操作",operationName = "移除菜单权限")
     //移除已分配的菜单
     public String removeAttr(HttpServletRequest request)  {
         String  menuIdArr= request.getParameter("MenuIdArr");
@@ -56,6 +60,7 @@ public class MenuControl {
     }
     @RequestMapping("newAttr")
     @ResponseBody
+    @Log(operationType = "操作",operationName = "新分配菜单权限")
     //分配新的菜单
     public String newAttr(HttpServletRequest request) {
         String  menuIdArr= request.getParameter("MenuIdArr");
@@ -71,12 +76,14 @@ public class MenuControl {
     }
     @RequestMapping("getAllRole")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String getAllRole() {
         return JSON.toJSONString(menuService.getAllRole());
     }
 
     @RequestMapping("/searchMenuList")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String searchMenuList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         System.out.println("菜单列表");
         String name = request.getParameter("name");
@@ -89,24 +96,28 @@ public class MenuControl {
 
     @RequestMapping("/editMenu")
     @ResponseBody
+    @Log(operationType = "操作",operationName = "编辑菜单")
     public String editMenu(Menu menu,HttpServletRequest request, HttpServletResponse response) throws IOException {
         return JSON.toJSONString(menuService.editMenu(menu)+"");
     }
 
     @RequestMapping("/addMenu")
     @ResponseBody
+    @Log(operationType = "操作",operationName = "新增菜单")
     public String addMenu(Menu menu,HttpServletRequest request, HttpServletResponse response) throws IOException {
         return JSON.toJSONString(menuService.addMenu(menu)+"");
     }
 
     @RequestMapping("/removeMenu")
     @ResponseBody
+    @Log(operationType = "操作",operationName = "移除菜单")
     public String deleteMenu(String id,HttpServletRequest request, HttpServletResponse response) throws IOException {
         return JSON.toJSONString(menuService.removeMenu(id)+"");
     }
 
     @RequestMapping("/isMenuRepeat")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String isMenuRepeat(String name,HttpServletRequest request, HttpServletResponse response) throws IOException {
         return JSON.toJSONString(menuService.isMenuRepeat(name)+"");
     }

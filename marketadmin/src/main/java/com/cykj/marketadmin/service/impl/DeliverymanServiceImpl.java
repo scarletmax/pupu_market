@@ -38,4 +38,14 @@ public class DeliverymanServiceImpl implements DeliverymanService {
     public List<String> getAllState() {
         return deliverymanMapper.getAllState();
     }
+
+    @Override
+    public double queryBenefit() {
+        return deliverymanMapper.queryBenefit();
+    }
+
+    @Override
+    public String setBenefit(String benefit) {
+        return deliverymanMapper.setBenefit(benefit)>0?"success":"fail";
+    }
 }

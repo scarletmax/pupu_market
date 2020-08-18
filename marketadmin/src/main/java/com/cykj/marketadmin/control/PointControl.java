@@ -1,6 +1,7 @@
 package com.cykj.marketadmin.control;
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.PointService;
 import com.cykj.marketpojo.LayData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,10 @@ import java.util.List;
 public class PointControl {
     @Autowired
     private PointService pointService;
-
+//    查询积分列表
     @RequestMapping(value = "/findPointList")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String findPointList(HttpServletRequest request, HttpServletResponse response) {
         String page = request.getParameter("page");
         String limit = request.getParameter("limit");
@@ -49,9 +51,10 @@ public class PointControl {
         layuiData = pointService.findPointList(condition);
         return JSON.toJSONString(layuiData);
     }
-
+//    查询积分状态
     @RequestMapping(value = "/findPointState")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String findPointState(HttpServletRequest request, HttpServletResponse response) {
         List<String> pointList= pointService.findPointState();
         return JSON.toJSONString(pointList);

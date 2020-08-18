@@ -27,6 +27,7 @@ public class NoticeControl {
     @Autowired
     public NoticeService noticeService;
 
+    //    查询推送状态
     @RequestMapping(value = "/findNoticeState")
     @ResponseBody
     public String findNoticeState(HttpServletRequest request) {
@@ -34,6 +35,7 @@ public class NoticeControl {
         return JSON.toJSONString(noticeList);
     }
 
+    //    查询推送列表
     @RequestMapping(value = "/findNoticeList")
     @ResponseBody
     public String findNoticeList(HttpServletRequest request) {
@@ -72,6 +74,7 @@ public class NoticeControl {
         return JSON.toJSONString(layuiData);
     }
 
+    //    更改推送状态
     @RequestMapping("/updateNoticeState")
     @ResponseBody
     public String updateNoticeState(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -84,11 +87,12 @@ public class NoticeControl {
         }
     }
 
+    //    新增推送
     @RequestMapping(value = "/addNotice")
     @ResponseBody
     public String addNotice(HttpServletRequest request, HttpServletResponse response) {
         String noticeInfo = request.getParameter("noticeInfo");
-        System.out.println("noticeInfo="+noticeInfo);
+        System.out.println("noticeInfo=" + noticeInfo);
         Notice notice = JSON.parseObject(noticeInfo, Notice.class);
         ShopAdmin admin = (ShopAdmin) request.getSession().getAttribute("admin");
         notice.setShopId(admin.getShopId());
@@ -97,6 +101,7 @@ public class NoticeControl {
         return "success";
     }
 
+    //    增加推送图片
     @RequestMapping(value = "/addNoticePic")
     @ResponseBody
     public String addNoticePic(HttpServletRequest request, HttpServletResponse response, MultipartFile file, String fileName) {
@@ -111,13 +116,13 @@ public class NoticeControl {
             String uuid = UUID.randomUUID() + "";
 //            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //            String dateStr = simpleDateFormat.format(date);
-            String  str="/uploadNoticePic/";
-            String savePath = request.getSession().getServletContext().getRealPath("/uploadNoticePic/");
+            String str = "/uploadNoticePic/";
+            String savePath = request.getSession().getServletContext().getRealPath("/uploadNoticePic");
             //要保存的问题件路径和名称
             String projectPath = savePath + File.separator + uuid + "." + prefix;
 
             //数据库保存名称
-            String datePath=File.separator + uuid + "." + prefix;
+            String datePath = File.separator + uuid + "." + prefix;
 
             System.out.println("projectPath==" + projectPath);
             File files = new File(projectPath);
@@ -143,7 +148,7 @@ public class NoticeControl {
             return null;
         }
     }
-
+    //插入推送信息
     @RequestMapping(value = "/insertNoticeInfo")
     @ResponseBody
     public String insertNoticeInfo(HttpServletRequest request) {
@@ -162,13 +167,13 @@ public class NoticeControl {
         }
         return "fail";
     }
-
+//  修改推送信息
     @RequestMapping("/updateNoticeInfo")
     @ResponseBody
     public String editNotice(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession httpSession = request.getSession();
         Notice notice = (Notice) httpSession.getAttribute("notice");
-        System.out.println(notice.getId()+"=id");
+        System.out.println(notice.getId() + "=id");
         if (notice.getPicUrl() != null && !notice.getPicUrl().equals("")) {
             int a = 0;
             a = noticeService.updateNotice(notice);

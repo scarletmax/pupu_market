@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketuser.mapper.ReceiverMapper">
+    <select id="getAllAddr" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.Receiver">
+        select id, name, address, tel, room_num, user_id, is_default, longitude, latitude
+from t_receiver_info where user_id='4'
+	</select>
+
+    <update id="editAddr" parameterType="com.cykj.marketpojo.Receiver" >
+        update t_receiver_info set
+        name = #{name},address=#{address},
+        tel=#{tel},room_num=#{roomNum},
+        is_default=#{isDefault},longitude=#{longitude},
+        latitude=#{latitude}
+        where id =  #{id}
+    </update>
+
+    <insert id="addAddr" parameterType="com.cykj.marketpojo.Receiver" useGeneratedKeys="true" keyProperty="id">
+        insert into t_receiver_info
+        (name,address,tel,room_num,user_id,is_default,longitude,latitude)
+        values (#{name},#{address},#{tel},#{roomNum},#{userId},#{isDefault},#{longitude},#{latitude})
+    </insert>
+
+    <update id="cancelAll" parameterType="com.cykj.marketpojo.Receiver">
+        update t_receiver_info
+        set is_default = '0' where user_id= #{userId}
+    </update>
+
+
+</mapper>
