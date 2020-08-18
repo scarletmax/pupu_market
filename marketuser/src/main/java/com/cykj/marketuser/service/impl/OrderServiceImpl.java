@@ -73,6 +73,6 @@ public class OrderServiceImpl implements OrderService {
                 cartMapper.clearCart(userId,shopId);
             }
         }
-        return flag ? "success":"fail";
+        return flag ? orderNum:"fail";
     }
 }

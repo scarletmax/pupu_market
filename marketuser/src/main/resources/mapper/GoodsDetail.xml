@@ -23,6 +23,43 @@ from t_goods_comment c,t_user u where goods_id=#{id} and u.id=c.user_id limit 1
         select id,name,price,pic1,price,total_count from t_goods
         where type_id= #{typeId} and state = 1 and shop_id= #{shopId}
     </select>
+    <!--    根据父级类别获取商品列表-->
+    <select id="getGoodsListByParentType" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.Goods">
+        select id,name,price,pic1,price,total_count from t_goods
+        where parent_type_id= #{typeId} and state = 1 and shop_id= #{shopId}
+    </select>
+<!--    搜索所有商品-->
+    <select id="queryGoods" parameterType="java.lang.String" resultType="com.cykj.marketpojo.Goods">
+        select id,name,price,pic1,price,total_count from t_goods
+where   state = 1 and shop_id= #{shopId} and name like concat('%',#{name},'%')
+    </select>
+<!--    根据订单号查询订单商品信息-->
+    <select id="getGoodsByOrderNum"  parameterType="java.lang.String" resultType="com.cykj.marketpojo.Goods">
+select t3.id,t3.price, goods_count,version,total_count,user_id,total_price from t_order_goods t1,t_order_detail t2,t_goods t3
+where t2.id=t1.order_detail_id and t2.order_num=#{orderNum} and t3.id=t1.goods_id
+    </select>
+<!--    更改订单状态-->
+    <update id="buy" parameterType="java.lang.String">
+       update t_order_detail set state= 1
+        where order_num=#{orderNum}
+    </update>
 
-
+<!--    扣除商品数量-->
+    <update id="delGoodsCount"  >
+        update t_goods set total_count=total_count-#{goodsCount} ,
+        version=version+1
+        where id= #{id} and version=#{version}
+    </update>
+<!--    积分-->
+    <update id="addPoint" parameterType="java.lang.Integer">
+        update t_user set point=point+#{point} where id=#{id}
+    </update>
+<!--    查看当前的用户-->
+    <select id="queryUser" parameterType="java.lang.Integer" resultType="com.cykj.marketpojo.User">
+        select level_id,point from t_user where id =#{id}
+    </select>
+<!--    查看加分后的等级-->
+    <select id="queryCurrLevel"   parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select id from t_level where #{point} &lt; max_point and #{point} &gt; min_point
+    </select>
 </mapper>

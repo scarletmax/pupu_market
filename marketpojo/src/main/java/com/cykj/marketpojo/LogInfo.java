@@ -9,11 +9,18 @@ public class LogInfo {
     private Date occurTime;
     private String type;
     private String opr;
-
+    private String operatorName;
 
     public LogInfo() {
     }
 
+    public String getOperatorName() {
+        return operatorName;
+    }
+
+    public void setOperatorName(String operatorName) {
+        this.operatorName = operatorName;
+    }
 
     public LogInfo(String operator, String type, String opr) {
         this.operator = operator;

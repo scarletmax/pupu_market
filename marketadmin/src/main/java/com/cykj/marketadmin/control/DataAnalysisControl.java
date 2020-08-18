@@ -1,6 +1,7 @@
 package com.cykj.marketadmin.control;
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.AdminService;
 import com.cykj.marketadmin.service.DataAnalysisService;
 import com.cykj.marketpojo.DataAnalysis;
@@ -24,6 +25,7 @@ public class DataAnalysisControl {
 //    查询不同分店的订单信息
     @RequestMapping(value = "/findOrderAddress")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String findOrderAddress(HttpServletRequest request, HttpServletResponse response) {
         HashMap<String, Object> condition = new HashMap<>();
         String startDate = request.getParameter("startTime");
@@ -44,6 +46,7 @@ public class DataAnalysisControl {
 //    查询不同时间段的订单信息
     @RequestMapping(value = "/findOrderTime")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String findOrderTime(HttpServletRequest request, HttpServletResponse response) {
         HashMap<String, Object> condition = new HashMap<>();
         String selectDay = request.getParameter("selectDay");
@@ -63,17 +66,20 @@ public class DataAnalysisControl {
     @RequestMapping("getOrderNumByWeek")
     @ResponseBody
     //  获取本周的订单量详情
+    @Log(operationType = "查看",operationName = "")
     public String getOrderNumByWeek() {
         return JSON.toJSONString(dataAnalysisService.getOrderNumByWeek());
     }
     @RequestMapping("getOrderNumByMonth")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     //  获取本月的订单量详情
     public String getOrderNumByMonth() {
         return JSON.toJSONString(dataAnalysisService.getOrderNumByMonth());
     }
     @RequestMapping("getOrderNumByYear")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     //获取本年度的订单量详情
     public String getOrderNumByYear() {
         return JSON.toJSONString(dataAnalysisService.getOrderNumByYear());

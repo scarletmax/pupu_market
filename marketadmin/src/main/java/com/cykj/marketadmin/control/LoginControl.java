@@ -2,6 +2,7 @@ package com.cykj.marketadmin.control;
 
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.LoginService;
 
 import com.cykj.marketpojo.Admin;
@@ -23,7 +24,7 @@ public class LoginControl {
 
     @RequestMapping(value = "/login")
     @ResponseBody
-//    @Log(operationType = "操作",operationName = "管理员登录")
+    @Log(operationType = "操作",operationName = "管理员登录")
     //管理员登录
     public String login(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String adminJson = request.getParameter("adminJson");
@@ -31,10 +32,15 @@ public class LoginControl {
         Admin userAdmin = JSON.parseObject(adminJson, Admin.class);
         Admin admin= loginService.login(userAdmin);
         if (admin != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("admin", admin);
-            request.getSession().setAttribute("isLogin", true);
-            return "success";
+            if(admin.getState()==1){
+                HttpSession session = request.getSession();
+                session.setAttribute("admin", admin);
+                request.getSession().setAttribute("isLogin", true);
+                return "success";
+            }else {
+                return "forbid";
+            }
+
         } else {
             return "error";
         }

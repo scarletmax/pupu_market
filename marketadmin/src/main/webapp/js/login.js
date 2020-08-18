@@ -25,8 +25,8 @@ $(function  () {
                     }else if(msg == "error"){
                         layer.msg("账号或者密码错误")
                         changeImg();
-                    }else if(msg == "null"){
-                        layer.msg("账号不存在")
+                    }else if(msg == "forbid"){
+                        layer.msg("账号被封禁或者删除")
                         changeImg();
                     }
 

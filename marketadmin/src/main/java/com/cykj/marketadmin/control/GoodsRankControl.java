@@ -1,6 +1,7 @@
 package com.cykj.marketadmin.control;
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.GoodsRankService;
 import com.cykj.marketadmin.service.GoodsService;
 import com.cykj.marketpojo.GoodsRank;
@@ -24,6 +25,7 @@ public class GoodsRankControl {
 
     @RequestMapping("/findgoodsRank")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String findgoodsRank(){
 
         HashMap<String,Object> hashMap=new HashMap<>();
@@ -35,6 +37,7 @@ public class GoodsRankControl {
     }
     @RequestMapping("/findgoodsRank2")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String findgoodsRank2(){
 
         HashMap<String,Object> hashMap=new HashMap<>();

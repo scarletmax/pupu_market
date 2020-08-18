@@ -2,6 +2,7 @@ package com.cykj.marketadmin.control;
 
 import com.alibaba.fastjson.JSON;
 
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ public class OrderControl {
 
     @RequestMapping(value = "/orderlist")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String orderlist(String userName,String userId,String deliverymanName,String shopName,String startTime,String receiptName ,String endTime,int limit,int page){
 
         System.out.println("orderlist="+" userName="+userName+" userId="+userId+"  deliverymanName="+deliverymanName+" shopName="+shopName+" startTime="+startTime+" endTime="+endTime+" limit="+limit+" page="+page);

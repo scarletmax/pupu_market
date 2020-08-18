@@ -16,4 +16,6 @@ public interface DeliverymanMapper {
     Integer updateState(@Param("id") Integer id, @Param("state") String state);
     //获取所有派送员状态
     List<String> getAllState();
+    double queryBenefit();
+    Integer setBenefit(String benefit);
 }

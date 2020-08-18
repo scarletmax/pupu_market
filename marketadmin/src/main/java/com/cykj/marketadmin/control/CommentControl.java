@@ -2,6 +2,7 @@ package com.cykj.marketadmin.control;
 
 import com.alibaba.fastjson.JSON;
 
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.DeliverymanCommentService;
 import com.cykj.marketadmin.service.GoodsCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class CommentControl {
 
     @RequestMapping(value = "findGoodsComment")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public Object findGoodsComment(int id){
 
         HashMap<String ,Object> hashMap=new HashMap<>();
@@ -31,6 +33,7 @@ public class CommentControl {
     }
     @RequestMapping(value = "findDeliverymanComment")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public Object findDeliverymanComment(int id){
 
         HashMap<String ,Object> hashMap=new HashMap<>();

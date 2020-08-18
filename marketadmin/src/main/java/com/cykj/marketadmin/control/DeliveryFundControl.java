@@ -1,6 +1,7 @@
 package com.cykj.marketadmin.control;
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.AdminService;
 import com.cykj.marketadmin.service.FundService;
 import com.cykj.marketpojo.DeliverymanFund;
@@ -25,6 +26,7 @@ public class DeliveryFundControl {
 
     @RequestMapping(value = "/findFundList")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String findFundList(HttpServletRequest request, HttpServletResponse response) {
         LayData layuiData = new LayData();
         layuiData = fundService.findFundList();
@@ -33,6 +35,7 @@ public class DeliveryFundControl {
 
     @RequestMapping(value = "/examine")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public void examine(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String serial = request.getParameter("out_trade_no");
         System.out.println(serial);
@@ -61,6 +64,7 @@ public class DeliveryFundControl {
 
     @RequestMapping(value = "/unExamine")
     @ResponseBody
+    @Log(operationType = "查看",operationName = "")
     public String unExamine(HttpServletRequest request, HttpServletResponse response) {
         Integer id = Integer.parseInt(request.getParameter("id"));
         String state = request.getParameter("state");
