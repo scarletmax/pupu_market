@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class LevelControl {
     @Autowired
     private LevelService levelService;
-
+//    查询等级列表
     @RequestMapping(value = "/findLevelList")
     @ResponseBody
     public String findLevelList(HttpServletRequest request, HttpServletResponse response) {
@@ -37,7 +37,7 @@ public class LevelControl {
         layuiData = levelService.findLevelList(condition);
         return JSON.toJSONString(layuiData);
     }
-
+//    添加新等级
     @RequestMapping(value = "/addLevel")
     @ResponseBody
     public String addLevel(HttpServletRequest request, HttpServletResponse response) {
@@ -52,7 +52,7 @@ public class LevelControl {
             return "fail";
         }
     }
-
+//    修改等级
     @RequestMapping(value = "/editLevel")
     @ResponseBody
     public String editLevel(HttpServletRequest request, HttpServletResponse response) {
@@ -67,6 +67,7 @@ public class LevelControl {
             return "fail";
         }
     }
+//    删除等级
     @RequestMapping(value = "/deleteLevel")
     @ResponseBody
     public String deleteLevel(HttpServletRequest request, HttpServletResponse response) {

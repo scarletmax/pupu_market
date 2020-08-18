@@ -21,7 +21,7 @@ import java.util.List;
 public class DataAnalysisControl {
     @Autowired
     private DataAnalysisService dataAnalysisService;
-
+//    查询不同分店的订单信息
     @RequestMapping(value = "/findOrderAddress")
     @ResponseBody
     public String findOrderAddress(HttpServletRequest request, HttpServletResponse response) {
@@ -41,7 +41,7 @@ public class DataAnalysisControl {
         ArrayList<DataAnalysis> dataAnalysisList = dataAnalysisService.findOrderAddress(condition);
         return JSON.toJSONString(dataAnalysisList);
     }
-
+//    查询不同时间段的订单信息
     @RequestMapping(value = "/findOrderTime")
     @ResponseBody
     public String findOrderTime(HttpServletRequest request, HttpServletResponse response) {

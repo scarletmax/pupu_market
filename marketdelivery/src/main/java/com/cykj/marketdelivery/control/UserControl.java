@@ -21,7 +21,7 @@ import java.util.List;
 public class UserControl {
     @Autowired
     private UserService userService;
-
+//  通过派送员传入的手机号密码实现派送员登陆
     @RequestMapping(value = "/login")
     @ResponseBody
     public String login(String code,String mobile, HttpServletRequest request){
@@ -35,7 +35,7 @@ public class UserControl {
         }
         return JSON.toJSONString(deliveryman);
     }
-
+//  通过扫脸回传的ID实现用户登陆
     @RequestMapping(value = "/getUserInfo")
     @ResponseBody
     public String getUserInfo(String id, HttpServletRequest request){

@@ -18,7 +18,7 @@ import java.util.List;
 public class PointControl {
     @Autowired
     private PointService pointService;
-
+//    查询积分列表
     @RequestMapping(value = "/findPointList")
     @ResponseBody
     public String findPointList(HttpServletRequest request, HttpServletResponse response) {
@@ -49,7 +49,7 @@ public class PointControl {
         layuiData = pointService.findPointList(condition);
         return JSON.toJSONString(layuiData);
     }
-
+//    查询积分状态
     @RequestMapping(value = "/findPointState")
     @ResponseBody
     public String findPointState(HttpServletRequest request, HttpServletResponse response) {
