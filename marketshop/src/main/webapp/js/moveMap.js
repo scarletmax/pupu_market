@@ -170,20 +170,20 @@ window.onload = function ()
     // };
 
     //开始拖拽时方法
-    oDrag.onStart = function ()
-    {
-        oSpan.innerHTML = "开始拖拽"
-    };
-
-    //开始拖拽时方法
-    oDrag.onMove = function ()
-    {
-        oSpan.innerHTML = "left:" + this.drag.offsetLeft + ", top:" + this.drag.offsetTop
-    };
-
-    //开始拖拽时方法
-    oDrag.onStop = function ()
-    {
-        oSpan.innerHTML = "结束拖拽"
-    };
+    // oDrag.onStart = function ()
+    // {
+    //     oSpan.innerHTML = "开始拖拽"
+    // };
+    //
+    // //开始拖拽时方法
+    // oDrag.onMove = function ()
+    // {
+    //     oSpan.innerHTML = "left:" + this.drag.offsetLeft + ", top:" + this.drag.offsetTop
+    // };
+    //
+    // //开始拖拽时方法
+    // oDrag.onStop = function ()
+    // {
+    //     oSpan.innerHTML = "结束拖拽"
+    // };
 };

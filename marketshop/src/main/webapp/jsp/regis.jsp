@@ -84,11 +84,14 @@
             background: #fef4eb;
             padding: 5px;
             margin: 50px;
-            border: 1px solid #f60;
+            border: 1px solid #189F92;
+            box-shadow: 10px 10px 5px #888888;
+            border-radius:10px;
+
         }
 
         #box .title {
-            height: 25px;
+            height: 30px;
             background: #f60;
         }
 
@@ -246,7 +249,12 @@
 <%--</div>--%>
 
 <div id="box">
-    <h2 class="title"><label id="boxhide" onclick="mapHide()" style="font-size: 30px">x</label></h2>
+    <h2 class="title"><label id="boxhide" onclick="mapHide()" style="font-size: 30px">&nbsp;x</label>
+        <label style="color: #EEEEEE">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            点击进行拖动</label>
+    </h2>
 <%--    <div class="map-x"><label onclick="mapHide()" style="font-size: 30px">x</label></div>--%>
         <div id="l-map" ></div>
         <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:500px;height:500px; display:none;"></div>
