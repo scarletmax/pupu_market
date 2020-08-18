@@ -205,7 +205,7 @@
             var idArr = [];
             if(obj.event=="上架"){
                 checkStatus.data.forEach(function (item) {
-                    if(item.stateStr="待上架"){
+                    if(item.stateStr=="待上架"){
                         idArr.push(item.id);
                     }
                 });
@@ -215,17 +215,17 @@
                     async:false,
                     type:"GET",
                     dataType:"text",
-                    before:function(){
-                        debugger;
+                    beforeSend:function(){
+                        console.log("idArr.lengt长度为"+idArr.length)
                         if(idArr.length==0){
-                            layer.msg("请选择状态为待上架中的商品上架！");
+                            layer.alert("请选择状态为待上架中的商品上架！", {icon: 5});
                             return false;
                         }
                     }
                     ,success:function(res){
                         console.log(res);
                         if(res!=0){
-                            layer.msg("选中项中状态为待上架的商品已成功上架",{time:1000});
+                            layer.msg("选中项中状态为待上架的商品已成功上架",{time:2000});
                             tableIns.reload();
                         }else{
                             layer.msg("操作失败",{time:1000});
@@ -246,16 +246,16 @@
                     async: false,
                     type: "GET",
                     dataType: "text",
-                    before:function(){
+                    beforeSend:function(){
                         if(idArr.length==0){
-                            layer.msg("请选择状态为销售中/补货中的商品下架！");
+                            layer.alert("请选择状态为销售中/补货中的商品下架！", {icon: 5});
                             return false;
                         }
                     }
                     ,success: function (res) {
                         console.log(res);
                         if (res != 0) {
-                            layer.msg("选中项中状态为销售中/补货中的商品已成功下架", {time: 1000});
+                            layer.msg("选中项中状态为销售中/补货中的商品已成功下架", {time: 2000});
                             tableIns.reload();
                         } else {
                             layer.msg("操作失败", {time: 1000});
@@ -267,7 +267,7 @@
                 });
             }else if(obj.event=="删除") {
                 checkStatus.data.forEach(function (item) {
-                    if (item.stateStr = "待上架") {
+                    if (item.stateStr=="待上架") {
                         idArr.push(item.id);
                     }
                 });
@@ -276,16 +276,16 @@
                     async:false,
                     type:"GET",
                     dataType:"text",
-                    before:function(){
+                    beforeSend:function(){
                         if(idArr.length==0){
-                            layer.msg("请选择待上架的商品删除！");
+                            layer.alert("请选择待上架的商品删除！", {icon: 5});
                             return false;
                         }
                     }
                     ,success:function(res){
                         console.log(res);
                         if(res!=0){
-                            layer.msg("选中项中状态为待上架的商品已成功删除",{time:1000});
+                            layer.msg("选中项中状态为待上架的商品已成功删除",{time:2000});
                             tableIns.reload();
                         }else{
                             layer.msg("操作失败",{time:1000});

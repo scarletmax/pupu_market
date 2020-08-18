@@ -89,7 +89,7 @@
 	</update>
 	<!--删除商品-->
 	<delete id="deleteGoods">
-		delete t_goods where id in
+		delete from t_goods where id in
 		<foreach collection="array" item="item" open="(" close=")" separator=",">
 			#{item}
 		</foreach>

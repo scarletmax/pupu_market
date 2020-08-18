@@ -6,6 +6,7 @@ public class GoodsComment {
 
     private int id;
     private int goodsId;
+    private int[] goodsIdArr;
     private int point;
     private String comment;
     private Date createTime;
@@ -99,5 +100,13 @@ public class GoodsComment {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public int[] getGoodsIdArr() {
+        return goodsIdArr;
+    }
+
+    public void setGoodsIdArr(int[] goodsIdArr) {
+        this.goodsIdArr = goodsIdArr;
     }
 }
