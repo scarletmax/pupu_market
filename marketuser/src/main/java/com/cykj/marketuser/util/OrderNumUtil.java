@@ -15,9 +15,12 @@ public class OrderNumUtil {
         // 4 代表长度为4
         // d 代表参数为正数型
         return first + String.format("%015d", hashCodeV);
+
     }
     public static void main(String[] args) {
-        String orderingID= getOrderNum();
-        System.out.println(orderingID);
+
+        String str="6787.633773444512";
+        String[] arr= str.split("\\.");
+        System.out.println("intvalue"+arr[0]);
     }
 }

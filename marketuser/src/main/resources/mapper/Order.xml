@@ -57,7 +57,7 @@ where user_id=#{userId} and is_default=1
     <insert id="createOrder" parameterType="com.cykj.marketpojo.OrderDetail" useGeneratedKeys="true" keyProperty="id">
         insert into  t_order_detail
         (total_price,state,order_num,name,address,room_num,longitude,latitude,tel,user_id,shop_id,pay_type,coupon_id)
-values (#{totalPrice},1,#{orderNum},#{name},#{address},#{roomNum},#{longitude},#{latitude},#{tel},#{userId},#{shopId},1,#{couponId})
+values (#{totalPrice},8,#{orderNum},#{name},#{address},#{roomNum},#{longitude},#{latitude},#{tel},#{userId},#{shopId},1,#{couponId})
     </insert>
     <insert id="insertGoods"  useGeneratedKeys="true" keyProperty="id">
         insert into t_order_goods

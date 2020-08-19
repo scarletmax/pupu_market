@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.marketuser.mapper.ShopMapper">
+    <!--	获取店铺信息-->
+    <select id="getShops" resultType="com.cykj.marketpojo.Shop">
+        select   id,name,longitude,latitude,address
+        ,(st_distance (point (longitude, latitude),point(#{longitude},#{latitude}) ) *111195) AS distance
+        from t_shop order by distance
+    </select>
+    <!--    获得所有分店的marker-->
+    <select id="getAllShopMarkers" resultType="com.cykj.marketpojo.Marker">
+        select id as shopId,name as title ,address,longitude,latitude
+        from t_shop where state='2'
+    </select>
+
+</mapper>

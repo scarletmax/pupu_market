@@ -20,10 +20,27 @@ public class Shop {
     private  String stateStr;
     private String code;//短信验证
     private String pwd;//密码
+    private String distance;
+    private String intDistance;
 
     public Shop() {
     }
 
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public String getIntDistance() {
+        return intDistance;
+    }
+
+    public void setIntDistance(String intDistance) {
+        this.intDistance = intDistance;
+    }
 
     public Shop(int id, String name, String address, String shopPic, Double longitude, Double latitude, String info, String verifyID, String verifyPic, Date createTime, String bossName, String tel, int state, String stateStr, String code, String pwd) {
         this.id = id;

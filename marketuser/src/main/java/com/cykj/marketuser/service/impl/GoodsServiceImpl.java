@@ -1,5 +1,6 @@
 package com.cykj.marketuser.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.cykj.marketpojo.Goods;
 import com.cykj.marketpojo.User;
 import com.cykj.marketuser.mapper.GoodsMapper;
@@ -50,8 +51,10 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     @Transactional
     public String buy(String orderNum) {
+        System.out.println("订单号为"+orderNum);
         //获得所有购买的商品
         List<Goods> goodsList= goodsMapper.getGoodsByOrderNum(orderNum);
+        System.out.println("商品列表为"+JSON.toJSONString(goodsList));
         //更改订单状态
         goodsMapper.buy(orderNum);
         //扣除商品数量

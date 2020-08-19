@@ -11,9 +11,19 @@ public class Advertisement {
     private int shopId;
     private String shopName;
     private int goodId;
+    private int goodsId;
+
     private String goodName;
 
     public Advertisement() {
+    }
+
+    public int getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
     }
 
     public Integer getId() {

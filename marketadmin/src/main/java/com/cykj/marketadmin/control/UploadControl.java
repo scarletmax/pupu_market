@@ -3,6 +3,7 @@ package com.cykj.marketadmin.control;
 import com.alibaba.fastjson.JSON;
 import com.cykj.marketadmin.aop.Log;
 import com.cykj.marketadmin.service.TypeService;
+import com.cykj.marketadmin.util.FtpUtil;
 import com.cykj.marketpojo.LayData;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -37,15 +39,17 @@ public class UploadControl {
             String suffix = originalName.substring(originalName.lastIndexOf(".") + 1);
             //使用UUID+后缀名保存文件名，防止中文乱码问题
             String uuid = UUID.randomUUID() + "";
-            String savePath = request.getSession().getServletContext().getRealPath("/upload/typeIcon");
+            boolean ftpUpload= FtpUtil.uploadFile("120.25.147.141",21,"ftpmax","ftpmax","/home/ftpmax/","/upload/typeIcon/",uuid + "." + suffix,thisFile.getInputStream() );
+
+//            String savePath = request.getSession().getServletContext().getRealPath("/upload/typeIcon");
             //最终实际保存路径
-            String filePath = savePath + File.separator + uuid + "." + suffix;
-            File files = new File(filePath);
-            //打印查看上传路径
-            if (!files.getParentFile().exists()) {//判断目录是否存在，否则创建父目录
-                files.getParentFile().mkdirs();
-            }
-            thisFile.transferTo(files); // 将接收的文件保存到指定文件中
+//            String filePath = savePath + File.separator + uuid + "." + suffix;
+//            File files = new File(filePath);
+//            //打印查看上传路径
+//            if (!files.getParentFile().exists()) {//判断目录是否存在，否则创建父目录
+//                files.getParentFile().mkdirs();
+//            }
+//            thisFile.transferTo(files); // 将接收的文件保存到指定文件中
 
             LayData<String> layData=new LayData<String>();
             layData.setCode(0);
