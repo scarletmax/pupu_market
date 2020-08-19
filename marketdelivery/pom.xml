@@ -127,7 +127,7 @@
                 <version>1.4.2.RELEASE</version>
 
                 <configuration>
-                    <mainClass>com.cykj.marketadmin.market.MarketdeliveryApplication</mainClass>
+                    <mainClass>com.cykj.marketdelivery.MarketdeliveryApplication</mainClass>
                     <fork>true</fork>
                 </configuration>
                 <executions>

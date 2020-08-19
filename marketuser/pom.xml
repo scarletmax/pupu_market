@@ -114,7 +114,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>1.4.2.RELEASE</version>
                 <configuration>
-                    <mainClass>com.cykj.marketadmin.market.MarketuserApplication</mainClass>
+                    <mainClass>com.cykj.marketuser.MarketuserApplication</mainClass>
                     <fork>true</fork>
                 </configuration>
                 <executions>
