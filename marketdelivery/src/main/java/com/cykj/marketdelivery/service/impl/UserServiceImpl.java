@@ -21,4 +21,9 @@ public class UserServiceImpl implements UserService {
     public Deliveryman getUserInfo(Integer id) {
         return userMapper.getUserInfo(id);
     }
+
+    @Override
+    public int forgetPwd(Deliveryman deliveryman) {
+        return userMapper.forgetPwd(deliveryman);
+    }
 }

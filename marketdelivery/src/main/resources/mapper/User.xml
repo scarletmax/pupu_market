@@ -18,4 +18,9 @@
         WHERE id = #{id}
     </update>
 
+    <update id="forgetPwd" parameterType="com.cykj.marketpojo.Deliveryman">
+        update t_deliveryman set pwd= #{pwd}
+        WHERE tel = #{tel}
+    </update>
+
 </mapper>

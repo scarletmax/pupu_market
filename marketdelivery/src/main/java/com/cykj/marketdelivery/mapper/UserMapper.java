@@ -9,4 +9,5 @@ public interface UserMapper {
     Deliveryman login(Deliveryman deliveryman);
     Deliveryman getUserInfo(Integer id);
     int updateMoney(Deliveryman deliveryman);
+    int forgetPwd(Deliveryman deliveryman);
 }
