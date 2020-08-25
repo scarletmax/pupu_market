@@ -53,7 +53,7 @@ public class UploadControl {
 
             LayData<String> layData=new LayData<String>();
             layData.setCode(0);
-            layData.setData(Collections.singletonList("/"+ uuid + "." + suffix));
+            layData.setData(Collections.singletonList(uuid + "." + suffix));
             System.out.println("url"+layData.getData().toString());
             return JSON.toJSONString(layData);
         } catch (Exception e) {

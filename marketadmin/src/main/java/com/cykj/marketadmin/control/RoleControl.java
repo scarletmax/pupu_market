@@ -25,6 +25,7 @@ public class RoleControl {
     @Log(operationType = "查看",operationName = "")
     public String searchMenuList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         return JSON.toJSONString(roleService.searchRoleList());
+
     }
 
     @RequestMapping("/editRole")

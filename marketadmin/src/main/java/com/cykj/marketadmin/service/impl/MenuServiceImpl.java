@@ -21,6 +21,17 @@ import java.util.List;
 public class MenuServiceImpl implements MenuService {
     @Autowired
     MenuMapper menuMapper;
+
+//    public MenuServiceImpl(MenuMapper menuMapper){
+//        System.out.println("faeffa");
+//        this.menuMapper=menuMapper;
+//    }
+//    public MenuServiceImpl(FundServiceImpl fundService){
+//        System.out.println("jinuyy");
+//        this.menuMapper=null;
+//    }
+
+
     @Override
     public List<Role> getAllRole() {
         return menuMapper.getAllRole();

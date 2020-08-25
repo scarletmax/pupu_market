@@ -16,6 +16,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         if (session.getAttribute("admin") == null) {
             String path = request.getContextPath();
             request.getRequestDispatcher("../jsp/login.jsp").forward(request, response);
+
             return false;
         }
         return true;

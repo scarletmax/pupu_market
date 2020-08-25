@@ -421,11 +421,11 @@
             $("input[name=choiceProp1]").val(data.choiceProp1);
             $("input[name=choiceProp2]").val(data.choiceProp2);
             $("input[name=choiceProp3]").val(data.choiceProp3);
-            $("#demo1").attr("src","../upload/goods_pic"+data.infoPic);
-            $("#pic1").attr("src","../upload/goods_pic"+data.pic1);
-            $("#pic2").attr("src","../upload/goods_pic"+data.pic2);
-            $("#pic3").attr("src","../upload/goods_pic"+data.pic3);
-            $("#pic4").attr("src","../upload/goods_pic"+data.pic4);
+            $("#demo1").attr("src","http://120.25.147.141/upload/goods_pic"+data.infoPic);
+            $("#pic1").attr("src","http://120.25.147.141/upload/goods_pic"+data.pic1);
+            $("#pic2").attr("src","http://120.25.147.141/upload/goods_pic"+data.pic2);
+            $("#pic3").attr("src","http://120.25.147.141/upload/goods_pic"+data.pic3);
+            $("#pic4").attr("src","http://120.25.147.141/upload/goods_pic"+data.pic4);
             //这里没有顺便给input框url地址，因此xml中修改时需要判断地址不空才插入
 
 

@@ -139,7 +139,7 @@
                 ,{field: 'menuLevel', title: '分类级别', align:'center', sort: true}
                 ,{field:'', title: '分类图标'
                     ,templet: function(d){
-                        var iconUrl = "${pageContext.request.contextPath}/upload/typeIcon"+d.iconUrl;
+                        var iconUrl = "http://120.25.147.141/upload/typeIcon"+d.iconUrl;
                         return '<div id="'+'myIcon'+d.id+'"><img src="'+iconUrl+'"></div>';
                     }
                 }

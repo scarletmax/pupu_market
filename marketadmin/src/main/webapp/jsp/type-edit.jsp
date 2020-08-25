@@ -160,7 +160,8 @@
                 ,"menuLevel":parent.tempData.menuLevel
                 ,"iconUrl":  parent.tempData.iconUrl
             });
-            $("#demo1").attr("src","${pageContext.request.contextPath}/upload/typeIcon"+ parent.tempData.iconUrl);
+            $("#demo1").attr("src","http://120.25.147.141/upload/typeIcon"+ parent.tempData.iconUrl);
+            <%--$("#demo1").attr("src","${pageContext.request.contextPath}/upload/typeIcon"+ parent.tempData.iconUrl);--%>
 
         })
 
